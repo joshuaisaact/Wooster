@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Trip from './Trip';
 import Trips from './Trips';
@@ -17,7 +17,7 @@ function AppLayout() {
   const [isLoading, setIsLoading] = useState(false);
   const [fetchTrigger, setFetchTrigger] = useState(0);
 
-  const fetchTrips = useCallback(async () => {
+  async function fetchTrips() {
     try {
       setIsLoading(true);
       const res = await fetch(`${BASE_URL}/trips`);
@@ -25,20 +25,19 @@ function AppLayout() {
       setTrips(data);
     } catch (error) {
       console.error(`There was an error loading data:`, error);
-      // Using console.error instead of alert for better error handling
     } finally {
       setIsLoading(false);
     }
-  }, [BASE_URL]);
+  }
 
   useEffect(() => {
     fetchTrips();
-  }, [fetchTrigger, fetchTrips]);
+  }, [fetchTrigger]);
 
-  const addNewTrip = useCallback((newTrip) => {
+  function addNewTrip(newTrip) {
     setTrips((prevTrips) => [...prevTrips, newTrip]);
     setFetchTrigger((prev) => prev + 1); // Trigger a new fetch
-  }, []);
+  }
 
   return (
     <div className="relative flex h-full justify-center overscroll-y-none">

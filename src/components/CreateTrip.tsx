@@ -10,12 +10,16 @@ import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { Trip } from '@/types/types';
 
 interface CreateTripProps {
   baseURL: string;
+  addNewTrip: (trip: Trip) => void;
+  isLoading: boolean;
+  setIsLoading: (loading: boolean) => void;
 }
 
-function CreateTrip({ baseURL, addNewTrip, isLoading, setIsLoading }: CreateTripProps) {
+function CreateTrip({ addNewTrip, isLoading, setIsLoading }: CreateTripProps) {
   const form = useForm({
     defaultValues: {
       days: 1,
@@ -26,10 +30,7 @@ function CreateTrip({ baseURL, addNewTrip, isLoading, setIsLoading }: CreateTrip
 
   const navigate = useNavigate();
 
-  async function onSubmit(
-    data: { days: number; location: string; date: Date | undefined },
-    baseURL,
-  ) {
+  async function onSubmit(data: { days: number; location: string; date: Date | undefined }) {
     setIsLoading(true);
     const formattedData = {
       days: data.days,

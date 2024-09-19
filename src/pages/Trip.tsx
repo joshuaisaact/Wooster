@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Activity from '../components/Activity';
 import Header from '../components/Header';
+import DayNav from '@/components/DayNav';
 
 interface ActivityProps {
   name: string;
@@ -25,7 +26,7 @@ interface TripProps {
   }[];
 }
 
-function flattenItinerary(trip: { itinerary: any }) {
+function flattenItinerary(trip: { itinerary }) {
   if (trip.itinerary && Array.isArray(trip.itinerary.itinerary)) {
     // Itinerary is nested, flatten it
     return trip.itinerary.itinerary;
@@ -42,61 +43,21 @@ function Trip({ trips }: TripProps) {
 
   if (!trip) return <p>Trip not found</p>;
 
-  // Debugging: Check trip and flattened itinerary
-  console.log('Trip:', trip);
   const flattenedItinerary = flattenItinerary(trip);
-  console.log('Flattened Itinerary:', flattenedItinerary);
 
   const currentDayItinerary = flattenedItinerary[currentDay - 1];
-
-  // Debugging: Check current day and filtered itinerary
-  console.log('Current Day:', currentDay);
-  console.log('Current Day Itinerary:', currentDayItinerary);
-
-  const handlePrevDay = () => {
-    setCurrentDay((prevDay) => Math.max(prevDay - 1, 1));
-  };
-
-  const handleNextDay = () => {
-    setCurrentDay((prevDay) => Math.min(prevDay + 1, trip.num_days));
-  };
 
   return (
     <div className="flex h-full flex-col items-center pt-10">
       <Header>{trip.destination}</Header>
 
-      <nav className="mb-4">
-        <ul className="flex gap-4">
-          {Array.from({ length: trip.num_days }, (_, index) => (
-            <li key={index}>
-              <button
-                className={`flex items-center justify-center rounded-lg px-4 py-2 font-semibold transition-colors duration-200 ${
-                  currentDay === index + 1
-                    ? 'bg-gray-700 text-white'
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                }`}
-                onClick={() => setCurrentDay(index + 1)}
-              >
-                Day {index + 1}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <DayNav trip={trip} currentDay={currentDay} setCurrentDay={setCurrentDay} />
 
-      {/* <div className="mb-4 flex gap-4">
-        <button onClick={handlePrevDay} disabled={currentDay === 1}>
-          ⬅️
-        </button>
-        <button onClick={handleNextDay} disabled={currentDay === trip.num_days}>
-          Next Day
-        </button>
-      </div> */}
       <h2 className="flex justify-center py-10">{currentDayItinerary.date}</h2>
       <ul className="flex">
         {currentDayItinerary && currentDayItinerary.activities.length > 0 ? (
           <ul className="flex flex-row gap-10">
-            {currentDayItinerary.activities.map((activity, index) => (
+            {currentDayItinerary.activities.map((activity: ActivityProps, index: number) => (
               <li key={index}>
                 <Activity activity={activity} />
               </li>

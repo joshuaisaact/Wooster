@@ -1,7 +1,10 @@
-import Header from '../components/Header';
-import CreateTrip from '../components/CreateTrip';
+import { ReactNode } from 'react';
 
-function Explore({ children }) {
+interface ExploreProps {
+  children: ReactNode;
+}
+
+function Explore({ children }: ExploreProps) {
   return <div className="flex h-full flex-col items-center pt-10">{children}</div>;
 }
 

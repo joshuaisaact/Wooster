@@ -1,24 +1,6 @@
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-
-interface ActivityProps {
-  name: string;
-  description: string;
-  location: string;
-  price: string;
-}
-
-interface ItineraryItem {
-  day: number;
-  activities: ActivityProps[];
-}
-
-interface Trip {
-  id: number;
-  destination: string;
-  num_days: number;
-  itinerary: ItineraryItem[];
-}
+import { Trip } from '../types/types';
 
 interface TripsProps {
   trips: Trip[];
