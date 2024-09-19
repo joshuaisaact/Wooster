@@ -33,13 +33,13 @@ function Trip({ trips }: TripProps) {
 
   return (
     <div className="flex h-full flex-col items-center pt-10">
-      <Header>Trip to {trip.destination}</Header>
+      <Header>{trip.destination}</Header>
       <h2>{trip.num_days} days</h2>
       <ul>
         {itinerary.map((item) => (
           <li key={item.day}>
-            <h3>Day {item.day}</h3>
-            <ul>
+            <h2 className="flex justify-center py-10">Day {item.day}</h2>
+            <ul className="flex gap-5">
               {item.activities.map((activity, index) => (
                 <li key={index}>
                   <Activity activity={activity} />

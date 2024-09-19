@@ -12,12 +12,23 @@ interface ActivityProps {
   };
 }
 
-function Activity({ activity }: ActivityProps) {
+export default function Component() {
+  // Dummy data for preview
+  const activity = {
+    name: 'High Line',
+    description:
+      'Walk along the High Line, a unique elevated park built on a former New York Central Railroad spur, offering a mix of nature, art, and urban views.',
+    location: "Manhattan's West Side",
+    price: 'Free',
+    image:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/High_Line_20th_Street_looking_downtown.jpg/1200px-High_Line_20th_Street_looking_downtown.jpg',
+  };
+
   const { name, description, location, price, image } = activity;
 
   return (
-    <Card className="flex h-[28rem] w-80 max-w-sm flex-col overflow-hidden border-[#646cff] bg-[#1a1a1a] text-[rgba(255,255,255,0.87)]">
-      <div className="relative h-48 w-full flex-shrink-0">
+    <Card className="max-w-sm overflow-hidden">
+      <div className="relative h-48 w-full">
         {image ? (
           <img src={image} alt={name} className="absolute inset-0 h-full w-full object-cover" />
         ) : (
@@ -26,25 +37,17 @@ function Activity({ activity }: ActivityProps) {
           </div>
         )}
       </div>
-      <CardHeader className="flex-shrink-0">
-        <CardTitle className="text-xl text-[#646cff]">{name}</CardTitle>
+      <CardHeader>
+        <CardTitle className="line-clamp-1">{name}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="mb-4 overflow-y-auto">
-          <p className="text-muted-foreground text-sm">{description}</p>
-        </div>
+        <p className="text-muted-foreground mb-4 line-clamp-2 text-sm">{description}</p>
         <div className="flex items-center justify-between">
-          <Badge
-            variant="secondary"
-            className="flex max-w-[45%] items-center gap-1 bg-green-800 text-[rgba(255,255,255,0.87)]"
-          >
+          <Badge variant="secondary" className="flex items-center gap-1">
             <MapPinIcon className="h-3 w-3" />
-            <span className="truncate">{location}</span>
+            {location}
           </Badge>
-          <Badge
-            variant="secondary"
-            className="flex items-center gap-1 bg-green-800 text-[rgba(255,255,255,0.87)]"
-          >
+          <Badge variant="secondary" className="flex items-center gap-1">
             <DollarSignIcon className="h-3 w-3" />
             {price}
           </Badge>
@@ -53,5 +56,3 @@ function Activity({ activity }: ActivityProps) {
     </Card>
   );
 }
-
-export default Activity;
