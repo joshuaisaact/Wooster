@@ -64,19 +64,38 @@ function Trip({ trips }: TripProps) {
   return (
     <div className="flex h-full flex-col items-center pt-10">
       <Header>{trip.destination}</Header>
-      <h2>{trip.num_days} days</h2>
-      <div className="mb-4 flex gap-4">
+
+      <nav className="mb-4">
+        <ul className="flex gap-4">
+          {Array.from({ length: trip.num_days }, (_, index) => (
+            <li key={index}>
+              <button
+                className={`flex items-center justify-center rounded-lg px-4 py-2 font-semibold transition-colors duration-200 ${
+                  currentDay === index + 1
+                    ? 'bg-gray-700 text-white'
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                }`}
+                onClick={() => setCurrentDay(index + 1)}
+              >
+                Day {index + 1}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* <div className="mb-4 flex gap-4">
         <button onClick={handlePrevDay} disabled={currentDay === 1}>
-          Previous Day
+          ⬅️
         </button>
         <button onClick={handleNextDay} disabled={currentDay === trip.num_days}>
           Next Day
         </button>
-      </div>
-      <ul>
+      </div> */}
+      <h2 className="flex justify-center py-10">{currentDayItinerary.date}</h2>
+      <ul className="flex">
         {currentDayItinerary && currentDayItinerary.activities.length > 0 ? (
-          <ul>
-            <h2 className="flex justify-center py-10">Day {currentDay}</h2>
+          <ul className="flex flex-row gap-10">
             {currentDayItinerary.activities.map((activity, index) => (
               <li key={index}>
                 <Activity activity={activity} />
