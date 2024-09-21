@@ -10,6 +10,7 @@ import Friends from './Friends';
 import Header from '@/components/Header';
 import CreateTrip from '@/components/CreateTrip';
 import DestinationList from '@/components/DestinationList';
+import DestinationDetail from '@/components/DestinationDetail';
 
 function AppLayout() {
   const BASE_URL = 'http://localhost:4000';
@@ -70,6 +71,7 @@ function AppLayout() {
               </Explore>
             }
           />
+          <Route path="destinations/:destinationId" element={<DestinationDetail />} />
           <Route path="friends" element={<Friends />} />
           <Route path="settings" element={<Profile />} />
         </Routes>
