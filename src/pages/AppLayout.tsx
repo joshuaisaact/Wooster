@@ -9,6 +9,7 @@ import Explore from './Explore';
 import Friends from './Friends';
 import Header from '@/components/Header';
 import CreateTrip from '@/components/CreateTrip';
+import DestinationList from '@/components/DestinationList';
 
 function AppLayout() {
   const BASE_URL = 'http://localhost:4000';
@@ -44,20 +45,28 @@ function AppLayout() {
       <Sidebar />
       <div className="flex-grow p-4">
         <Routes>
-          <Route path="home" element={<Dashboard />} />
-          <Route path="trips" element={<Trips trips={trips} />} />
-          <Route path="trips/:tripId" element={<Trip trips={trips} />} />
           <Route
-            path="explore"
+            path="home"
             element={
-              <Explore>
-                <Header>Explore</Header>
+              <Dashboard>
+                <Header>Dashboard</Header>
                 <CreateTrip
                   baseURL={BASE_URL}
                   addNewTrip={addNewTrip}
                   isLoading={isLoading}
                   setIsLoading={setIsLoading}
                 />
+              </Dashboard>
+            }
+          />
+          <Route path="trips" element={<Trips trips={trips} />} />
+          <Route path="trips/:tripId" element={<Trip trips={trips} />} />
+          <Route
+            path="explore"
+            element={
+              <Explore baseURL={BASE_URL}>
+                <Header>Explore</Header>
+                <DestinationList />
               </Explore>
             }
           />

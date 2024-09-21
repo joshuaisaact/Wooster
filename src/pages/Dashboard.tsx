@@ -1,10 +1,10 @@
-import Header from '../components/Header';
+import { ReactNode } from 'react';
 
-function Dashboard() {
-  return (
-    <div className="flex h-full flex-col items-center pt-10">
-      <Header>Dashboard</Header>
-    </div>
-  );
+interface DashboardProps {
+  children: ReactNode;
+}
+
+function Dashboard({ children }: DashboardProps) {
+  return <div className="flex h-full flex-col items-center pt-10">{children}</div>;
 }
 export default Dashboard;
