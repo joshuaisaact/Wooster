@@ -25,7 +25,7 @@ function Trips({ trips }: TripsProps) {
                 to={`/trips/${trip.id}`}
                 className="flex items-center justify-center rounded-lg px-4 py-2 text-gray-300 transition-colors duration-200 hover:bg-gray-700 hover:text-white"
               >
-                {trip.destination} ({trip.num_days} days)
+                {trip.destination_name} ({trip.num_days} days)
               </Link>
             </li>
           ))}

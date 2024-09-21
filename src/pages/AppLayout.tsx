@@ -61,7 +61,9 @@ function AppLayout() {
             }
           />
           <Route path="trips" element={<Trips trips={trips} />} />
-          <Route path="trips/:tripId" element={<Trip trips={trips} />} />
+          <Route path="trips/:tripId" element={<Trip trips={trips} />}>
+            <Route path="summary/:destinationId" element={<DestinationDetail />} />
+          </Route>
           <Route
             path="explore"
             element={

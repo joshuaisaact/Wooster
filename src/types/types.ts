@@ -1,6 +1,6 @@
 export interface Trip {
   id: string;
-  destination: string;
+  destination_name: string;
   num_days: number;
   date: string;
   itinerary: ItineraryItem[];

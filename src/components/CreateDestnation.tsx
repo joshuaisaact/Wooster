@@ -55,7 +55,7 @@ function CreateDestination({ addNewDestination, isLoading, setIsLoading }: Creat
   return (
     <Card className="w-80">
       <CardHeader>
-        <CardTitle>Create a Destination</CardTitle>
+        <CardTitle>Add a Destination</CardTitle>
         <CardDescription>Add a new destination to your list</CardDescription>
       </CardHeader>
       <CardContent>
@@ -77,7 +77,7 @@ function CreateDestination({ addNewDestination, isLoading, setIsLoading }: Creat
                 )}
               />
               <Button type="submit" className="w-full bg-green-500">
-                Create
+                Add
               </Button>
             </form>
           </FormProvider>

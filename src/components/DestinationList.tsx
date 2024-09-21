@@ -2,6 +2,7 @@ import { Destination } from '@/types/types';
 import { useState, useEffect } from 'react';
 import CreateDestination from './CreateDestnation';
 import { Link } from 'react-router-dom';
+import DestinationCard from './DestinationCard';
 
 interface DestinationListProps {
   baseURL: string;
@@ -33,32 +34,35 @@ function DestinationList({ baseURL }: DestinationListProps) {
   }, []);
 
   return (
-    <div>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul className="flex w-full max-w-md flex-wrap justify-center gap-4">
-          {destinations.map((destination) => (
-            <li
-              key={destination.destination_id}
-              className="mb-4 rounded-lg border transition-colors duration-200 hover:bg-gray-100"
-            >
-              <Link
-                to={`/destinations/${encodeURIComponent(destination.destination_name)}`}
-                className="block p-4"
-              >
-                <h3>{destination.destination_name}</h3>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-12">
+      {/* Destination Cards */}
+      <div className="col-start-1 sm:col-span-8">
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+            {destinations.map((destination) => (
+              <li key={destination.destination_id} className="mb-4">
+                <Link
+                  to={`/destinations/${encodeURIComponent(destination.destination_name)}`}
+                  className="block p-4"
+                >
+                  <DestinationCard destination={destination} />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
-      <CreateDestination
-        addNewDestination={handleAddNewDestination}
-        isLoading={isLoading}
-        setIsLoading={setIsLoading}
-      />
+      {/* Add Destination Form */}
+      <div className="col-start-9 p-4 sm:col-span-4">
+        <CreateDestination
+          addNewDestination={handleAddNewDestination}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
+      </div>
     </div>
   );
 }

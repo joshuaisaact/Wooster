@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Outlet } from 'react-router-dom';
 import Activity from '../components/Activity';
 import Header from '../components/Header';
 import DayNav from '@/components/DayNav';
+import DestinationDetail from '@/components/DestinationDetail';
 
 interface ActivityProps {
   name: string;
@@ -19,7 +20,7 @@ interface ItineraryItem {
 interface TripProps {
   trips: {
     id: string; // Ensure this is a string if using tripId from params
-    destination: string;
+    destination_name: string;
     num_days: number;
     date: string;
     itinerary: ItineraryItem[];
@@ -49,24 +50,31 @@ function Trip({ trips }: TripProps) {
 
   return (
     <div className="flex h-full flex-col items-center pt-10">
-      <Header>{trip.destination}</Header>
+      <Header>{trip.destination_name}</Header>
 
       <DayNav trip={trip} currentDay={currentDay} setCurrentDay={setCurrentDay} />
 
-      <h2 className="flex justify-center py-10">{currentDayItinerary.date}</h2>
-      <ul className="flex">
-        {currentDayItinerary && currentDayItinerary.activities.length > 0 ? (
-          <ul className="flex flex-row gap-10">
-            {currentDayItinerary.activities.map((activity: ActivityProps, index: number) => (
-              <li key={index}>
-                <Activity activity={activity} />
-              </li>
-            ))}
+      {/* Render the destination summary only if currentDay is 0 */}
+      {currentDay === 0 ? (
+        <Outlet />
+      ) : (
+        <>
+          <h2 className="flex justify-center py-10">{currentDayItinerary.date}</h2>
+          <ul className="flex">
+            {currentDayItinerary && currentDayItinerary.activities.length > 0 ? (
+              <ul className="flex flex-row gap-10">
+                {currentDayItinerary.activities.map((activity: ActivityProps, index: number) => (
+                  <li key={index}>
+                    <Activity activity={activity} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No activities for Day {currentDay}</p>
+            )}
           </ul>
-        ) : (
-          <p>No activities for Day {currentDay}</p>
-        )}
-      </ul>
+        </>
+      )}
     </div>
   );
 }
