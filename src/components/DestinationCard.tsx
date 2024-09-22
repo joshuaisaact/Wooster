@@ -1,16 +1,10 @@
-import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPinIcon } from 'lucide-react';
+import { Destination } from '@/types/types';
 
 interface DestinationProps {
-  destination: {
-    destination_name: string;
-    description: string;
-    country: string;
-    user_ratings: number;
-    cost_level: string;
-  };
+  destination: Destination;
 }
 
 function DestinationCard({ destination }: DestinationProps) {

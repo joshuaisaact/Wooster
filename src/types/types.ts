@@ -26,4 +26,26 @@ export interface Destination {
   description: string;
   country: string;
   created_at: string;
+  best_time_to_visit: string;
+  average_temperature_low: string;
+  average_temperature_high: string;
+  popular_activities: string;
+  travel_tips: string;
+  nearby_attractions: string;
+  transportation_options: string;
+  accessibility_info: string;
+  official_language: string;
+  currency: string;
+  local_cuisine: string;
+  cost_level: string;
+  safety_rating: string;
+  cultural_significance: string;
+}
+
+export interface Activity {
+  name: string;
+  description: string;
+  location: string;
+  latitude: number;
+  longitude: number;
 }

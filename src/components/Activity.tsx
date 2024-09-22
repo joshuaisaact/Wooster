@@ -13,42 +13,25 @@ interface ActivityProps {
 }
 
 function Activity({ activity }: ActivityProps) {
-  const { name, description, location, price, image } = activity;
+  const { name, description, location, price } = activity;
 
   return (
-    <Card className="flex h-[28rem] w-80 max-w-sm flex-col overflow-hidden border-[#646cff] bg-[#1a1a1a] text-[rgba(255,255,255,0.87)]">
-      <div className="relative h-48 w-full flex-shrink-0">
-        {image ? (
-          <img src={image} alt={name} className="absolute inset-0 h-full w-full object-cover" />
-        ) : (
-          <div className="bg-secondary flex h-full w-full items-center justify-center">
-            <span className="text-4xl">🏞️</span>
-          </div>
-        )}
-      </div>
+    <Card className="flex w-full max-w-sm flex-col overflow-hidden border border-gray-300 bg-white text-gray-900 shadow-md">
       <CardHeader className="flex-shrink-0">
-        <CardTitle className="text-xl text-[#646cff]">{name}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="mb-4 overflow-y-auto">
-          <p className="text-muted-foreground text-sm">{description}</p>
-        </div>
-        <div className="flex items-center justify-between">
-          <Badge
-            variant="secondary"
-            className="flex max-w-[45%] items-center gap-1 bg-green-800 text-[rgba(255,255,255,0.87)]"
-          >
+        <CardTitle className="text-2xl">{name}</CardTitle>
+        <div className="mt-2 flex flex-wrap gap-2">
+          <Badge variant="secondary" className="flex items-center gap-1">
             <MapPinIcon className="h-3 w-3" />
-            <span className="truncate">{location}</span>
+            <span>{location}</span>
           </Badge>
-          <Badge
-            variant="secondary"
-            className="flex items-center gap-1 bg-green-800 text-[rgba(255,255,255,0.87)]"
-          >
+          <Badge variant="secondary" className="flex items-center gap-1">
             <DollarSignIcon className="h-3 w-3" />
             {price}
           </Badge>
         </div>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <p className="text-muted-foreground">{description}</p>
       </CardContent>
     </Card>
   );

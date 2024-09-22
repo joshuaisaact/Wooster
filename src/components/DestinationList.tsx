@@ -4,11 +4,7 @@ import CreateDestination from './CreateDestnation';
 import { Link } from 'react-router-dom';
 import DestinationCard from './DestinationCard';
 
-interface DestinationListProps {
-  baseURL: string;
-}
-
-function DestinationList({ baseURL }: DestinationListProps) {
+function DestinationList() {
   const [destinations, setDestinations] = useState<Destination[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
