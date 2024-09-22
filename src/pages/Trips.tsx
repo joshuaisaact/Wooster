@@ -27,7 +27,7 @@ function Trips({ trips, isLoading, setIsLoading, addNewTrip }: TripsProps) {
   }
 
   return (
-    <div className="flex h-full flex-col items-center pt-10">
+    <div className="text-text flex h-full flex-col items-center pt-10">
       <Header>Trips</Header>
       <div className="flex flex-col items-center">
         <ul className="flex w-full max-w-4xl grid-cols-1 gap-10 p-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

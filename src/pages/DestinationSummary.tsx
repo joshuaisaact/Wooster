@@ -34,7 +34,7 @@ function DestinationSummary() {
   }
 
   return (
-    <div className="flex flex-col items-center p-4">
+    <div className="text-text flex flex-col items-center p-4">
       <Header>{destination.destination_name}</Header>
       <DestinationDetail destination={destination} />
     </div>

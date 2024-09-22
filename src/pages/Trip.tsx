@@ -57,7 +57,7 @@ function Trip({ trips }: TripProps) {
   const currentDayItinerary = flattenedItinerary[currentDay - 1];
 
   return (
-    <div className="flex h-full w-full flex-col pt-10">
+    <div className="text-text flex h-full w-full flex-col pt-10">
       <div className="flex flex-col items-center justify-center">
         <Header>{trip.destination_name}</Header>
         <DayNav trip={trip} currentDay={currentDay} setCurrentDay={setCurrentDay} />

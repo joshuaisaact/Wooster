@@ -51,19 +51,20 @@ export default function DestinationList() {
           )}
         </div>
         <div className="rounded-lg bg-white p-6 shadow-md">
-          <h2 className="mb-4 text-2xl font-bold">Focus on Destination</h2>
+          <h2 className="mb-4 text-2xl font-bold">My Saved Destinations</h2>
           <div className="flex flex-wrap gap-2">
             {destinations.map((destination) => (
               <button
                 key={destination.destination_id}
                 onClick={() => handleButtonClick(destination)}
-                className="rounded bg-blue-500 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-600"
+                className="rounded bg-green-600 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-600"
               >
                 {destination.destination_name}
               </button>
             ))}
           </div>
         </div>
+
         <div className="rounded-lg bg-white p-6 shadow-md">
           <h2 className="mb-4 text-2xl font-bold">Destination List</h2>
           {isLoading ? (
@@ -86,6 +87,13 @@ export default function DestinationList() {
       </div>
       <div className="lg:col-span-1">
         <div className="rounded-lg bg-white p-6 shadow-md">
+          {focusedDestination ? (
+            <DestinationCard destination={focusedDestination} />
+          ) : (
+            <p>Select a destination to see details.</p>
+          )}
+        </div>
+        <div className="mt-10 rounded-lg bg-white p-6 shadow-md">
           <CreateDestination
             addNewDestination={handleAddNewDestination}
             isLoading={isLoading}
