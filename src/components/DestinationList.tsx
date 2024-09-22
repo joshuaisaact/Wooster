@@ -4,6 +4,7 @@ import { Destination } from '@/types/types';
 import CreateDestination from './CreateDestnation';
 import DestinationCard from './DestinationCard';
 import GlobeComponent from '@/pages/GlobeComponent';
+import DestinationFullList from './DestinationFullList';
 
 export default function DestinationList() {
   const [destinations, setDestinations] = useState<Destination[]>([]);
@@ -88,7 +89,12 @@ export default function DestinationList() {
       <div className="lg:col-span-1">
         <div className="rounded-lg bg-white p-6 shadow-md">
           {focusedDestination ? (
-            <DestinationCard destination={focusedDestination} />
+            <Link
+              to={`/destinations/${encodeURIComponent(focusedDestination.destination_name)}`}
+              className="block"
+            >
+              <DestinationCard destination={focusedDestination} />
+            </Link>
           ) : (
             <p>Select a destination to see details.</p>
           )}
