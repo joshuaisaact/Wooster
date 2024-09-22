@@ -50,9 +50,10 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
     if (!globeEl.current) return;
 
     const globe = Globe()
-      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+      .globeImageUrl('/earth-texture.png')
       .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-      .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
+      // .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
+      .backgroundColor('#ffffff')
       .width(width)
       .height(height)
       .htmlElementsData(points)
@@ -93,7 +94,7 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
     <div
       ref={globeEl}
       style={{ width: `${width}px`, height: `${height}px` }}
-      className="flex items-center justify-center overflow-hidden rounded-lg bg-gray-900 shadow-lg"
+      className="flex items-center justify-center overflow-hidden rounded-lg bg-white shadow-lg"
     />
   );
 };

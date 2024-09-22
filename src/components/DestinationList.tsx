@@ -39,7 +39,7 @@ export default function DestinationList() {
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
       <div className="space-y-7 lg:col-span-2">
-        <div className="rounded-lg bg-white p-6 shadow-md">
+        <div className="rounded-lg bg-white p-6">
           {isLoading ? (
             <p>Loading...</p>
           ) : (
