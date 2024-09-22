@@ -1,14 +1,8 @@
-import { ItineraryItem } from '@/types/types';
 import { Link } from 'react-router-dom';
+import { Trip } from '@/types/types';
 
 interface DayNavProps {
-  trip: {
-    id: string;
-    destination_name: string;
-    num_days: number;
-    date: string;
-    itinerary: ItineraryItem[];
-  };
+  trip: Trip;
   currentDay: number;
   setCurrentDay: (day: number) => void;
 }
@@ -17,7 +11,7 @@ function DayNav({ trip, currentDay, setCurrentDay }: DayNavProps) {
   return (
     <nav className="mb-4">
       <ul className="flex gap-4">
-        <Link to={`/trips/${trip.id}/summary/${trip.destination_name}`}>
+        <Link to={`/trips/${trip.trip_id}/summary/${trip.destination_name}`}>
           <button
             className={`px-4 py-2 ${currentDay === 0 ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}`}
             onClick={() => {

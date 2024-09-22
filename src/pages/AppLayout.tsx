@@ -11,6 +11,8 @@ import Header from '@/components/Header';
 import CreateTrip from '@/components/CreateTrip';
 import DestinationList from '@/components/DestinationList';
 import DestinationSummary from './DestinationSummary';
+import GlobeComponent from './GlobeComponent';
+import CreateDestination from '@/components/CreateDestnation';
 
 function AppLayout() {
   const BASE_URL = 'http://localhost:4000';
@@ -44,23 +46,33 @@ function AppLayout() {
   return (
     <div className="relative flex h-full justify-center overscroll-y-none">
       <Sidebar />
-      <div className="flex-grow p-4">
+      <div className="flex-grow flex-col items-center p-4">
         <Routes>
           <Route
             path="home"
             element={
               <Dashboard>
-                <Header>Dashboard</Header>
                 <CreateTrip
                   baseURL={BASE_URL}
                   addNewTrip={addNewTrip}
                   isLoading={isLoading}
                   setIsLoading={setIsLoading}
                 />
+                <CreateDestination />
               </Dashboard>
             }
           />
-          <Route path="trips" element={<Trips trips={trips} />} />
+          <Route
+            path="trips"
+            element={
+              <Trips
+                trips={trips}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                addNewTrip={addNewTrip}
+              />
+            }
+          />
           <Route path="trips/:tripId" element={<Trip trips={trips} />}>
             <Route path="summary/:destinationId" element={<DestinationSummary />} />
           </Route>
@@ -74,6 +86,7 @@ function AppLayout() {
             }
           />
           <Route path="destinations/:destinationId" element={<DestinationSummary />} />
+          <Route path="globe" element={<GlobeComponent />} />
           <Route path="friends" element={<Friends />} />
           <Route path="settings" element={<Profile />} />
         </Routes>

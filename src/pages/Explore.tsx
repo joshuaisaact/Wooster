@@ -5,7 +5,11 @@ interface ExploreProps {
 }
 
 function Explore({ children }: ExploreProps) {
-  return <div className="flex h-full flex-col items-center pt-10">{children}</div>;
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex flex-col space-y-8">{children}</div>
+    </div>
+  );
 }
 
 export default Explore;

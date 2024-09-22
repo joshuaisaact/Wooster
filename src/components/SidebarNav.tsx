@@ -14,6 +14,9 @@ function SidebarNav() {
           <SidebarNavLink to="/explore" label="Explore" />
         </li>
         <li>
+          <SidebarNavLink to="/globe" label="Globe" />
+        </li>
+        <li>
           <SidebarNavLink to="/friends" label="Friends" />
         </li>
         <li>

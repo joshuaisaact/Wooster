@@ -13,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
 import { Trip } from '@/types/types';
 
 interface CreateTripProps {
-  baseURL: string;
   addNewTrip: (trip: Trip) => void;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
@@ -126,14 +125,14 @@ function CreateTrip({ addNewTrip, isLoading, setIsLoading }: CreateTripProps) {
                     </FormLabel>
                     <FormControl>
                       <Slider
-                        min={1}
-                        max={3}
+                        min={2}
+                        max={5}
                         step={1}
                         defaultValue={[field.value]}
                         onValueChange={(vals) => field.onChange(vals[0])}
                       />
                     </FormControl>
-                    <FormDescription>Select the number of days for your trip (1-3)</FormDescription>
+                    <FormDescription>Select the number of days for your trip </FormDescription>
                   </FormItem>
                 )}
               />
@@ -143,9 +142,9 @@ function CreateTrip({ addNewTrip, isLoading, setIsLoading }: CreateTripProps) {
                 name="location"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Location</FormLabel>
+                    <FormLabel>Destination</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter a location" {...field} required />
+                      <Input placeholder="Enter a destination" {...field} required />
                     </FormControl>
                     <FormDescription>Where do you want to go?</FormDescription>
                   </FormItem>

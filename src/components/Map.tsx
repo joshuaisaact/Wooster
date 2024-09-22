@@ -30,7 +30,7 @@ const Markers = ({ activities }: { activities: Activity[] }) => {
       {activities.map((activity, index) => (
         <Marker key={index} position={[activity.latitude, activity.longitude]}>
           <Popup>
-            <strong>{activity.name}</strong>
+            <strong>{activity.activity_name}</strong>
             <br />
             {activity.description}
           </Popup>

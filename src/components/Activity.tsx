@@ -4,7 +4,7 @@ import { MapPinIcon, DollarSignIcon } from 'lucide-react';
 
 interface ActivityProps {
   activity: {
-    name: string;
+    activity_name: string;
     description: string;
     location: string;
     price: string;
@@ -13,12 +13,12 @@ interface ActivityProps {
 }
 
 function Activity({ activity }: ActivityProps) {
-  const { name, description, location, price } = activity;
+  const { activity_name, description, location, price } = activity;
 
   return (
     <Card className="flex w-full max-w-sm flex-col overflow-hidden border border-gray-300 bg-white text-gray-900 shadow-md">
       <CardHeader className="flex-shrink-0">
-        <CardTitle className="text-2xl">{name}</CardTitle>
+        <CardTitle className="text-2xl">{activity_name}</CardTitle>
         <div className="mt-2 flex flex-wrap gap-2">
           <Badge variant="secondary" className="flex items-center gap-1">
             <MapPinIcon className="h-3 w-3" />

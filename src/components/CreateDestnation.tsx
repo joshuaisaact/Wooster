@@ -10,7 +10,7 @@ interface FormData {
 }
 
 interface CreateDestinationProps {
-  addNewDestination: (Destination: Destination) => void;
+  addNewDestination?: (Destination: Destination) => void;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
 }

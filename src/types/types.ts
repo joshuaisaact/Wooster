@@ -1,5 +1,5 @@
 export interface Trip {
-  id: string;
+  trip_id: string;
   destination_name: string;
   num_days: number;
   date: string;
@@ -43,9 +43,10 @@ export interface Destination {
 }
 
 export interface Activity {
-  name: string;
+  activity_name: string;
   description: string;
   location: string;
   latitude: number;
   longitude: number;
+  price: string;
 }

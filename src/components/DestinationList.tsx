@@ -1,12 +1,18 @@
-import { Destination } from '@/types/types';
 import { useState, useEffect } from 'react';
-import CreateDestination from './CreateDestnation';
 import { Link } from 'react-router-dom';
+import { Destination } from '@/types/types';
+import CreateDestination from './CreateDestnation';
 import DestinationCard from './DestinationCard';
+import GlobeComponent from '@/pages/GlobeComponent';
 
-function DestinationList() {
+export default function DestinationList() {
   const [destinations, setDestinations] = useState<Destination[]>([]);
+  const [focusedDestination, setFocusedDestination] = useState<Destination | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  function handleButtonClick(destination: Destination) {
+    setFocusedDestination(destination);
+  }
 
   function handleAddNewDestination(newDestination: Destination) {
     setDestinations((prevDestinations) => [...prevDestinations, newDestination]);
@@ -30,37 +36,63 @@ function DestinationList() {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-12">
-      {/* Destination Cards */}
-      <div className="col-start-1 sm:col-span-8">
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <div className="space-y-7 lg:col-span-2">
+        <div className="rounded-lg bg-white p-6 shadow-md">
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <GlobeComponent
+              destinations={destinations}
+              focusedDestination={focusedDestination}
+              height={600}
+              width="100%"
+            />
+          )}
+        </div>
+        <div className="rounded-lg bg-white p-6 shadow-md">
+          <h2 className="mb-4 text-2xl font-bold">Focus on Destination</h2>
+          <div className="flex flex-wrap gap-2">
             {destinations.map((destination) => (
-              <li key={destination.destination_id} className="mb-4">
-                <Link
-                  to={`/destinations/${encodeURIComponent(destination.destination_name)}`}
-                  className="block p-4"
-                >
-                  <DestinationCard destination={destination} />
-                </Link>
-              </li>
+              <button
+                key={destination.destination_id}
+                onClick={() => handleButtonClick(destination)}
+                className="rounded bg-blue-500 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-600"
+              >
+                {destination.destination_name}
+              </button>
             ))}
-          </ul>
-        )}
+          </div>
+        </div>
+        <div className="rounded-lg bg-white p-6 shadow-md">
+          <h2 className="mb-4 text-2xl font-bold">Destination List</h2>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {destinations.map((destination) => (
+                <li key={destination.destination_id}>
+                  <Link
+                    to={`/destinations/${encodeURIComponent(destination.destination_name)}`}
+                    className="block"
+                  >
+                    <DestinationCard destination={destination} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
-
-      {/* Add Destination Form */}
-      <div className="col-start-9 p-4 sm:col-span-4">
-        <CreateDestination
-          addNewDestination={handleAddNewDestination}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />
+      <div className="lg:col-span-1">
+        <div className="rounded-lg bg-white p-6 shadow-md">
+          <CreateDestination
+            addNewDestination={handleAddNewDestination}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />
+        </div>
       </div>
     </div>
   );
 }
-
-export default DestinationList;
