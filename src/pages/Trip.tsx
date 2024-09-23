@@ -68,7 +68,6 @@ function Trip({ trips, destinations }: TripProps) {
         <DestinationDetail destination={destination} />
       ) : (
         <>
-          <h2 className="flex justify-center py-10">{currentDayItinerary.date}</h2>
           <div className="flex w-full">
             {/* Added a div to ensure full width for the itinerary */}
             {currentDayItinerary && currentDayItinerary.activities.length > 0 ? (

@@ -26,7 +26,7 @@ function AppLayout() {
   async function fetchTrips() {
     try {
       setIsLoading(true);
-      const res = await fetch(`${BASE_URL}/trips`);
+      const res = await fetch(`${BASE_URL}/tripsdb`);
       const data = await res.json();
       setTrips(data);
     } catch (error) {
@@ -67,9 +67,11 @@ function AppLayout() {
   }
 
   return (
-    <div className="relative flex h-full justify-center overscroll-y-none">
-      <Sidebar />
-      <div className="flex-grow flex-col items-center p-4">
+    <div className="flex min-h-screen">
+      <div className="fixed left-0 top-0 h-full w-64 bg-green-700">
+        <Sidebar />
+      </div>
+      <div className="ml-64 flex-1 flex-grow flex-col items-center p-4">
         <Routes>
           <Route
             path="home"

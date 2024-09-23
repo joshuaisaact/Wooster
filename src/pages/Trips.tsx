@@ -29,17 +29,19 @@ function Trips({ trips, isLoading, setIsLoading, addNewTrip }: TripsProps) {
   return (
     <div className="text-text flex h-full flex-col items-center pt-10">
       <Header>Trips</Header>
-      <div className="flex flex-col items-center">
-        <ul className="flex w-full max-w-4xl grid-cols-1 gap-10 p-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-2 justify-center">
+        <ul className="grid h-[600px] w-full max-w-4xl grid-cols-1 gap-10 overflow-y-auto px-10">
           {trips.map((trip) => (
             <li key={trip.trip_id}>
-              <Link to={`/trips/${trip.trip_id}`} className="block">
+              <Link to={`/trips/${trip.trip_id}`}>
                 <TripCard trip={trip} />
               </Link>
             </li>
           ))}
         </ul>
-        <CreateTrip isLoading={isLoading} setIsLoading={setIsLoading} addNewTrip={addNewTrip} />
+        <div className="flex h-full w-full items-center justify-center p-10">
+          <CreateTrip isLoading={isLoading} setIsLoading={setIsLoading} addNewTrip={addNewTrip} />
+        </div>
       </div>
     </div>
   );

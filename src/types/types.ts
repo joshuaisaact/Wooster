@@ -2,7 +2,7 @@ export interface Trip {
   trip_id: string;
   destination_name: string;
   num_days: number;
-  date: string;
+  start_date: string;
   itinerary: ItineraryItem[];
 }
 

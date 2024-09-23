@@ -6,8 +6,8 @@ interface ExploreProps {
 
 function Explore({ children }: ExploreProps) {
   return (
-    <div className="text-text container mx-auto px-4 py-8">
-      <div className="flex flex-col space-y-8">{children}</div>
+    <div className="text-text container mx-auto px-4">
+      <div className="flex flex-col">{children}</div>
     </div>
   );
 }

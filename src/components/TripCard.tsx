@@ -9,15 +9,15 @@ interface TripCardProps {
 }
 
 function TripCard({ trip }: TripCardProps) {
-  const { trip_id, destination_name, num_days, date } = trip;
+  const { trip_id, destination_name, num_days, start_date } = trip;
 
   return (
     <Link to={`/trips/${trip_id}`}>
-      <Card className="flex h-[250px] w-80 flex-col transition-all hover:shadow-md">
+      <Card className="flex flex-col transition-all hover:shadow-md">
         <CardHeader>
           <CardTitle className="flex justify-between text-lg">
             <span>Trip to {destination_name}</span>
-            <span>{date}</span>
+            <span>{start_date}</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-1 flex-col">

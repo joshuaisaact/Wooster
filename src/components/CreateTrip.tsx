@@ -21,27 +21,27 @@ interface CreateTripProps {
 function CreateTrip({ addNewTrip, isLoading, setIsLoading }: CreateTripProps) {
   const form = useForm({
     defaultValues: {
-      days: 1,
+      days: 2,
       location: '',
-      date: undefined,
+      start_date: undefined,
     },
   });
 
   const navigate = useNavigate();
 
-  async function onSubmit(data: { days: number; location: string; date: Date | undefined }) {
+  async function onSubmit(data: { days: number; location: string; start_date: Date | undefined }) {
     setIsLoading(true);
     const formattedData = {
       days: data.days,
       location: data.location,
-      date: data.date ? data.date.toISOString() : null, // Convert Date to ISO string
+      start_date: data.start_date ? data.start_date.toISOString() : null, // Convert Date to ISO string
       itinerary: [],
     };
 
     console.log(JSON.stringify(formattedData));
 
     try {
-      const response = await fetch(`http://localhost:4000/newtrip`, {
+      const response = await fetch(`http://localhost:4000/newtripdb`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ function CreateTrip({ addNewTrip, isLoading, setIsLoading }: CreateTripProps) {
                   <FormItem>
                     <Controller
                       control={form.control}
-                      name="date"
+                      name="start_date"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
                           <FormLabel>Date</FormLabel>

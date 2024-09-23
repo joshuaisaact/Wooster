@@ -16,7 +16,7 @@ interface DestinationListProps {
 function DestinationList({ destinations, handleAddNewDestination }: DestinationListProps) {
   const [focusedDestination, setFocusedDestination] = useState<Destination | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [globeHeight, setGlobeHeight] = useState(600); // Default height
+  const [globeDimensions, setGlobeDimensions] = useState({ height: 600, width: 600 }); // Default height
 
   function handleButtonClick(destination: Destination) {
     setFocusedDestination(destination);
@@ -26,8 +26,10 @@ function DestinationList({ destinations, handleAddNewDestination }: DestinationL
     // Function to handle window resize and adjust the globe height
     function updateGlobeHeight() {
       const windowHeight = window.innerHeight;
+      const windowWidth = window.innerWidth;
       const adjustedHeight = windowHeight * 0.5; // Adjust globe height to 60% of window height
-      setGlobeHeight(adjustedHeight);
+      const adjustedWidth = windowWidth * 0.6; // Adjust globe width to 80% window width
+      setGlobeDimensions({ height: adjustedHeight, width: adjustedWidth });
     }
 
     updateGlobeHeight(); // Set initial height
@@ -44,14 +46,17 @@ function DestinationList({ destinations, handleAddNewDestination }: DestinationL
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
       <div className="space-y-7 lg:col-span-2">
-        <div className={`bg-background min-h-[${globeHeight}] rounded-lg p-6`}>
+        <div
+          className={`bg-background min-h-[${globeDimensions.height}] min-w-[${globeDimensions.width}] rounded-lg`}
+        >
           {isLoading ? (
             <p>Loading globe...</p>
           ) : (
             <GlobeComponent
               destinations={destinations}
               focusedDestination={focusedDestination}
-              height={globeHeight} // Use the responsive globe height
+              height={globeDimensions.height} // Use the responsive globe height
+              width="100%" // Use the responsive globe width
             />
           )}
         </div>
@@ -60,7 +65,7 @@ function DestinationList({ destinations, handleAddNewDestination }: DestinationL
           <SavedDestinations destinations={destinations} handleButtonClick={handleButtonClick} />
         </div>
 
-        <div className="rounded-lg bg-white p-6 shadow-md">
+        {/* <div className="rounded-lg bg-white p-6 shadow-md">
           <h2 className="mb-4 text-2xl font-bold">Destination List</h2>
           {isLoading ? (
             <p>Loading...</p>
@@ -78,7 +83,7 @@ function DestinationList({ destinations, handleAddNewDestination }: DestinationL
               ))}
             </ul>
           )}
-        </div>
+        </div> */}
       </div>
 
       <div className="lg:col-span-1">
