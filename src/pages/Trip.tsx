@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { useParams, Outlet } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import DayNav from '@/components/DayNav';
 import { Destination, Trip as TripType } from '@/types/types';
 import ItineraryPage from './ItineraryPage';
+import DestinationDetail from '@/components/DestinationDetail';
 
 interface TripProps {
   trips: TripType[];
+  destinations: Destination[];
 }
 
 function flattenItinerary(trip: { itinerary }) {
@@ -18,11 +20,9 @@ function flattenItinerary(trip: { itinerary }) {
   return trip.itinerary;
 }
 
-function Trip({ trips }: TripProps) {
+function Trip({ trips, destinations }: TripProps) {
   const { tripId } = useParams<{ tripId: string }>();
   const [currentDay, setCurrentDay] = useState(1); // Start from day 1
-  const [destination, setDestination] = useState<Destination | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
 
   // useEffect(() => {
   //   const fetchDestination = async () => {
@@ -49,6 +49,7 @@ function Trip({ trips }: TripProps) {
   // }, [tripId]);
 
   const trip = trips.find((t) => t.trip_id === tripId);
+  const destination = destinations.find((d) => d.destination_name === trip.destination_name);
 
   if (!trip) return <p>Trip not found</p>;
 
@@ -64,7 +65,7 @@ function Trip({ trips }: TripProps) {
       </div>
       {/* Render the destination summary only if currentDay is 0 */}
       {currentDay === 0 ? (
-        <Outlet />
+        <DestinationDetail destination={destination} />
       ) : (
         <>
           <h2 className="flex justify-center py-10">{currentDayItinerary.date}</h2>

@@ -13,9 +13,11 @@ import DestinationList from '@/components/DestinationList';
 import DestinationSummary from './DestinationSummary';
 import GlobeComponent from './GlobeComponent';
 import CreateDestination from '@/components/CreateDestnation';
+import type { Destination, Trip as Triptype } from '@/types/types';
 
 function AppLayout() {
   const BASE_URL = 'http://localhost:4000';
+  const [destinations, setDestinations] = useState<Destination[]>([]);
 
   const [trips, setTrips] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,9 +40,30 @@ function AppLayout() {
     fetchTrips();
   }, [fetchTrigger]);
 
-  function addNewTrip(newTrip) {
+  async function fetchDestinations() {
+    try {
+      setIsLoading(true);
+      const res = await fetch(`http://localhost:4000/destinations`);
+      const data = await res.json();
+      setDestinations(data);
+    } catch (error) {
+      console.error(`There was an error loading destinations:`, error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchDestinations();
+  }, []);
+
+  function addNewTrip(newTrip: Triptype) {
     setTrips((prevTrips) => [...prevTrips, newTrip]);
     setFetchTrigger((prev) => prev + 1); // Trigger a new fetch
+  }
+
+  function handleAddNewDestination(newDestination: Destination) {
+    setDestinations((prevDestinations) => [...prevDestinations, newDestination]);
   }
 
   return (
@@ -53,7 +76,6 @@ function AppLayout() {
             element={
               <Dashboard>
                 <CreateTrip
-                  baseURL={BASE_URL}
                   addNewTrip={addNewTrip}
                   isLoading={isLoading}
                   setIsLoading={setIsLoading}
@@ -72,19 +94,25 @@ function AppLayout() {
               />
             }
           />
-          <Route path="trips/:tripId" element={<Trip trips={trips} />}>
+          <Route path="trips/:tripId" element={<Trip trips={trips} destinations={destinations} />}>
             <Route path="summary/:destinationId" element={<DestinationSummary />} />
           </Route>
           <Route
             path="explore"
             element={
-              <Explore baseURL={BASE_URL}>
+              <Explore>
                 <Header>Explore</Header>
-                <DestinationList />
+                <DestinationList
+                  destinations={destinations}
+                  handleAddNewDestination={handleAddNewDestination}
+                />
               </Explore>
             }
           />
-          <Route path="destinations/:destinationId" element={<DestinationSummary />} />
+          <Route
+            path="destinations/:destinationId"
+            element={<DestinationSummary destinations={destinations} />}
+          />
           <Route path="globe" element={<GlobeComponent />} />
           <Route path="friends" element={<Friends />} />
           <Route path="settings" element={<Profile />} />

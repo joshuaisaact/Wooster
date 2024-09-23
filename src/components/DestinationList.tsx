@@ -6,66 +6,56 @@ import DestinationCard from './DestinationCard';
 import GlobeComponent from '@/pages/GlobeComponent';
 import DestinationFullList from './DestinationFullList';
 import SavedDestinations from './SavedDestinations';
+import { Destination as DestinationType } from '@/types/types';
 
-export default function DestinationList() {
-  const [destinations, setDestinations] = useState<Destination[]>([]);
+interface DestinationListProps {
+  destinations: DestinationType[];
+  handleAddNewDestination: (newDestination: DestinationType) => void;
+}
+
+function DestinationList({ destinations, handleAddNewDestination }: DestinationListProps) {
   const [focusedDestination, setFocusedDestination] = useState<Destination | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [globeHeight, setGlobeHeight] = useState(600); // Default height
 
   function handleButtonClick(destination: Destination) {
     setFocusedDestination(destination);
   }
 
-  function handleAddNewDestination(newDestination: Destination) {
-    setDestinations((prevDestinations) => [...prevDestinations, newDestination]);
-  }
-
-  async function fetchDestinations() {
-    try {
-      setIsLoading(true);
-      const res = await fetch(`http://localhost:4000/destinations`);
-      const data = await res.json();
-      setDestinations(data);
-    } catch (error) {
-      console.error(`There was an error loading destinations:`, error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
   useEffect(() => {
-    fetchDestinations();
+    // Function to handle window resize and adjust the globe height
+    function updateGlobeHeight() {
+      const windowHeight = window.innerHeight;
+      const adjustedHeight = windowHeight * 0.5; // Adjust globe height to 60% of window height
+      setGlobeHeight(adjustedHeight);
+    }
+
+    updateGlobeHeight(); // Set initial height
+
+    // Add event listener for window resize
+    window.addEventListener('resize', updateGlobeHeight);
+
+    // Clean up event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', updateGlobeHeight);
+    };
   }, []);
 
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
       <div className="space-y-7 lg:col-span-2">
-        <div className="bg-background min-h-[600px] rounded-lg p-6">
+        <div className={`bg-background min-h-[${globeHeight}] rounded-lg p-6`}>
           {isLoading ? (
             <p>Loading globe...</p>
           ) : (
             <GlobeComponent
               destinations={destinations}
               focusedDestination={focusedDestination}
-              height={600}
-              width="100%"
+              height={globeHeight} // Use the responsive globe height
             />
           )}
         </div>
-        {/* <div className="rounded-lg bg-white p-6 shadow-md">
-          <h2 className="mb-4 text-2xl font-bold">My Saved Destinations</h2>
-          <div className="flex flex-wrap gap-2">
-            {destinations.map((destination) => (
-              <button
-                key={destination.destination_id}
-                onClick={() => handleButtonClick(destination)}
-                className="rounded bg-green-600 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-600"
-              >
-                {destination.destination_name}
-              </button>
-            ))}
-          </div>
-        </div> */}
+
         <div>
           <SavedDestinations destinations={destinations} handleButtonClick={handleButtonClick} />
         </div>
@@ -115,3 +105,5 @@ export default function DestinationList() {
     </div>
   );
 }
+
+export default DestinationList;
