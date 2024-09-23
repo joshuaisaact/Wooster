@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '@/components/Header';
-import { Destination } from '@/types/types';
+import { Destination, Trip } from '@/types/types';
 import DestinationDetail from '@/components/DestinationDetail';
 
 interface DestinationSummaryProps {
   destinations?: Destination[]; // Make destinations optional in case it's not passed in
+  addNewTrip: (trip: Trip) => void;
 }
 
-function DestinationSummary({ destinations = [] }: DestinationSummaryProps) {
+function DestinationSummary({ destinations = [], addNewTrip }: DestinationSummaryProps) {
   const { destinationId } = useParams<{ destinationId: string }>();
   const [destination, setDestination] = useState<Destination | null>(null);
   const [isLoading, setIsLoading] = useState(!destinations.length); // Only show loading if no destinations are passed in
@@ -47,8 +48,7 @@ function DestinationSummary({ destinations = [] }: DestinationSummaryProps) {
 
   return (
     <div className="text-text flex flex-col items-center p-4">
-      <Header>{destination.destination_name}</Header>
-      <DestinationDetail destination={destination} />
+      <DestinationDetail destination={destination} addNewTrip={addNewTrip} />
     </div>
   );
 }

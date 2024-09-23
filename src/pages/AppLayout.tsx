@@ -2,23 +2,21 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Trip from './Trip';
-import Trips from './Trips';
+import Trips from './TripsList';
 import Profile from './Profile';
 import Dashboard from './Dashboard';
 import Explore from './Explore';
-import Friends from './Friends';
+import DestinationFullList from '@/components/DestinationFullList';
 import Header from '@/components/Header';
 import CreateTrip from '@/components/CreateTrip';
 import DestinationList from '@/components/DestinationList';
 import DestinationSummary from './DestinationSummary';
 import GlobeComponent from './GlobeComponent';
-import CreateDestination from '@/components/CreateDestnation';
 import type { Destination, Trip as Triptype } from '@/types/types';
 
 function AppLayout() {
   const BASE_URL = 'http://localhost:4000';
   const [destinations, setDestinations] = useState<Destination[]>([]);
-
   const [trips, setTrips] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [fetchTrigger, setFetchTrigger] = useState(0);
@@ -66,6 +64,35 @@ function AppLayout() {
     setDestinations((prevDestinations) => [...prevDestinations, newDestination]);
   }
 
+  async function handleDeleteDestination(destination: Destination): Promise<void> {
+    const destination_id = destination.destination_id;
+    try {
+      const response = await fetch(`http://localhost:4000/destinations/${destination_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      console.log('Current Destinations:', destinations);
+      setDestinations((prevDestinations) => {
+        const updatedDestinations = prevDestinations.filter(
+          (dest) => dest.destination_id !== destination_id,
+        );
+        console.log('Updated Destinations:', updatedDestinations);
+        return updatedDestinations;
+      });
+      // fetchDestinations();
+    } catch (error) {
+      console.error('Error deleting destination:', error);
+      // Optionally handle error (e.g., show a message)
+    }
+  }
+
   return (
     <div className="flex min-h-screen">
       <div className="fixed left-0 top-0 h-full w-64 bg-green-700">
@@ -76,7 +103,13 @@ function AppLayout() {
           <Route
             path="home"
             element={
-              <Dashboard>
+              <Dashboard
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                handleAddNewDestination={handleAddNewDestination}
+                trips={trips}
+                destinations={destinations}
+              >
                 <CreateTrip
                   addNewTrip={addNewTrip}
                   isLoading={isLoading}
@@ -90,6 +123,7 @@ function AppLayout() {
             element={
               <Trips
                 trips={trips}
+                destinations={destinations}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
                 addNewTrip={addNewTrip}
@@ -113,10 +147,19 @@ function AppLayout() {
           />
           <Route
             path="destinations/:destinationId"
-            element={<DestinationSummary destinations={destinations} />}
+            element={<DestinationSummary destinations={destinations} addNewTrip={addNewTrip} />}
           />
           <Route path="globe" element={<GlobeComponent />} />
-          <Route path="friends" element={<Friends />} />
+          <Route
+            path="destination-list"
+            element={
+              <DestinationFullList
+                destinations={destinations}
+                isLoading={isLoading}
+                deleteDestination={handleDeleteDestination}
+              />
+            }
+          />
           <Route path="settings" element={<Profile />} />
         </Routes>
       </div>

@@ -5,9 +5,10 @@ import { Destination } from '@/types/types';
 
 interface DestinationProps {
   destination: Destination;
+  onDeleteDestination: (destination: Destination) => Promise<void>;
 }
 
-function DestinationCard({ destination }: DestinationProps) {
+function DestinationCard({ destination, onDeleteDestination }: DestinationProps) {
   const { destination_name, description, country, cost_level } = destination;
 
   const truncateText = (text: string, maxLength: number) => {

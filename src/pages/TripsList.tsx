@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import { Trip } from '../types/types';
+import { Destination, Trip } from '../types/types';
 import CreateTrip from '@/components/CreateTrip';
 import TripCard from '@/components/TripCard';
 
@@ -9,9 +9,10 @@ interface TripsProps {
   addNewTrip: (trip: Trip) => void;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
+  destinations: Destination[];
 }
 
-function Trips({ trips, isLoading, setIsLoading, addNewTrip }: TripsProps) {
+function Trips({ trips, destinations, isLoading, setIsLoading, addNewTrip }: TripsProps) {
   if (!trips || trips.length === 0) {
     return (
       <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
@@ -29,15 +30,23 @@ function Trips({ trips, isLoading, setIsLoading, addNewTrip }: TripsProps) {
   return (
     <div className="text-text flex h-full flex-col items-center pt-10">
       <Header>Trips</Header>
-      <div className="grid grid-cols-2 justify-center">
-        <ul className="grid h-[600px] w-full max-w-4xl grid-cols-1 gap-10 overflow-y-auto px-10">
-          {trips.map((trip) => (
-            <li key={trip.trip_id}>
-              <Link to={`/trips/${trip.trip_id}`}>
-                <TripCard trip={trip} />
-              </Link>
-            </li>
-          ))}
+      <div className="grid grid-cols-3 justify-center">
+        <ul className="col-span-2 grid h-[600px] w-full max-w-4xl grid-cols-1 gap-10 overflow-y-auto px-10 py-10">
+          {trips.map((trip) => {
+            const destination = destinations.find(
+              (dest) => dest.destination_name === trip.destination_name,
+            ); // Adjust property names as needed
+            // const destinationSummary = destination ? destination.description : ''; // Adjust according to your destination structure
+
+            return (
+              <li key={trip.trip_id}>
+                <Link to={`/trips/${trip.trip_id}`}>
+                  <TripCard trip={trip} destination={destination} />{' '}
+                  {/* Pass the destination summary */}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
         <div className="flex h-full w-full items-center justify-center p-10">
           <CreateTrip isLoading={isLoading} setIsLoading={setIsLoading} addNewTrip={addNewTrip} />

@@ -80,6 +80,7 @@ function Map({ activities = [], latitude = 0, longitude = 0, className }: MapCom
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        zIndex={1} // Lower z-index for map tiles
       />
 
       <Markers activities={activities} />

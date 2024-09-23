@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import DayNav from '@/components/DayNav';
@@ -23,39 +23,51 @@ function flattenItinerary(trip: { itinerary }) {
 function Trip({ trips, destinations }: TripProps) {
   const { tripId } = useParams<{ tripId: string }>();
   const [currentDay, setCurrentDay] = useState(1); // Start from day 1
+  const [destination, setDestination] = useState<Destination | null>(null);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
 
-  // useEffect(() => {
-  //   const fetchDestination = async () => {
-  //     // Check if trip exists locally first
+  useEffect(() => {
+    const fetchDestination = async () => {
+      // Check if trip exists locally first
+      const localTrip = trips.find((t) => t.trip_id === tripId);
+      if (localTrip) {
+        setDestination(localTrip.destination); // Set local destination
+        setIsLoading(false); // Local trip found, stop loading
+        return;
+      }
 
-  //     const localTrip = trips.find((t) => t.trip_id === tripId);
-  //     if (localTrip) {
-  //       setDestination(localTrip.destination); // Set local destination
-  //       return;
-  //     }
+      try {
+        const response = await fetch(`http://localhost:4000/trips/${tripId}`);
+        const data = await response.json();
+        setDestination(data.destination); // Assuming data has a destination property
+      } catch (error) {
+        console.error('Error fetching trip data:', error);
+      } finally {
+        setIsLoading(false); // Set loading state to false after fetch
+      }
+    };
 
-  //     try {
-  //       const response = await fetch(`http://localhost:4000/trips/${tripId}`);
-  //       const data = await response.json();
-  //       setDestination(data.destination); // Assuming data has a destination property
-  //     } catch (error) {
-  //       console.error('Error fetching trip data:', error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-
-  //   fetchDestination();
-  // }, [tripId]);
+    fetchDestination();
+  }, [tripId, trips]);
 
   const trip = trips.find((t) => t.trip_id === tripId);
-  const destination = destinations.find((d) => d.destination_name === trip.destination_name);
 
-  if (!trip) return <p>Trip not found</p>;
+  // Add a loading state to prevent undefined data rendering
+  if (isLoading) {
+    return <p>Loading trip details...</p>;
+  }
+
+  // Show an error message if the trip is not found
+  if (!trip) {
+    return <p>Trip not found</p>;
+  }
 
   const flattenedItinerary = flattenItinerary(trip);
+  const currentDayItinerary = flattenedItinerary ? flattenedItinerary[currentDay - 1] : [];
 
-  const currentDayItinerary = flattenedItinerary[currentDay - 1];
+  const selectedDestination = destinations.find(
+    (d) => d.destination_name === trip.destination_name,
+  );
 
   return (
     <div className="text-text flex h-full w-full flex-col pt-10">
@@ -65,7 +77,7 @@ function Trip({ trips, destinations }: TripProps) {
       </div>
       {/* Render the destination summary only if currentDay is 0 */}
       {currentDay === 0 ? (
-        <DestinationDetail destination={destination} />
+        <DestinationDetail destination={selectedDestination} />
       ) : (
         <>
           <div className="flex w-full">
@@ -81,4 +93,5 @@ function Trip({ trips, destinations }: TripProps) {
     </div>
   );
 }
+
 export default Trip;

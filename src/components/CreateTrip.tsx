@@ -16,13 +16,14 @@ interface CreateTripProps {
   addNewTrip: (trip: Trip) => void;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
+  location?: string;
 }
 
-function CreateTrip({ addNewTrip, isLoading, setIsLoading }: CreateTripProps) {
+function CreateTrip({ addNewTrip, isLoading, setIsLoading, location }: CreateTripProps) {
   const form = useForm({
     defaultValues: {
       days: 2,
-      location: '',
+      location: location,
       start_date: undefined,
     },
   });
@@ -53,7 +54,11 @@ function CreateTrip({ addNewTrip, isLoading, setIsLoading }: CreateTripProps) {
         const result = await response.json();
         console.log(result);
         addNewTrip(result); // Add the new trip to the parent state
-        navigate(`/trips/${result.trip.id}`);
+
+        // Use the correct path for the trip_id
+        if (result.trip && result.trip.trip_id) {
+          navigate(`/trips/${result.trip.trip_id}`);
+        }
       }
     } catch (error) {
       console.error(error);
@@ -137,19 +142,27 @@ function CreateTrip({ addNewTrip, isLoading, setIsLoading }: CreateTripProps) {
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="location"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Destination</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter a destination" {...field} required />
-                    </FormControl>
-                    <FormDescription>Where do you want to go?</FormDescription>
-                  </FormItem>
-                )}
-              />
+              {location ? (
+                <div className="flex justify-between">
+                  <FormLabel>Destination</FormLabel>
+                  <span className="font-medium">{location}</span>{' '}
+                  {/* Display the passed location */}
+                </div>
+              ) : (
+                <FormField
+                  control={form.control}
+                  name="location"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Destination</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter a destination" {...field} required />
+                      </FormControl>
+                      <FormDescription>Where do you want to go?</FormDescription>
+                    </FormItem>
+                  )}
+                />
+              )}
 
               <Button type="submit" className="w-full bg-green-500">
                 Go!

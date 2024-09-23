@@ -4,7 +4,6 @@ import { Destination } from '@/types/types';
 import CreateDestination from './CreateDestnation';
 import DestinationCard from './DestinationCard';
 import GlobeComponent from '@/pages/GlobeComponent';
-import DestinationFullList from './DestinationFullList';
 import SavedDestinations from './SavedDestinations';
 import { Destination as DestinationType } from '@/types/types';
 

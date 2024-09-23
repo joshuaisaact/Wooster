@@ -57,3 +57,7 @@ button:focus-visible {
     --radius: 0.5rem;
   }
 }
+
+.leaflet-pane {
+  z-index: 1 !important; /* Lower the z-index */
+}

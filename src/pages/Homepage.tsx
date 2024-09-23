@@ -8,7 +8,7 @@ function Homepage() {
       <h1 className="text-grey py-10 font-black">Wooster</h1>
       <h3 className="py-10">Your trip companion</h3>
       <Link
-        to="/app"
+        to="/home"
         className="flex items-center justify-center rounded-lg px-4 py-2 text-gray-300 transition-colors duration-200 hover:bg-gray-700 hover:text-white"
       >
         Log in

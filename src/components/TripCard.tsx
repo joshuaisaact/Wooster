@@ -1,35 +1,39 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CalendarIcon, MapPinIcon } from 'lucide-react';
-import { Trip } from '@/types/types';
+import { Destination, Trip } from '@/types/types';
 import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
 
 interface TripCardProps {
   trip: Trip;
+  destination: Destination;
 }
 
-function TripCard({ trip }: TripCardProps) {
+function TripCard({ trip, destination }: TripCardProps) {
   const { trip_id, destination_name, num_days, start_date } = trip;
+  const formatted_start_date = format(start_date, 'E, do MMMM yyyy');
 
   return (
     <Link to={`/trips/${trip_id}`}>
-      <Card className="flex flex-col transition-all hover:shadow-md">
+      <Card className="flex flex-col rounded-lg transition-all hover:shadow-lg">
         <CardHeader>
-          <CardTitle className="flex justify-between text-lg">
-            <span>Trip to {destination_name}</span>
-            <span>{start_date}</span>
-          </CardTitle>
+          <CardTitle className="text-xl font-semibold">{destination_name}</CardTitle>
+          <p className="text-sm text-gray-500">{formatted_start_date}</p>
         </CardHeader>
         <CardContent className="flex flex-1 flex-col">
-          <div className="mb-4"></div>
-          <div className="flex items-center justify-between">
+          <div className="mb-2 flex justify-between"></div>
+          <p className="mb-4 text-sm text-gray-600">{destination.description}</p>
+          <div className="mt-auto flex items-center justify-between">
             <Badge variant="secondary" className="flex items-center gap-1">
-              <MapPinIcon className="h-3 w-3" />
-              <span className="truncate">{destination_name}</span>
+              <CalendarIcon className="h-4 w-4" />
+              <span>
+                {num_days} {num_days === 1 ? 'day' : 'days'}
+              </span>
             </Badge>
-            <Badge variant="secondary" className="mt-auto flex items-center gap-1">
-              <CalendarIcon className="h-3 w-3" />
-              {num_days} {num_days === 1 ? 'day' : 'days'}
+            <Badge variant="secondary" className="flex items-center gap-1">
+              <MapPinIcon className="h-4 w-4" />
+              <span className="truncate">{destination.country}</span>
             </Badge>
           </div>
         </CardContent>
