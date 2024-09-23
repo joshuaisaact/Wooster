@@ -58,7 +58,6 @@ function AppLayout() {
                   isLoading={isLoading}
                   setIsLoading={setIsLoading}
                 />
-                <CreateDestination />
               </Dashboard>
             }
           />

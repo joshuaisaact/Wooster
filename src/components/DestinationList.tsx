@@ -5,6 +5,7 @@ import CreateDestination from './CreateDestnation';
 import DestinationCard from './DestinationCard';
 import GlobeComponent from '@/pages/GlobeComponent';
 import DestinationFullList from './DestinationFullList';
+import SavedDestinations from './SavedDestinations';
 
 export default function DestinationList() {
   const [destinations, setDestinations] = useState<Destination[]>([]);
@@ -39,9 +40,9 @@ export default function DestinationList() {
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
       <div className="space-y-7 lg:col-span-2">
-        <div className="rounded-lg bg-white p-6">
+        <div className="bg-background min-h-[600px] rounded-lg p-6">
           {isLoading ? (
-            <p>Loading...</p>
+            <p>Loading globe...</p>
           ) : (
             <GlobeComponent
               destinations={destinations}
@@ -51,7 +52,7 @@ export default function DestinationList() {
             />
           )}
         </div>
-        <div className="rounded-lg bg-white p-6 shadow-md">
+        {/* <div className="rounded-lg bg-white p-6 shadow-md">
           <h2 className="mb-4 text-2xl font-bold">My Saved Destinations</h2>
           <div className="flex flex-wrap gap-2">
             {destinations.map((destination) => (
@@ -64,6 +65,9 @@ export default function DestinationList() {
               </button>
             ))}
           </div>
+        </div> */}
+        <div>
+          <SavedDestinations destinations={destinations} handleButtonClick={handleButtonClick} />
         </div>
 
         <div className="rounded-lg bg-white p-6 shadow-md">
@@ -86,8 +90,9 @@ export default function DestinationList() {
           )}
         </div>
       </div>
+
       <div className="lg:col-span-1">
-        <div className="rounded-lg bg-white p-6 shadow-md">
+        <div className="max-w-max rounded-lg bg-white p-6 shadow-md">
           {focusedDestination ? (
             <Link
               to={`/destinations/${encodeURIComponent(focusedDestination.destination_name)}`}
@@ -96,10 +101,10 @@ export default function DestinationList() {
               <DestinationCard destination={focusedDestination} />
             </Link>
           ) : (
-            <p>Select a destination to see details.</p>
+            <p className="w-80">Select a destination to see details.</p>
           )}
         </div>
-        <div className="mt-10 rounded-lg bg-white p-6 shadow-md">
+        <div className="mt-10 max-w-max rounded-lg bg-white p-6 shadow-md">
           <CreateDestination
             addNewDestination={handleAddNewDestination}
             isLoading={isLoading}

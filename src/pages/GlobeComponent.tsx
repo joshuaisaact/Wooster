@@ -53,7 +53,7 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
       .globeImageUrl('/earth-texture.png')
       .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
       // .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
-      .backgroundColor('#ffffff')
+      .backgroundColor('#F0F7F4')
       .width(width)
       .height(height)
       .htmlElementsData(points)
@@ -94,7 +94,7 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
     <div
       ref={globeEl}
       style={{ width: `${width}px`, height: `${height}px` }}
-      className="flex items-center justify-center overflow-hidden rounded-lg bg-white shadow-lg"
+      className="flex items-center justify-center overflow-hidden rounded-lg bg-white"
     />
   );
 };
