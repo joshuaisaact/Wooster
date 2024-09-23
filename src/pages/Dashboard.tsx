@@ -10,13 +10,13 @@ function Dashboard({ children }: DashboardProps) {
   return (
     <div className="text-text flex h-full flex-col items-center pt-10">
       <Header>Dashboard</Header>
-      <h2 className="text-2xl font-bold">Welcome back, Josh!</h2>
+
       <div className="grid w-full max-w-7xl grid-cols-1 gap-8 pt-10 lg:grid-cols-3">
         {/* Main content area - two-thirds width */}
         <div className="space-y-7 lg:col-span-2">
           <div className="bg-background min-h-[600px] rounded-lg p-6 shadow-md">
             {/* Placeholder for main dashboard content */}
-            <p>No content to display.</p>
+            <h2 className="text-2xl font-bold">Welcome back, Josh!</h2>
           </div>
         </div>
 
