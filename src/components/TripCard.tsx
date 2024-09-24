@@ -8,10 +8,15 @@ import Map from './Map';
 
 interface TripCardProps {
   trip: Trip;
-  destination: Destination;
+  destination: Destination | null;
 }
 
 function TripCard({ trip, destination }: TripCardProps) {
+  // Check if destination is defined and has required properties
+  if (!destination || !destination.latitude || !destination.longitude) {
+    return null; // Return null to avoid rendering if the destination is not ready
+  }
+
   const { trip_id, destination_name, num_days, start_date } = trip;
   const formatted_start_date = format(start_date, 'E, do MMMM yyyy');
 

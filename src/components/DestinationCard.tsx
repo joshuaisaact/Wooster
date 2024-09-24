@@ -17,7 +17,7 @@ function DestinationCard({ destination, onDeleteDestination }: DestinationProps)
   };
 
   return (
-    <Card className="flex h-[250px] w-80 flex-col">
+    <Card className="flex w-80 flex-col">
       <CardHeader>
         <CardTitle className="text-lg">{destination_name}</CardTitle>
       </CardHeader>

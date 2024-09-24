@@ -4,7 +4,7 @@ import { Destination as DestinationType, Trip } from '@/types/types';
 import TripCard from '@/components/TripCard';
 import SavedDestinations from '@/components/SavedDestinations';
 import CreateTrip from '@/components/CreateTrip';
-import Map from '@/components/Map'; // Import your map component
+import Map from '@/components/Map';
 
 interface DashboardProps {
   children: ReactNode;
@@ -34,7 +34,8 @@ function Dashboard({
       .sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime())[0];
   };
 
-  const soonestTrip = getSoonestTrip(trips);
+  // Get the soonest trip only if not loading
+  const soonestTrip = !isLoading ? getSoonestTrip(trips) : null;
   const soonestTripDestination = soonestTrip
     ? destinations.find(
         (destination) => destination.destination_name === soonestTrip.destination_name,
@@ -45,6 +46,11 @@ function Dashboard({
     setSelectedDestination(destination); // Update the selected destination state
   };
 
+  // Display a loading message while data is being fetched
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="text-text flex h-full flex-col items-center pt-10">
       <div className="grid w-full max-w-7xl grid-cols-1 gap-8 pt-10 lg:grid-cols-3">
@@ -53,7 +59,7 @@ function Dashboard({
           <div className="bg-background flex min-h-[600px] flex-col gap-10 rounded-lg p-6 shadow-md">
             <div className="flex w-full flex-row items-center justify-between">
               <section>
-                <h2 className="mt-4 text-2xl font-bold">Welcome back, Josh!</h2>
+                <h2 className="mb-5 mt-4 text-2xl font-bold">Welcome back, Josh!</h2>
                 <p>
                   Your next adventure is just around the corner. Ready to continue planning your
                   trip to {soonestTripDestination?.destination_name}? Wooster has all the tools you
@@ -62,26 +68,12 @@ function Dashboard({
               </section>
               <img src="./wooster-suitcase-no-bg.png" className="h-40" />
             </div>
-            <h2>Your next trip:</h2>
+            <h2>
+              <strong>Next trip:</strong>
+            </h2>
             {soonestTrip ? (
               <div className="flex w-full flex-row items-stretch gap-1">
-                {/* Map takes 1/3 of the width */}
-                {soonestTripDestination &&
-                  soonestTripDestination.latitude &&
-                  soonestTripDestination.longitude && (
-                    <div className="w-1/3">
-                      <Map
-                        latitude={soonestTripDestination.latitude}
-                        longitude={soonestTripDestination.longitude}
-                        className="h-full rounded-lg shadow-md"
-                      />
-                    </div>
-                  )}
-
-                {/* Trip Card takes 2/3 of the width */}
-                <div className="w-2/3">
-                  <TripCard trip={soonestTrip} destination={soonestTripDestination} />
-                </div>
+                <TripCard trip={soonestTrip} destination={soonestTripDestination} />
               </div>
             ) : (
               <p>No upcoming trips found.</p>

@@ -72,7 +72,7 @@ function Trip({ trips, destinations }: TripProps) {
   return (
     <div className="text-text flex h-full w-full flex-col pt-10">
       <div className="flex flex-col items-center justify-center">
-        <Header>{trip.destination_name}</Header>
+        {/* <Header>{trip.destination_name}</Header> */}
         <DayNav trip={trip} currentDay={currentDay} setCurrentDay={setCurrentDay} />
       </div>
       {/* Render the destination summary only if currentDay is 0 */}

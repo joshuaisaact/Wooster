@@ -43,6 +43,7 @@ export interface Destination {
 }
 
 export interface Activity {
+  activity_id: number;
   activity_name: string;
   description: string;
   location: string;

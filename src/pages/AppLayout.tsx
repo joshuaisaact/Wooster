@@ -18,7 +18,7 @@ function AppLayout() {
   const BASE_URL = 'http://localhost:4000';
   const [destinations, setDestinations] = useState<Destination[]>([]);
   const [trips, setTrips] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [fetchTrigger, setFetchTrigger] = useState(0);
 
   async function fetchTrips() {

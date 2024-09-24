@@ -29,27 +29,28 @@ function Trips({ trips, destinations, isLoading, setIsLoading, addNewTrip }: Tri
 
   return (
     <div className="text-text flex h-full flex-col items-center pt-10">
-      <Header>Trips</Header>
-      <div className="grid grid-cols-3 justify-center">
-        <ul className="col-span-2 grid h-[600px] w-full max-w-4xl grid-cols-1 gap-10 overflow-y-auto px-10 py-10">
-          {trips.map((trip) => {
-            const destination = destinations.find(
-              (dest) => dest.destination_name === trip.destination_name,
-            ); // Adjust property names as needed
-            // const destinationSummary = destination ? destination.description : ''; // Adjust according to your destination structure
+      {/* <Header>Trips</Header> */}
+      <div className="flex w-full max-w-6xl justify-between">
+        <div className="w-2/3 p-10">
+          <ul className="h-[calc(100vh-120px)] overflow-y-auto">
+            {trips.map((trip, index) => {
+              const destination = destinations.find(
+                (dest) => dest.destination_name === trip.destination_name,
+              );
 
-            return (
-              <li key={trip.trip_id}>
-                <Link to={`/trips/${trip.trip_id}`}>
-                  <TripCard trip={trip} destination={destination} />{' '}
-                  {/* Pass the destination summary */}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-        <div className="flex h-full w-full items-center justify-center p-10">
+              return (
+                <li key={trip.trip_id} className="mb-10">
+                  <Link to={`/trips/${trip.trip_id}`}>
+                    <TripCard trip={trip} destination={destination} index={index} />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div className="sticky top-0 w-1/3 p-10">
           <CreateTrip isLoading={isLoading} setIsLoading={setIsLoading} addNewTrip={addNewTrip} />
+          <img src="wooster-on-maps-no-bg.png" />
         </div>
       </div>
     </div>
