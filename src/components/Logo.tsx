@@ -4,15 +4,24 @@ interface LogoProps {
   height?: string;
   width?: string;
   link?: string;
+  image?: string;
 }
 
-function Logo({ height, width, link }: LogoProps) {
+function Logo({ height, width, link, image }: LogoProps) {
   return link ? (
     <Link to={link}>
-      <img src="/logo.png" alt="Wooster logo" className={`${height} ${width}`} />
+      <img
+        src="/wooster-face-front-no-bg-alt.png"
+        alt="Wooster logo"
+        className={`${height} ${width}`}
+      />
     </Link>
   ) : (
-    <img src="/logo.png" alt="Wooster logo" className={`${height} ${width}`} />
+    <img
+      src={image ? image : '/wooster-face-front-no-bg.png'}
+      alt="Wooster logo"
+      className={`${height} ${width}`}
+    />
   );
 }
 

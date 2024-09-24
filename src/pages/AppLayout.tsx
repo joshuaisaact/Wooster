@@ -109,13 +109,8 @@ function AppLayout() {
                 handleAddNewDestination={handleAddNewDestination}
                 trips={trips}
                 destinations={destinations}
-              >
-                <CreateTrip
-                  addNewTrip={addNewTrip}
-                  isLoading={isLoading}
-                  setIsLoading={setIsLoading}
-                />
-              </Dashboard>
+                addNewTrip={addNewTrip}
+              ></Dashboard>
             }
           />
           <Route

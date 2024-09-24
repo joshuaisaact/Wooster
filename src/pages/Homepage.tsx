@@ -4,7 +4,7 @@ import Logo from '../components/Logo';
 function Homepage() {
   return (
     <div className="flex h-full flex-col items-center justify-center bg-green-800">
-      <Logo height={'h-40'} />
+      <Logo height={'h-72'} image={'/wooster-homepage-no-bg.png'} />
       <h1 className="text-grey py-10 font-black">Wooster</h1>
       <h3 className="py-10">Your trip companion</h3>
       <Link

@@ -143,11 +143,13 @@ function CreateTrip({ addNewTrip, isLoading, setIsLoading, location }: CreateTri
               />
 
               {location ? (
-                <div className="flex justify-between">
+                <FormItem>
                   <FormLabel>Destination</FormLabel>
-                  <span className="font-medium">{location}</span>{' '}
-                  {/* Display the passed location */}
-                </div>
+                  <FormControl>
+                    <Input value={location} readOnly className="text-base" />
+                  </FormControl>
+                  <FormDescription>Your destination</FormDescription>
+                </FormItem>
               ) : (
                 <FormField
                   control={form.control}

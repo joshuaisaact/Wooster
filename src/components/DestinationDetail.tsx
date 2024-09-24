@@ -30,7 +30,12 @@ function DestinationDetail({ destination, addNewTrip }: DestinationDetailProps) 
       <div className="flex h-full w-full flex-col md:w-1/2">
         <Card className="h-full overflow-auto">
           <CardHeader>
-            <CardTitle className="text-2xl">{destination.destination_name}</CardTitle>
+            <div className="flex flex-row justify-between">
+              <CardTitle className="text-2xl">{destination.destination_name}</CardTitle>
+              <Button onClick={() => setTripCreationOpen(!tripCreationOpen)}>
+                {tripCreationOpen ? 'Cancel' : 'Plan Trip'}
+              </Button>
+            </div>
 
             <div className="mt-2 flex flex-wrap gap-2">
               <Badge variant="secondary" className="flex items-center gap-1">
@@ -91,20 +96,20 @@ function DestinationDetail({ destination, addNewTrip }: DestinationDetailProps) 
               <h3 className="mb-2 font-semibold">Cultural Significance</h3>
               <p className="text-muted-foreground text-sm">{destination.cultural_significance}</p>
             </div>
-            <Button onClick={() => setTripCreationOpen(!tripCreationOpen)}>
-              {tripCreationOpen ? 'Cancel' : 'Plan Trip'}
-            </Button>
           </CardContent>
         </Card>
-        {tripCreationOpen && (
+      </div>
+      {tripCreationOpen && (
+        <div className="flex flex-col justify-between">
           <CreateTrip
             location={destination.destination_name}
             addNewTrip={addNewTrip}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
           />
-        )}
-      </div>
+          <img src="/Wooster-map-planning.png" />
+        </div>
+      )}
     </div>
   );
 }
