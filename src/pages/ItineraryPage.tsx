@@ -29,7 +29,7 @@ function ItineraryPage({ currentDay }: ItineraryPageProps) {
   };
 
   return (
-    <div className="flex h-[800px] w-full flex-col gap-4 md:flex-row">
+    <div className="flex h-[800px] w-full flex-col items-center justify-center gap-4 md:flex-row">
       <div className="h-full w-full md:w-1/2">
         <Map
           activities={currentDay.activities}

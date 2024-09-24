@@ -8,17 +8,18 @@ function SidebarNav() {
           <SidebarNavLink to="/home" label="Dashboard" />
         </li>
         <li>
-          <SidebarNavLink to="/trips" label="My Trips" />
+          <SidebarNavLink to="/trips" label="Trips" />
+        </li>
+        <li>
+          <SidebarNavLink to="/destination-list" label="Destinations" />
         </li>
         <li>
           <SidebarNavLink to="/explore" label="Explore" />
         </li>
-        <li>
+        {/* <li>
           <SidebarNavLink to="/globe" label="Globe" />
-        </li>
-        <li>
-          <SidebarNavLink to="/destination-list" label="Saved Destinations" />
-        </li>
+        </li> */}
+
         <li>
           <SidebarNavLink to="/settings" label="Settings" />
         </li>

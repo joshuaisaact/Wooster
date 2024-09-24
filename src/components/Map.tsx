@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import markerIconUrl from 'leaflet/dist/images/marker-icon.png';
+import pawIcon from '/paw.png';
 import markerShadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import markerIconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import { Activity } from '@/types/types';
@@ -119,7 +120,7 @@ const Map = forwardRef(
         const activity = activities.find((act) => act.activity_id === selectedActivityId);
         if (activity) {
           const latLng = [activity.latitude, activity.longitude];
-          mapRef.current.flyTo(latLng, 15);
+          mapRef.current.flyTo(latLng, 17);
         }
       }
     }, [selectedActivityId, activities]);

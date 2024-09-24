@@ -113,7 +113,7 @@ function AppLayout() {
             path="explore"
             element={
               <Explore>
-                <Header>Explore</Header>
+                {/* <Header>Explore</Header> */}
                 <DestinationList
                   destinations={destinations}
                   handleAddNewDestination={handleAddNewDestination}

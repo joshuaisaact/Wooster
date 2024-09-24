@@ -23,7 +23,9 @@ function DestinationList({
   const [globeDimensions, setGlobeDimensions] = useState({ height: 600, width: 600 }); // Default height
 
   function handleButtonClick(destination: Destination) {
-    setFocusedDestination(destination);
+    setFocusedDestination((prevFocusedDestination) =>
+      prevFocusedDestination?.destination_id === destination.destination_id ? null : destination,
+    );
   }
 
   useEffect(() => {
@@ -65,8 +67,15 @@ function DestinationList({
           )}
         </div>
 
-        <div>
-          <SavedDestinations destinations={destinations} handleButtonClick={handleButtonClick} />
+        <div className="flex flex-row">
+          <SavedDestinations
+            destinations={destinations}
+            handleButtonClick={handleButtonClick}
+            focusedDestinationId={focusedDestination?.destination_id || null}
+          />
+          <div className="mt-6 flex items-center justify-center">
+            <img src="wooster-suitcase-yellow-no-bg.png" className="h-72 max-w-max p-6" />
+          </div>
         </div>
       </div>
 

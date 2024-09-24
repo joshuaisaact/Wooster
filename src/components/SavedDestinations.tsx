@@ -6,11 +6,13 @@ import { Destination } from '@/types/types';
 interface SavedDestinationsProps {
   destinations: Destination[];
   handleButtonClick: (destination: Destination) => void;
+  focusedDestinationId: number | null;
 }
 
 export default function SavedDestinations({
   destinations,
   handleButtonClick,
+  focusedDestinationId,
 }: SavedDestinationsProps) {
   return (
     <Card>
@@ -26,7 +28,11 @@ export default function SavedDestinations({
                 onClick={() => handleButtonClick(destination)}
                 variant="outline"
                 size="sm"
-                className="text-s focus:bg-green-600 focus:text-white"
+                className={`text-s ${
+                  focusedDestinationId === destination.destination_id
+                    ? 'bg-green-600 text-white'
+                    : 'bg-white text-black'
+                }`}
               >
                 {destination.destination_name}
               </Button>
