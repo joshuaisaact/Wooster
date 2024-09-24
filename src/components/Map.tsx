@@ -21,6 +21,8 @@ interface MapComponentProps {
   latitude?: number;
   longitude?: number;
   className?: string;
+  isInteractive?: boolean;
+  showZoomControls?: boolean;
 }
 
 // Component for markers
@@ -64,7 +66,14 @@ const MapWithBounds = ({ activities, latitude, longitude }: MapComponentProps) =
 };
 
 // Main Map component
-function Map({ activities = [], latitude = 0, longitude = 0, className }: MapComponentProps) {
+function Map({
+  activities = [],
+  latitude = 0,
+  longitude = 0,
+  className,
+  isInteractive = true,
+  showZoomControls = true,
+}: MapComponentProps) {
   const initialCenter =
     activities.length > 0
       ? [activities[0].latitude, activities[0].longitude]
@@ -76,6 +85,8 @@ function Map({ activities = [], latitude = 0, longitude = 0, className }: MapCom
       zoom={13}
       style={{ height: '100%', width: '100%' }}
       className={className}
+      scrollWheelZoom={isInteractive} // Disable zooming with the mouse wheel if not interactive
+      zoomControl={showZoomControls} // Show or hide zoom controls based on prop
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
