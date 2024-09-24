@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import Header from '../components/Header';
 
 // Validation schema using Zod
 const emailSchema = z.object({

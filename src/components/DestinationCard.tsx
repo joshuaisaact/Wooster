@@ -5,10 +5,9 @@ import { Destination } from '@/types/types';
 
 interface DestinationProps {
   destination: Destination;
-  onDeleteDestination: (destination: Destination) => Promise<void>;
 }
 
-function DestinationCard({ destination, onDeleteDestination }: DestinationProps) {
+function DestinationCard({ destination }: DestinationProps) {
   const { destination_name, description, country, cost_level } = destination;
 
   const truncateText = (text: string, maxLength: number) => {
@@ -17,7 +16,7 @@ function DestinationCard({ destination, onDeleteDestination }: DestinationProps)
   };
 
   return (
-    <Card className="flex w-80 flex-col">
+    <Card className="flex min-w-72 max-w-80 flex-col">
       <CardHeader>
         <CardTitle className="text-lg">{destination_name}</CardTitle>
       </CardHeader>

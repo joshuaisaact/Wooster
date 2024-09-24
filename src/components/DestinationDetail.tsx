@@ -6,15 +6,99 @@ import { MapPinIcon, Calendar, Thermometer, Globe, Info } from 'lucide-react';
 import Map from './Map';
 import CreateTrip from './CreateTrip';
 import { Button } from './ui/button';
+import { Trip as TripType } from '@/types/types';
+import { useNavigate } from 'react-router-dom';
 
 interface DestinationDetailProps {
   destination: Destination;
-  addNewTrip: (trip: Trip) => void;
+  addNewTrip?: (trip: TripType) => void;
+  onDeleteDestination?: (destinationId: number) => void;
+  trip?: TripType;
+  onDeleteTrip?: (tripId: string) => void;
 }
 
-function DestinationDetail({ destination, addNewTrip }: DestinationDetailProps) {
+function DestinationDetail({
+  destination,
+  addNewTrip,
+  onDeleteDestination,
+  trip,
+  onDeleteTrip,
+}: DestinationDetailProps) {
   const [tripCreationOpen, setTripCreationOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleDeleteTrip = async () => {
+    if (!trip) return;
+
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this trip? This action is not reversible.',
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`http://localhost:4000/trips/${trip.trip_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        console.error('Error response from server:', errorDetails);
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      console.log('Trip deleted successfully');
+
+      if (onDeleteTrip) {
+        onDeleteTrip(trip.trip_id);
+        console.log('onDeleteTrip called with:', trip.trip_id); // Add this log
+      }
+
+      navigate('/trips');
+    } catch (error) {
+      console.error('Error deleting trip:', error.message);
+    }
+  };
+
+  const handleDeleteDestination = async () => {
+    const destination_id = destination?.destination_id;
+    if (!destination_id) {
+      console.error('No destination ID found');
+      return;
+    }
+
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this destination? This action is not reversable.',
+    );
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:4000/destinations/${destination_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        const errorDetails = await response.json();
+        console.error('Error response from server:', errorDetails);
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      console.log('Destination deleted successfully');
+
+      // Optionally, redirect to another page (e.g., back to the list of destinations)
+      navigate('/destination-list');
+    } catch (error) {
+      console.error('Error deleting destination:', error.message);
+    }
+  };
 
   return (
     <div className="flex h-[800px] w-full flex-col gap-4 md:flex-row">
@@ -32,9 +116,14 @@ function DestinationDetail({ destination, addNewTrip }: DestinationDetailProps) 
           <CardHeader>
             <div className="flex flex-row justify-between">
               <CardTitle className="text-2xl">{destination.destination_name}</CardTitle>
-              <Button onClick={() => setTripCreationOpen(!tripCreationOpen)}>
-                {tripCreationOpen ? 'Cancel' : 'Plan Trip'}
-              </Button>
+              {addNewTrip && ( // Only render button if addNewTrip is provided
+                <button
+                  className="bg-green-500 text-white"
+                  onClick={() => setTripCreationOpen(!tripCreationOpen)}
+                >
+                  {tripCreationOpen ? 'Cancel' : 'Plan Trip'}
+                </button>
+              )}
             </div>
 
             <div className="mt-2 flex flex-wrap gap-2">
@@ -96,6 +185,28 @@ function DestinationDetail({ destination, addNewTrip }: DestinationDetailProps) 
               <h3 className="mb-2 font-semibold">Cultural Significance</h3>
               <p className="text-muted-foreground text-sm">{destination.cultural_significance}</p>
             </div>
+
+            {trip && ( // Render the Delete Trip button if a trip prop is passed
+              <div className="mt-4 flex justify-center">
+                <Button
+                  onClick={handleDeleteTrip}
+                  className="bg-red-500 text-white hover:bg-red-600"
+                >
+                  Delete Trip
+                </Button>
+              </div>
+            )}
+
+            {onDeleteDestination && ( // Render only if onDeleteDestination prop is provided
+              <div className="mt-4 flex justify-center">
+                <Button
+                  onClick={handleDeleteDestination}
+                  className="bg-red-500 text-white hover:bg-red-600"
+                >
+                  Delete Destination
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

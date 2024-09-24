@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Header from '../components/Header';
 import { Destination, Trip } from '../types/types';
 import CreateTrip from '@/components/CreateTrip';
 import TripCard from '@/components/TripCard';
@@ -40,9 +39,7 @@ function Trips({ trips, destinations, isLoading, setIsLoading, addNewTrip }: Tri
 
               return (
                 <li key={trip.trip_id} className="mb-10">
-                  <Link to={`/trips/${trip.trip_id}`}>
-                    <TripCard trip={trip} destination={destination} index={index} />
-                  </Link>
+                  <TripCard trip={trip} destination={destination} index={index} />
                 </li>
               );
             })}

@@ -10,9 +10,14 @@ import { Destination as DestinationType } from '@/types/types';
 interface DestinationListProps {
   destinations: DestinationType[];
   handleAddNewDestination: (newDestination: DestinationType) => void;
+  onDeleteDestination?: (destinationId: number) => void;
 }
 
-function DestinationList({ destinations, handleAddNewDestination }: DestinationListProps) {
+function DestinationList({
+  destinations,
+  handleAddNewDestination,
+  onDeleteDestination,
+}: DestinationListProps) {
   const [focusedDestination, setFocusedDestination] = useState<Destination | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [globeDimensions, setGlobeDimensions] = useState({ height: 600, width: 600 }); // Default height
@@ -63,26 +68,6 @@ function DestinationList({ destinations, handleAddNewDestination }: DestinationL
         <div>
           <SavedDestinations destinations={destinations} handleButtonClick={handleButtonClick} />
         </div>
-
-        {/* <div className="rounded-lg bg-white p-6 shadow-md">
-          <h2 className="mb-4 text-2xl font-bold">Destination List</h2>
-          {isLoading ? (
-            <p>Loading...</p>
-          ) : (
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {destinations.map((destination) => (
-                <li key={destination.destination_id}>
-                  <Link
-                    to={`/destinations/${encodeURIComponent(destination.destination_name)}`}
-                    className="block"
-                  >
-                    <DestinationCard destination={destination} />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div> */}
       </div>
 
       <div className="lg:col-span-1">
@@ -92,7 +77,10 @@ function DestinationList({ destinations, handleAddNewDestination }: DestinationL
               to={`/destinations/${encodeURIComponent(focusedDestination.destination_name)}`}
               className="block"
             >
-              <DestinationCard destination={focusedDestination} />
+              <DestinationCard
+                destination={focusedDestination}
+                onDeleteDestination={onDeleteDestination}
+              />
             </Link>
           ) : (
             <p className="w-80">Select a destination to see details.</p>

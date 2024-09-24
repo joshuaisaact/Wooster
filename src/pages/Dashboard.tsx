@@ -1,13 +1,11 @@
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import CreateDestination from '@/components/CreateDestnation';
 import { Destination as DestinationType, Trip } from '@/types/types';
 import TripCard from '@/components/TripCard';
 import SavedDestinations from '@/components/SavedDestinations';
 import CreateTrip from '@/components/CreateTrip';
-import Map from '@/components/Map';
 
 interface DashboardProps {
-  children: ReactNode;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
   handleAddNewDestination: (newDestination: DestinationType) => void;
@@ -17,7 +15,6 @@ interface DashboardProps {
 }
 
 function Dashboard({
-  children,
   trips,
   destinations,
   handleAddNewDestination,

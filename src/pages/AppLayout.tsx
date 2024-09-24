@@ -8,7 +8,6 @@ import Dashboard from './Dashboard';
 import Explore from './Explore';
 import DestinationFullList from '@/components/DestinationFullList';
 import Header from '@/components/Header';
-import CreateTrip from '@/components/CreateTrip';
 import DestinationList from '@/components/DestinationList';
 import DestinationSummary from './DestinationSummary';
 import GlobeComponent from './GlobeComponent';
@@ -64,33 +63,15 @@ function AppLayout() {
     setDestinations((prevDestinations) => [...prevDestinations, newDestination]);
   }
 
-  async function handleDeleteDestination(destination: Destination): Promise<void> {
-    const destination_id = destination.destination_id;
-    try {
-      const response = await fetch(`http://localhost:4000/destinations/${destination_id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  function handleRemoveDestination(deletedDestinationId) {
+    setDestinations((prevDestinations) =>
+      prevDestinations.filter((dest) => dest.destination_id !== deletedDestinationId),
+    );
+  }
 
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      console.log('Current Destinations:', destinations);
-      setDestinations((prevDestinations) => {
-        const updatedDestinations = prevDestinations.filter(
-          (dest) => dest.destination_id !== destination_id,
-        );
-        console.log('Updated Destinations:', updatedDestinations);
-        return updatedDestinations;
-      });
-      // fetchDestinations();
-    } catch (error) {
-      console.error('Error deleting destination:', error);
-      // Optionally handle error (e.g., show a message)
-    }
+  function handleDeleteTrip(deletedTripId) {
+    setTrips((prevTrips) => prevTrips.filter((trip) => trip.trip_id !== deletedTripId));
+    setFetchTrigger((prev) => prev + 1); // Trigger a new fetch
   }
 
   return (
@@ -142,18 +123,19 @@ function AppLayout() {
           />
           <Route
             path="destinations/:destinationId"
-            element={<DestinationSummary destinations={destinations} addNewTrip={addNewTrip} />}
+            element={
+              <DestinationSummary
+                destinations={destinations}
+                onDeleteDestination={handleRemoveDestination}
+                onDeleteTrip={handleDeleteTrip}
+                addNewTrip={addNewTrip}
+              />
+            }
           />
           <Route path="globe" element={<GlobeComponent />} />
           <Route
             path="destination-list"
-            element={
-              <DestinationFullList
-                destinations={destinations}
-                isLoading={isLoading}
-                deleteDestination={handleDeleteDestination}
-              />
-            }
+            element={<DestinationFullList destinations={destinations} isLoading={isLoading} />}
           />
           <Route path="settings" element={<Profile />} />
         </Routes>

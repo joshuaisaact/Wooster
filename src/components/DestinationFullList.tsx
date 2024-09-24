@@ -8,11 +8,7 @@ interface DestinationFullListProps {
   deleteDestination: (destination: Destination) => Promise<void>;
 }
 
-function DestinationFullList({
-  destinations,
-  isLoading,
-  deleteDestination,
-}: DestinationFullListProps) {
+function DestinationFullList({ destinations, isLoading }: DestinationFullListProps) {
   return (
     <div className="rounded-lg bg-white p-6 shadow-md">
       <h2 className="mb-4 text-2xl font-bold">Destination List</h2>
@@ -26,11 +22,7 @@ function DestinationFullList({
                 to={`/destinations/${encodeURIComponent(destination.destination_name)}`}
                 className="block"
               >
-                <DestinationCard
-                  destination={destination}
-                  onDeleteDestination={deleteDestination}
-                  isLink={true}
-                />
+                <DestinationCard destination={destination} isLink={true} />
               </Link>
             </li>
           ))}
