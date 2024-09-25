@@ -53,14 +53,16 @@ function Dashboard({
       <div className="grid w-full max-w-7xl grid-cols-1 gap-8 pt-10 lg:grid-cols-3">
         {/* Main content area - two-thirds width */}
         <div className="space-y-7 lg:col-span-2">
-          <div className="bg-background flex min-h-[600px] flex-col gap-10 rounded-lg p-6 shadow-md">
+          <div className="flex min-h-[600px] flex-col gap-10 rounded-lg bg-white p-8 shadow-md">
             <div className="flex w-full flex-row items-center justify-between">
               <section>
                 <h2 className="mb-5 mt-4 text-2xl font-bold">Welcome back, Josh!</h2>
-                <p>
-                  Your next adventure is just around the corner. Ready to continue planning your
-                  trip to {soonestTripDestination?.destination_name}? Wooster has all the tools you
-                  need to make it unforgettable.
+                <span>
+                  <strong>Your next adventure is just around the corner.</strong>
+                </span>
+                <p className="mt-5">
+                  Ready to continue planning your trip to {soonestTripDestination?.destination_name}
+                  ? Wooster has all the tools you need to make it unforgettable.
                 </p>
               </section>
               <img src="./wooster-suitcase-no-bg.png" className="h-40" />

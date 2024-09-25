@@ -29,7 +29,7 @@ function Trips({ trips, destinations, isLoading, setIsLoading, addNewTrip }: Tri
   return (
     <div className="text-text flex h-full flex-col items-center pt-10">
       {/* <Header>Trips</Header> */}
-      <div className="flex w-full max-w-6xl justify-between">
+      <div className="flex w-full justify-between">
         <div className="w-2/3 p-10">
           <ul className="h-[calc(100vh-120px)] overflow-y-auto">
             {trips.map((trip, index) => {

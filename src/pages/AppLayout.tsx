@@ -7,7 +7,6 @@ import Profile from './Profile';
 import Dashboard from './Dashboard';
 import Explore from './Explore';
 import DestinationFullList from '@/components/DestinationFullList';
-import Header from '@/components/Header';
 import DestinationList from '@/components/DestinationList';
 import DestinationSummary from './DestinationSummary';
 import GlobeComponent from './GlobeComponent';
@@ -113,7 +112,6 @@ function AppLayout() {
             path="explore"
             element={
               <Explore>
-                {/* <Header>Explore</Header> */}
                 <DestinationList
                   destinations={destinations}
                   handleAddNewDestination={handleAddNewDestination}

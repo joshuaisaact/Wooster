@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import markerIconUrl from 'leaflet/dist/images/marker-icon.png';
-import pawIcon from '/paw.png';
 import markerShadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import markerIconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import { Activity } from '@/types/types';
@@ -136,7 +135,7 @@ const Map = forwardRef(
         ref={mapRef}
       >
         <TileLayer
-          url="https://a.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           zIndex={1}
         />
