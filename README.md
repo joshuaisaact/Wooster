@@ -1,50 +1,146 @@
-# React + TypeScript + Vite
+# Wooster - AI-Powered Trip Planning Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Wooster is an AI-powered trip planning application that helps users explore and plan trips with personalized recommendations. The frontend is built with TypeScript, Tailwind CSS, and React, incorporating interactive elements like a 3D globe and map using Leaflet and Three.js. The app communicates with the backend service (Gemini) to generate trips and detailed destination data.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Overview](#overview)
+- [Technologies Used](#technologies-used)
+- [Project Structure](#project-structure)
+- [Key Features](#key-features)
+- [Installation](#installation)
+- [Development](#development)
+- [Scripts](#scripts)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Expanding the ESLint configuration
+## Overview
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Wooster's frontend provides users with an interactive interface to explore destinations and plan trips. It includes an "Explore" page featuring a 3D globe where users can visualize destinations and trip details. The application fetches data from the Gemini backend via an Express.js API to generate trips and display detailed destination data.
 
-- Configure the top-level `parserOptions` property like this:
+## Technologies Used
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Wooster's frontend leverages a modern tech stack for development:
+
+- **TypeScript**: Ensures type safety and scalability.
+- **React**: Builds the user interface components.
+- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+- **Leaflet & React-Leaflet**: For map rendering and interactive destination views.
+- **Three.js & Globe.gl**: For the 3D globe on the Explore page.
+- **Radix UI**: Accessible, unstyled components used for dialogs, sliders, and more.
+- **Zod**: Schema validation for user inputs and forms.
+- **Vite**: A fast development environment and build tool.
+
+## Project Structure
+
+Below is the core project structure based on the provided files and features:
+
+```plaintext
+src/
+│
+├── components/
+│   ├── Activity.tsx                # Activity card component
+│   ├── CreateDestination.tsx       # Create Destination card component
+│   ├── CreateTrip.tsx              # Create Trip card component
+│   ├── DayNav.tsx                  # Navigate between days component
+│   ├── DestinationDetail.tsx       # Destination detail card component
+│   ├── DayNav.tsx                  # Navigate between days component
+│   ├── Dashboard.tsx               # Main dashboard for trip overviews
+│   ├── DestinationSummary.tsx      # Component to show destination summaries
+│   ├── Map.tsx                     # 2D Map component (using Leaflet.js)
+│   ├── SavedDestinations.tsx       # Saved destination list component
+│   ├── Sidebar.tsx                 # Sidebar component
+│   ├── SidebarNav.tsx              # Sidebar navigation component
+│   ├── Trip.tsx                    # Component to show a detailed trip
+│   ├── Trips.tsx                   # Main trip page, listing user trips
+│   ├── TripCard.tsx                # Trip card component
+│   ├── TripsList.tsx               # Component to list all trips
+│   ├── AppLayout.tsx               # Layout component for navigation and routing
+│   └── reducer.ts                  # State management logic
+│
+├── pages/
+│   ├── AppLayout.tsx              # Top-level page including fetch logic and routes
+│   ├── Dashboard.tsx              # Main dashboard
+│   ├── DestinationSummary.tsx     # Detailed destination summary page
+│   ├── Explore.tsx                # Explore page with 3D globe.
+│   ├── Homepage.tsx               # Pre-login page.
+│   ├── ItineraryPage.tsx          # Detailed itinerary page for a trip
+│   ├── Profile.tsx                # Settings page
+│   └── Trip.tsx                   # Trip overview page
+│   └── Trips.tsx                  # Trips page
+│   └── TripsList.tsx              # List of Trips page
+│
+│
+└── main.tsx                        # Entry point for the React app
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Key Features
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. **Explore Destinations**:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+   - A 3D interactive globe using `three.js` and `globe.gl`.
+   - Leaflet integration for detailed maps and destination exploration.
+
+2. **Trip Planning**:
+
+   - AI-powered trip generation using Gemini.
+   - Interactive forms and suggestions powered by React Hook Form and Zod for input validation.
+
+3. **Responsive Design**:
+
+   - Tailwind CSS for dynamic styling and responsive layout.
+
+4. **State Management**:
+
+   - Centralized state management using React's reducer pattern.
+
+5. **Destination Summaries**:
+
+   - Fetch and display detailed summaries for each destination based on AI-generated data.
+
+6. **User Trips**:
+
+   - View planned trips and explore detailed trip itineraries with a focus on user-friendly navigation.
+
+7. **AI art**:
+
+   - Dog art generated using Stable Diffusion.
+
+## Installation
+
+To get started with the Wooster frontend, clone the repository and install the required dependencies:
+
+```bash
+git clone https://github.com/yourusername/wooster-frontend.git
+cd wooster-frontend
+npm install
 ```
+
+Ensure that you also have the backend service (Gemini) set up for API interaction.
+
+## Development
+
+To start the development server, run:
+
+```bash
+npm run dev
+```
+
+This will start a Vite-powered development environment with hot module reloading for seamless development.
+
+## Scripts
+
+- `npm run dev`: Start the development server.
+- `npm run build`: Build the project for production.
+- `npm run lint`: Lint the code using ESLint.
+- `npm run lint:fix`: Automatically fix linting issues.
+- `npm run format`: Format the code using Prettier.
+- `npm run type-check`: Run TypeScript type checking without emitting any files.
+
+## Contributing
+
+Contributions are welcome! If you'd like to improve the app, feel free to submit a pull request or file an issue. Please follow the established coding conventions and make sure all changes are thoroughly tested.
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
