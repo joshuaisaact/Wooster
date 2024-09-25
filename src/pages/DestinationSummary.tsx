@@ -18,50 +18,22 @@ function DestinationSummary({
   dispatch,
   state,
 }: DestinationSummaryProps) {
-  const { destinationId } = useParams<{ destinationId: string }>();
+  const { destinationId: destinationName } = useParams<{ destinationId: string }>();
 
-  useEffect(() => {
-    if (!state?.destinations) {
-      console.error('State is undefined or destinations are missing');
-      return;
-    }
-
-    // Find destination from state
-    const foundDestination = state.destinations.find(
-      (dest) => dest.destination_id === Number(destinationId),
-    );
-
-    if (!foundDestination) {
-      // Fetch the destination if it's not found in the reducer state
-      const fetchDestination = async () => {
-        dispatch({ type: 'SET_LOADING', payload: true });
-        try {
-          const response = await fetch(`http://localhost:4000/destinations/${destinationId}`);
-          const data = await response.json();
-          dispatch({ type: 'SET_DESTINATIONS', payload: [...state.destinations, data] });
-        } catch (error) {
-          console.error('Error fetching destination details:', error);
-        } finally {
-          dispatch({ type: 'SET_LOADING', payload: false }); // Ensure loading is turned off
-        }
-      };
-
-      fetchDestination();
-    } else {
-      // If destination is already found, ensure loading is turned off
-      if (state.isLoading) {
-        dispatch({ type: 'SET_LOADING', payload: false });
-      }
-    }
-  }, [destinationId, dispatch, state.destinations, state.isLoading]);
+  // Check if the destination exists in the state
+  const destination = state.destinations.find((dest) => dest.destination_name === destinationName);
 
   if (state.isLoading) {
     return <p>Loading...</p>;
   }
 
-  const destination = state.destinations.find(
-    (dest) => dest.destination_id === Number(destinationId),
-  );
+  if (!destination) {
+    return <p>Destination not found.</p>;
+  }
+
+  if (state.isLoading) {
+    return <p>Loading...</p>;
+  }
 
   if (!destination) {
     return <p>Destination not found.</p>;

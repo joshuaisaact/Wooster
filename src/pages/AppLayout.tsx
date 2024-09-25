@@ -43,10 +43,12 @@ function AppLayout() {
     }
   }
 
+  console.log('Fetched trips and destinations');
+
   useEffect(() => {
     fetchTrips();
     fetchDestinations();
-  }, []);
+  }, [dispatch]);
 
   function addNewTrip(newTrip: Triptype) {
     dispatch({ type: 'ADD_TRIP', payload: newTrip });
