@@ -22,20 +22,7 @@ function flattenItinerary(trip: TripType) {
 function Trip({ trips, destinations }: TripProps) {
   const { tripId } = useParams<{ tripId: string }>();
   const [currentDay, setCurrentDay] = useState(0); // Start from day 1
-  const [isLoading, setIsLoading] = useState(true); // Loading state
-  const [trip, setTrip] = useState<TripType | null>(null); // To store the current trip
-
-  useEffect(() => {
-    // Fetch the trip from the local props
-    const localTrip = trips.find((t) => t.trip_id === tripId);
-    if (localTrip) {
-      setTrip(localTrip);
-      setIsLoading(false); // Stop loading if trip is found
-    } else {
-      console.error('Trip not found locally');
-      setIsLoading(false);
-    }
-  }, [tripId, trips]);
+  const trip = trips.find((t) => t.trip_id === tripId);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -54,10 +41,6 @@ function Trip({ trips, destinations }: TripProps) {
     }
   };
 
-  if (isLoading) {
-    return <p>Loading trip details...</p>;
-  }
-
   if (!trip) {
     return <p>Trip not found</p>;
   }
@@ -70,8 +53,7 @@ function Trip({ trips, destinations }: TripProps) {
   const currentDayItinerary = flattenedItinerary ? flattenedItinerary[currentDay - 1] : [];
 
   return (
-    <div className="flex h-full w-full flex-col pt-10 text-text">
-      {/* Share Button Placement */}
+    <div className="text-text flex h-full w-full flex-col pt-10">
       <div className="mb-4 flex items-center justify-between px-4">
         <h1 className="text-2xl font-bold">{trip.destination_name} Trip</h1>
         <Button
