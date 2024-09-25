@@ -47,9 +47,9 @@ function Profile() {
   }
 
   return (
-    <div className="text-text flex h-full flex-col items-center pt-10">
+    <div className="flex h-full flex-col items-center pt-10 text-text">
       {/* <Header>Settings</Header> */}
-      <div className="bg-background mt-10 w-full max-w-4xl space-y-10 rounded-lg p-6">
+      <div className="mt-10 w-full max-w-4xl space-y-10 rounded-lg bg-background p-6">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* Left Column - Forms */}
           <div className="space-y-10">

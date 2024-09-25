@@ -1,50 +1,37 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Destination, Trip } from '@/types/types';
 import DestinationDetail from '@/components/DestinationDetail';
 
 interface DestinationSummaryProps {
-  destinations?: Destination[]; // Make destinations optional in case it's not passed in
   addNewTrip?: (trip: Trip) => void;
   onDeleteDestination?: (destinationId: number) => void;
   onDeleteTrip?: (tripId: string) => void;
+  dispatch: React.Dispatch<any>; // Assuming you're using useReducer
+  state: { isLoading: boolean; destinations: Destination[] }; // Reducer state
 }
 
 function DestinationSummary({
-  destinations = [],
   addNewTrip,
   onDeleteDestination,
   onDeleteTrip,
+  dispatch,
+  state,
 }: DestinationSummaryProps) {
-  const { destinationId } = useParams<{ destinationId: string }>();
-  const [destination, setDestination] = useState<Destination | null>(null);
-  const [isLoading, setIsLoading] = useState(!destinations.length); // Only show loading if no destinations are passed in
+  const { destinationId: destinationName } = useParams<{ destinationId: string }>();
 
-  useEffect(() => {
-    // Check if destinations were passed as props
-    if (destinations.length > 0) {
-      const foundDestination = destinations.find((dest) => dest.destination_name === destinationId);
-      setDestination(foundDestination || null);
-    } else {
-      // Fallback: Fetch the destination if not found in the passed-in array
-      const fetchDestination = async () => {
-        try {
-          setIsLoading(true);
-          const response = await fetch(`http://localhost:4000/destinations/${destinationId}`);
-          const data = await response.json();
-          setDestination(data);
-        } catch (error) {
-          console.error('Error fetching destination details:', error);
-        } finally {
-          setIsLoading(false);
-        }
-      };
+  // Check if the destination exists in the state
+  const destination = state.destinations.find((dest) => dest.destination_name === destinationName);
 
-      fetchDestination();
-    }
-  }, [destinationId, destinations]);
+  if (state.isLoading) {
+    return <p>Loading...</p>;
+  }
 
-  if (isLoading) {
+  if (!destination) {
+    return <p>Destination not found.</p>;
+  }
+
+  if (state.isLoading) {
     return <p>Loading...</p>;
   }
 
@@ -59,6 +46,7 @@ function DestinationSummary({
         addNewTrip={addNewTrip}
         onDeleteDestination={onDeleteDestination}
         onDeleteTrip={onDeleteTrip}
+        dispatch={dispatch}
       />
     </div>
   );

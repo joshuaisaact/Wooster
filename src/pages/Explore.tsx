@@ -6,7 +6,7 @@ interface ExploreProps {
 
 function Explore({ children }: ExploreProps) {
   return (
-    <div className="text-text container mx-auto px-4">
+    <div className="container mx-auto px-4 text-text">
       <div className="flex flex-col">{children}</div>
     </div>
   );

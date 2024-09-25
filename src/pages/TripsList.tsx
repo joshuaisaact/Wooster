@@ -26,7 +26,7 @@ function Trips({ trips, destinations, isLoading, setIsLoading, addNewTrip }: Tri
   }
 
   return (
-    <div className="text-text flex h-full flex-col items-center pt-10">
+    <div className="flex h-full flex-col items-center pt-10 text-text">
       {/* <Header>Trips</Header> */}
       <div className="flex w-full justify-between">
         <div className="w-2/3 p-10">

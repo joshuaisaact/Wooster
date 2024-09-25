@@ -15,11 +15,11 @@ import { Trip } from '@/types/types';
 interface CreateTripProps {
   addNewTrip: (trip: Trip) => void;
   isLoading: boolean;
-  setIsLoading: (loading: boolean) => void;
+  dispatch: React.Dispatch<any>; // Assuming you're using useReducer
   location?: string;
 }
 
-function CreateTrip({ addNewTrip, isLoading, setIsLoading, location }: CreateTripProps) {
+function CreateTrip({ addNewTrip, isLoading, dispatch, location }: CreateTripProps) {
   const form = useForm({
     defaultValues: {
       days: 2,
@@ -31,7 +31,7 @@ function CreateTrip({ addNewTrip, isLoading, setIsLoading, location }: CreateTri
   const navigate = useNavigate();
 
   async function onSubmit(data: { days: number; location: string; start_date: Date | undefined }) {
-    setIsLoading(true);
+    dispatch({ type: 'SET_LOADING', payload: true });
     const formattedData = {
       days: data.days,
       location: data.location,
@@ -55,6 +55,8 @@ function CreateTrip({ addNewTrip, isLoading, setIsLoading, location }: CreateTri
         console.log(result);
         addNewTrip(result); // Add the new trip to the parent state
 
+        dispatch({ type: 'ADD_TRIP', payload: result.trip });
+
         // Use the correct path for the trip_id
         if (result.trip && result.trip.trip_id) {
           navigate(`/trips/${result.trip.trip_id}`);
@@ -63,7 +65,7 @@ function CreateTrip({ addNewTrip, isLoading, setIsLoading, location }: CreateTri
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(false);
+      dispatch({ type: 'SET_LOADING', payload: false });
     }
   }
 

@@ -16,6 +16,7 @@ interface DestinationDetailProps {
   onDeleteDestination?: (destinationId: number) => void;
   trip?: TripType;
   onDeleteTrip?: (tripId: string) => void;
+  dispatch: React.Dispatch<any>;
 }
 
 function DestinationDetail({
@@ -23,16 +24,18 @@ function DestinationDetail({
   addNewTrip,
   onDeleteDestination,
   trip,
+  dispatch,
   onDeleteTrip,
 }: DestinationDetailProps) {
   const [tripCreationOpen, setTripCreationOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false); // Control the confirm modal
 
   const navigate = useNavigate();
 
   const handleDeleteTrip = async () => {
     if (!trip) return;
+
+    dispatch({ type: 'SET_LOADING', payload: true }); // Dispatch loading state
 
     try {
       const response = await fetch(`http://localhost:4000/trips/${trip.trip_id}`, {
@@ -48,24 +51,17 @@ function DestinationDetail({
         throw new Error(`Error: ${response.statusText}`);
       }
 
-      console.log('Trip deleted successfully');
-
-      if (onDeleteTrip) {
-        onDeleteTrip(trip.trip_id);
-        console.log('onDeleteTrip called with:', trip.trip_id); // Add this log
-      }
+      // Trip deleted successfully
+      dispatch({ type: 'REMOVE_TRIP', payload: trip.trip_id });
 
       navigate('/trips');
     } catch (error) {
-      if (error instanceof Error) {
-        console.error('Error deleting trip:', error.message);
-      } else {
-        console.error('Unknown error occurred:', error);
-      }
+      console.error('Error deleting trip:', error.message || 'Unknown error occurred');
+    } finally {
+      dispatch({ type: 'SET_LOADING', payload: false }); // End loading state
     }
   };
 
-  // Move handleDeleteDestination here, outside of handleDeleteTrip
   const handleDeleteDestination = async () => {
     const destination_id = destination?.destination_id;
     if (!destination_id) {
@@ -79,6 +75,8 @@ function DestinationDetail({
     if (!confirmDelete) {
       return;
     }
+
+    dispatch({ type: 'SET_LOADING', payload: true }); // Dispatch loading state
 
     try {
       const response = await fetch(`http://localhost:4000/destinations/${destination_id}`, {
@@ -94,16 +92,14 @@ function DestinationDetail({
         throw new Error(`Error: ${response.statusText}`);
       }
 
-      console.log('Destination deleted successfully');
+      // Destination deleted successfully
+      dispatch({ type: 'REMOVE_DESTINATION', payload: destination_id });
 
-      // Optionally, redirect to another page (e.g., back to the list of destinations)
       navigate('/destination-list');
     } catch (error) {
-      if (error instanceof Error) {
-        console.error('Error deleting destination:', error.message);
-      } else {
-        console.error('Unknown error occurred:', error);
-      }
+      console.error('Error deleting destination:', error.message || 'Unknown error occurred');
+    } finally {
+      dispatch({ type: 'SET_LOADING', payload: false }); // End loading state
     }
   };
 
@@ -243,9 +239,9 @@ function DestinationDetail({
         <div className="flex h-full flex-col justify-between">
           <CreateTrip
             location={destination.destination_name}
-            addNewTrip={addNewTrip}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
+            addNewTrip={(trip: TripType) => dispatch({ type: 'ADD_TRIP', payload: trip })}
+            isLoading={false}
+            dispatch={dispatch}
           />
           <img src="/Wooster-map-planning.png" className="mt-4 h-auto" alt="Map Planning" />
         </div>

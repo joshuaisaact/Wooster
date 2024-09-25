@@ -7,11 +7,11 @@ import CreateTrip from '@/components/CreateTrip';
 
 interface DashboardProps {
   isLoading: boolean;
-  setIsLoading: (loading: boolean) => void;
   handleAddNewDestination: (newDestination: DestinationType) => void;
   trips: Trip[];
   destinations: DestinationType[];
   addNewTrip: (trip: Trip) => void;
+  dispatch: React.Dispatch<any>;
 }
 
 function Dashboard({
@@ -19,8 +19,8 @@ function Dashboard({
   destinations,
   handleAddNewDestination,
   isLoading,
-  setIsLoading,
   addNewTrip,
+  dispatch,
 }: DashboardProps) {
   const [selectedDestination, setSelectedDestination] = useState<DestinationType | null>(null);
 
@@ -91,14 +91,14 @@ function Dashboard({
               location={selectedDestination?.destination_name}
               addNewTrip={addNewTrip}
               isLoading={isLoading}
-              setIsLoading={setIsLoading}
+              dispatch={dispatch}
             />
           </div>
           <div className="max-w-max rounded-lg bg-white p-6 shadow-md">
             <CreateDestination
               addNewDestination={handleAddNewDestination}
               isLoading={isLoading}
-              setIsLoading={setIsLoading}
+              dispatch={dispatch}
             />
           </div>
         </div>

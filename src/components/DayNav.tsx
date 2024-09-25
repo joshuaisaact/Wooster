@@ -9,7 +9,7 @@ interface DayNavProps {
 
 function DayNav({ trip, currentDay, setCurrentDay }: DayNavProps) {
   return (
-    <nav className="text-text mb-4">
+    <nav className="mb-4 text-text">
       <ul className="flex gap-4">
         <Link to={`/trips/${trip.trip_id}/summary/${trip.destination_name}`}>
           <button
