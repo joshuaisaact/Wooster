@@ -96,11 +96,7 @@ function Dashboard({
             />
           </div>
           <div className="max-w-max rounded-lg bg-white p-6 shadow-md">
-            <CreateDestination
-              addNewDestination={handleAddNewDestination}
-              isLoading={isLoading}
-              dispatch={dispatch}
-            />
+            <CreateDestination isLoading={isLoading} dispatch={dispatch} />
           </div>
         </div>
       </div>

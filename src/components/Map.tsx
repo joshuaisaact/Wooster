@@ -132,6 +132,7 @@ const Map = forwardRef(
         scrollWheelZoom={isInteractive}
         zoomControl={showZoomControls}
         ref={mapRef}
+        attributionControl={false}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

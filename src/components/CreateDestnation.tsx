@@ -11,12 +11,11 @@ interface FormData {
 }
 
 interface CreateDestinationProps {
-  addNewDestination?: (Destination: Destination) => void;
   isLoading: boolean;
   dispatch: React.Dispatch<Action>; // Assuming you're using useReducer
 }
 
-function CreateDestination({ addNewDestination, isLoading, dispatch }: CreateDestinationProps) {
+function CreateDestination({ isLoading, dispatch }: CreateDestinationProps) {
   const form = useForm({
     defaultValues: {
       destination: '', // The only input field we need for this form

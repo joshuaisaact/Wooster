@@ -11,15 +11,16 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { Trip } from '@/types/types';
+import { Action } from '@/store/reducer';
 
 interface CreateTripProps {
   addNewTrip: (trip: Trip) => void;
   isLoading: boolean;
-  dispatch: React.Dispatch<any>;
+  dispatch: React.Dispatch<Action>;
   location?: string;
 }
 
-function CreateTrip({ addNewTrip, isLoading, dispatch, location }: CreateTripProps) {
+function CreateTrip({ isLoading, dispatch, location }: CreateTripProps) {
   const form = useForm({
     defaultValues: {
       days: 2,
@@ -52,8 +53,6 @@ function CreateTrip({ addNewTrip, isLoading, dispatch, location }: CreateTripPro
 
       if (response.ok) {
         const result = await response.json();
-        console.log(result);
-        addNewTrip(result); // Add the new trip to the parent state
 
         dispatch({ type: 'ADD_TRIP', payload: result.trip });
 

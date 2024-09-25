@@ -57,7 +57,11 @@ function DestinationDetail({
 
       navigate('/trips');
     } catch (error) {
-      console.error('Error deleting trip:', error.message || 'Unknown error occurred');
+      if (error instanceof Error) {
+        console.error('Error deleting trip:', error.message);
+      } else {
+        console.error('An unknown error occurred while deleting trip:', error);
+      }
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false }); // End loading state
     }
@@ -98,7 +102,11 @@ function DestinationDetail({
 
       navigate('/destination-list');
     } catch (error) {
-      console.error('Error deleting destination:', error.message || 'Unknown error occurred');
+      if (error instanceof Error) {
+        console.error('Error deleting trip:', error.message);
+      } else {
+        console.error('An unknown error occurred while deleting trip:', error);
+      }
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false }); // End loading state
     }
