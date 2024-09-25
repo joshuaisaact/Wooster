@@ -5,9 +5,9 @@ import DestinationDetail from '@/components/DestinationDetail';
 
 interface DestinationSummaryProps {
   destinations?: Destination[]; // Make destinations optional in case it's not passed in
-  addNewTrip: (trip: Trip) => void;
+  addNewTrip?: (trip: Trip) => void;
   onDeleteDestination?: (destinationId: number) => void;
-  onDeleteTrip?: (tripId: number) => void;
+  onDeleteTrip?: (tripId: string) => void;
 }
 
 function DestinationSummary({

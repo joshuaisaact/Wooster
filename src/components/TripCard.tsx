@@ -8,7 +8,7 @@ import Map from './Map';
 
 interface TripCardProps {
   trip: Trip;
-  destination: Destination | null;
+  destination?: Destination | null | undefined;
 }
 
 function TripCard({ trip, destination }: TripCardProps) {

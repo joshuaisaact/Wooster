@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Trip from './Trip';
@@ -15,7 +15,7 @@ import type { Destination, Trip as Triptype } from '@/types/types';
 function AppLayout() {
   const BASE_URL = 'http://localhost:4000';
   const [destinations, setDestinations] = useState<Destination[]>([]);
-  const [trips, setTrips] = useState([]);
+  const [trips, setTrips] = useState<Triptype[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchTrigger, setFetchTrigger] = useState(0);
 
@@ -62,13 +62,13 @@ function AppLayout() {
     setDestinations((prevDestinations) => [...prevDestinations, newDestination]);
   }
 
-  function handleRemoveDestination(deletedDestinationId) {
+  function handleRemoveDestination(deletedDestinationId: number) {
     setDestinations((prevDestinations) =>
       prevDestinations.filter((dest) => dest.destination_id !== deletedDestinationId),
     );
   }
 
-  function handleDeleteTrip(deletedTripId) {
+  function handleDeleteTrip(deletedTripId: string) {
     setTrips((prevTrips) => prevTrips.filter((trip) => trip.trip_id !== deletedTripId));
     setFetchTrigger((prev) => prev + 1); // Trigger a new fetch
   }

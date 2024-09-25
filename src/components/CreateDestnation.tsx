@@ -43,7 +43,11 @@ function CreateDestination({ addNewDestination, isLoading, setIsLoading }: Creat
         const result = await response.json();
         console.log(result);
         const newDestination = result.destination;
-        addNewDestination(newDestination); // Update the parent component with the new destination
+        if (addNewDestination) {
+          addNewDestination(newDestination);
+        } else {
+          console.warn('addNewDestination is undefined');
+        }
       }
     } catch (error) {
       console.error(error);

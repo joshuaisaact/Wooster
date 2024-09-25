@@ -34,11 +34,6 @@ function DestinationDetail({
   const handleDeleteTrip = async () => {
     if (!trip) return;
 
-    // const confirmDelete = window.confirm(
-    //   'Are you sure you want to delete this trip? This action is not reversible.',
-    // );
-    // if (!confirmDelete) return;
-
     try {
       const response = await fetch(`http://localhost:4000/trips/${trip.trip_id}`, {
         method: 'DELETE',
@@ -62,10 +57,15 @@ function DestinationDetail({
 
       navigate('/trips');
     } catch (error) {
-      console.error('Error deleting trip:', error.message);
+      if (error instanceof Error) {
+        console.error('Error deleting trip:', error.message);
+      } else {
+        console.error('Unknown error occurred:', error);
+      }
     }
   };
 
+  // Move handleDeleteDestination here, outside of handleDeleteTrip
   const handleDeleteDestination = async () => {
     const destination_id = destination?.destination_id;
     if (!destination_id) {
@@ -74,7 +74,7 @@ function DestinationDetail({
     }
 
     const confirmDelete = window.confirm(
-      'Are you sure you want to delete this destination? This action is not reversable.',
+      'Are you sure you want to delete this destination? This action is not reversible.',
     );
     if (!confirmDelete) {
       return;
@@ -99,7 +99,11 @@ function DestinationDetail({
       // Optionally, redirect to another page (e.g., back to the list of destinations)
       navigate('/destination-list');
     } catch (error) {
-      console.error('Error deleting destination:', error.message);
+      if (error instanceof Error) {
+        console.error('Error deleting destination:', error.message);
+      } else {
+        console.error('Unknown error occurred:', error);
+      }
     }
   };
 
@@ -124,7 +128,6 @@ function DestinationDetail({
           <Map
             latitude={destination.latitude}
             longitude={destination.longitude}
-            destinationName={destination.destination_name}
             className="h-full w-full"
           />
         ) : (

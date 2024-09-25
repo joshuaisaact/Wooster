@@ -38,11 +38,11 @@ function Profile() {
     },
   });
 
-  function onEmailSubmit(data: any) {
+  function onEmailSubmit(data: string) {
     console.log('Email Updated:', data);
   }
 
-  function onPasswordSubmit(data: any) {
+  function onPasswordSubmit(data: string) {
     console.log('Password Updated:', data);
   }
 

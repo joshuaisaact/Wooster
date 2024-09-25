@@ -13,11 +13,7 @@ interface DestinationListProps {
   onDeleteDestination?: (destinationId: number) => void;
 }
 
-function DestinationList({
-  destinations,
-  handleAddNewDestination,
-  onDeleteDestination,
-}: DestinationListProps) {
+function DestinationList({ destinations, handleAddNewDestination }: DestinationListProps) {
   const [focusedDestination, setFocusedDestination] = useState<Destination | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [globeDimensions, setGlobeDimensions] = useState({ height: 600, width: 600 }); // Default height
@@ -86,10 +82,7 @@ function DestinationList({
               to={`/destinations/${encodeURIComponent(focusedDestination.destination_name)}`}
               className="block"
             >
-              <DestinationCard
-                destination={focusedDestination}
-                onDeleteDestination={onDeleteDestination}
-              />
+              <DestinationCard destination={focusedDestination} />
             </Link>
           ) : (
             <p className="w-80">Select a destination to see details.</p>

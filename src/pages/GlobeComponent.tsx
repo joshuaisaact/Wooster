@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 import Globe from 'globe.gl';
-import { Sparkle } from 'lucide-react';
 
 interface Destination {
   latitude: number;
@@ -10,7 +9,7 @@ interface Destination {
 
 interface GlobeComponentProps {
   height?: number;
-  width?: string;
+  width?: number;
   destinations?: Destination[];
   focusedDestination?: Destination | null;
 }
@@ -22,7 +21,8 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
   focusedDestination = null,
 }) => {
   const globeEl = useRef<HTMLDivElement>(null);
-  const globeInstanceRef = useRef<any>(null);
+  const globeInstanceRef = useRef<object | null>(null);
+  console.log(globeInstanceRef);
 
   const points = useMemo(
     () =>
@@ -47,7 +47,8 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
   }, [focusedDestination, focusOnCoordinates]);
 
   useEffect(() => {
-    if (!globeEl.current) return;
+    // Store the current globeEl reference to avoid accessing a potentially stale value
+    const currentGlobeEl = globeEl.current;
 
     const globe = Globe()
       .globeImageUrl('/earth-texture.png')
@@ -58,6 +59,7 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
       .height(height)
       .htmlElementsData(points)
       .htmlElement((d) => {
+        console.log(d);
         const el = document.createElement('div');
         el.innerHTML = `
           <div class="flex flex-col items-center">
@@ -78,13 +80,17 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
         return el;
       });
 
-    globe(globeEl.current);
+    // Initialize globe on the current element
+    if (currentGlobeEl) {
+      globe(currentGlobeEl);
+    }
+
     globeInstanceRef.current = globe;
 
     // Cleanup function
     return () => {
-      if (globeEl.current) {
-        globeEl.current.innerHTML = '';
+      if (currentGlobeEl) {
+        currentGlobeEl.innerHTML = ''; // Safely clear the reference
       }
       globeInstanceRef.current = null;
     };

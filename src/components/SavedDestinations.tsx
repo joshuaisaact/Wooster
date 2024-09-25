@@ -6,7 +6,7 @@ import { Destination } from '@/types/types';
 interface SavedDestinationsProps {
   destinations: Destination[];
   handleButtonClick: (destination: Destination) => void;
-  focusedDestinationId: number | null;
+  focusedDestinationId?: number | null;
 }
 
 export default function SavedDestinations({

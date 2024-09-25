@@ -5,7 +5,6 @@ import { Destination } from '@/types/types';
 interface DestinationFullListProps {
   destinations: Destination[];
   isLoading: boolean;
-  deleteDestination: (destination: Destination) => Promise<void>;
 }
 
 function DestinationFullList({ destinations, isLoading }: DestinationFullListProps) {
@@ -22,7 +21,7 @@ function DestinationFullList({ destinations, isLoading }: DestinationFullListPro
                 to={`/destinations/${encodeURIComponent(destination.destination_name)}`}
                 className="block"
               >
-                <DestinationCard destination={destination} isLink={true} />
+                <DestinationCard destination={destination} />
               </Link>
             </li>
           ))}

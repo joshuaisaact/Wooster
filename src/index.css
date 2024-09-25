@@ -84,5 +84,7 @@ body {
 }
 
 /* Scrollbar styling for Firefox */
-scrollbar-color: rgba(0, 0, 0, 0.2) #f0f7f4;
-scrollbar-width: thin;
+* {
+  scrollbar-color: rgba(0, 0, 0, 0.2) #f0f7f4;
+  scrollbar-width: thin;
+}

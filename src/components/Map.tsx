@@ -8,7 +8,6 @@ import markerIconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import { Activity } from '@/types/types';
 
 // Set default marker icons
-delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: markerIconRetinaUrl,
   iconUrl: markerIconUrl,

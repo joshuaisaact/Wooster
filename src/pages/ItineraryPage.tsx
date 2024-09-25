@@ -13,7 +13,7 @@ type ItineraryPageProps = {
 
 function ItineraryPage({ currentDay }: ItineraryPageProps) {
   const [selectedActivityId, setSelectedActivityId] = useState<number | null>(null);
-  const mapRef = useRef(null);
+  const mapRef = useRef<L.Map | null>(null);
 
   const handleActivitySelect = (activityId: number) => {
     setSelectedActivityId(activityId);

@@ -45,7 +45,6 @@ function DestinationDetail() {
           <Map
             latitude={destination.latitude}
             longitude={destination.longitude}
-            destinationName={destination.destination_name}
             className="h-full w-full"
           />
         </div>
