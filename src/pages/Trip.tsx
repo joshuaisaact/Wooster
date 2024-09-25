@@ -70,7 +70,7 @@ function Trip({ trips, destinations }: TripProps) {
   const currentDayItinerary = flattenedItinerary ? flattenedItinerary[currentDay - 1] : [];
 
   return (
-    <div className="text-text flex h-full w-full flex-col pt-10">
+    <div className="flex h-full w-full flex-col pt-10 text-text">
       {/* Share Button Placement */}
       <div className="mb-4 flex items-center justify-between px-4">
         <h1 className="text-2xl font-bold">{trip.destination_name} Trip</h1>

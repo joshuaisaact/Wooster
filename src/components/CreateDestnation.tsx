@@ -12,10 +12,10 @@ interface FormData {
 interface CreateDestinationProps {
   addNewDestination?: (Destination: Destination) => void;
   isLoading: boolean;
-  setIsLoading: (loading: boolean) => void;
+  dispatch: React.Dispatch<any>; // Assuming you're using useReducer
 }
 
-function CreateDestination({ addNewDestination, isLoading, setIsLoading }: CreateDestinationProps) {
+function CreateDestination({ addNewDestination, isLoading, dispatch }: CreateDestinationProps) {
   const form = useForm({
     defaultValues: {
       destination: '', // The only input field we need for this form
@@ -23,12 +23,11 @@ function CreateDestination({ addNewDestination, isLoading, setIsLoading }: Creat
   });
 
   async function onSubmit(data: FormData) {
-    setIsLoading(true);
     const formattedData = {
       destination: data.destination,
     };
 
-    console.log(JSON.stringify(formattedData));
+    dispatch({ type: 'SET_LOADING', payload: true }); // Set loading state to true
 
     try {
       const response = await fetch(`http://localhost:4000/newdestination`, {
@@ -41,18 +40,15 @@ function CreateDestination({ addNewDestination, isLoading, setIsLoading }: Creat
 
       if (response.ok) {
         const result = await response.json();
-        console.log(result);
         const newDestination = result.destination;
-        if (addNewDestination) {
-          addNewDestination(newDestination);
-        } else {
-          console.warn('addNewDestination is undefined');
-        }
+
+        // Dispatch action to add new destination to the state
+        dispatch({ type: 'ADD_DESTINATION', payload: newDestination });
       }
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(false);
+      dispatch({ type: 'SET_LOADING', payload: false }); // Set loading state to false
     }
   }
 

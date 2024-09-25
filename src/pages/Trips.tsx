@@ -11,7 +11,7 @@ interface TripsProps {
   setIsLoading: (loading: boolean) => void;
 }
 
-function Trips({ trips, isLoading, setIsLoading, addNewTrip }: TripsProps) {
+function Trips({ trips, isLoading, dispatch, addNewTrip }: TripsProps) {
   if (!trips || trips.length === 0) {
     return (
       <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
@@ -20,7 +20,7 @@ function Trips({ trips, isLoading, setIsLoading, addNewTrip }: TripsProps) {
           <p className="text-muted-foreground text-sm">
             View your upcoming trips here, once you've planned one
           </p>
-          <CreateTrip isLoading={isLoading} setIsLoading={setIsLoading} addNewTrip={addNewTrip} />
+          <CreateTrip isLoading={isLoading} dispatch={dispatch} addNewTrip={addNewTrip} />
         </div>
       </div>
     );
@@ -40,7 +40,7 @@ function Trips({ trips, isLoading, setIsLoading, addNewTrip }: TripsProps) {
           ))}
         </ul>
         <div className="flex h-full w-full items-center justify-center p-10">
-          <CreateTrip isLoading={isLoading} setIsLoading={setIsLoading} addNewTrip={addNewTrip} />
+          <CreateTrip isLoading={isLoading} dispatch={dispatch} addNewTrip={addNewTrip} />
         </div>
       </div>
     </div>
