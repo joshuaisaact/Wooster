@@ -9,6 +9,7 @@ import { Button } from './ui/button';
 import { Trip as TripType } from '@/types/types';
 import { useNavigate } from 'react-router-dom';
 import ConfirmModal from './ui/ConfirmModal';
+import { Action } from '@/store/reducer';
 
 interface DestinationDetailProps {
   destination: Destination;
@@ -16,7 +17,7 @@ interface DestinationDetailProps {
   onDeleteDestination?: (destinationId: number) => void;
   trip?: TripType;
   onDeleteTrip?: (tripId: string) => void;
-  dispatch: React.Dispatch<any>;
+  dispatch: React.Dispatch<Action>;
 }
 
 function DestinationDetail({

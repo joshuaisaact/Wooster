@@ -3,12 +3,13 @@ import Header from '../components/Header';
 import { Trip } from '../types/types';
 import CreateTrip from '@/components/CreateTrip';
 import TripCard from '@/components/TripCard';
+import { Action } from '@/store/reducer';
 
 interface TripsProps {
   trips: Trip[];
   addNewTrip: (trip: Trip) => void;
   isLoading: boolean;
-  setIsLoading: (loading: boolean) => void;
+  dispatch: React.Dispatch<Action>;
 }
 
 function Trips({ trips, isLoading, dispatch, addNewTrip }: TripsProps) {

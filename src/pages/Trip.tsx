@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import DayNav from '@/components/DayNav';
 import { Destination, Trip as TripType } from '@/types/types';

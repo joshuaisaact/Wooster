@@ -4,6 +4,7 @@ import { Destination as DestinationType, Trip } from '@/types/types';
 import TripCard from '@/components/TripCard';
 import SavedDestinations from '@/components/SavedDestinations';
 import CreateTrip from '@/components/CreateTrip';
+import { Action } from '@/store/reducer';
 
 interface DashboardProps {
   isLoading: boolean;
@@ -11,7 +12,7 @@ interface DashboardProps {
   trips: Trip[];
   destinations: DestinationType[];
   addNewTrip: (trip: Trip) => void;
-  dispatch: React.Dispatch<any>;
+  dispatch: React.Dispatch<Action>;
 }
 
 function Dashboard({

@@ -15,7 +15,7 @@ import { Trip } from '@/types/types';
 interface CreateTripProps {
   addNewTrip: (trip: Trip) => void;
   isLoading: boolean;
-  dispatch: React.Dispatch<any>; // Assuming you're using useReducer
+  dispatch: React.Dispatch<any>;
   location?: string;
 }
 

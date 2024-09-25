@@ -1,16 +1,17 @@
 import { Destination, Trip } from '../types/types';
 import CreateTrip from '@/components/CreateTrip';
 import TripCard from '@/components/TripCard';
+import { Action } from '@/store/reducer';
 
 interface TripsProps {
   trips: Trip[];
   addNewTrip: (trip: Trip) => void;
   isLoading: boolean;
-  setIsLoading: (loading: boolean) => void;
+  dispatch: React.Dispatch<Action>;
   destinations: Destination[];
 }
 
-function Trips({ trips, destinations, isLoading, setIsLoading, addNewTrip }: TripsProps) {
+function Trips({ trips, destinations, isLoading, dispatch, addNewTrip }: TripsProps) {
   if (!trips || trips.length === 0) {
     return (
       <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
@@ -19,14 +20,14 @@ function Trips({ trips, destinations, isLoading, setIsLoading, addNewTrip }: Tri
           <p className="text-muted-foreground text-sm">
             View your upcoming trips here, once you've planned one
           </p>
-          <CreateTrip isLoading={isLoading} setIsLoading={setIsLoading} addNewTrip={addNewTrip} />
+          <CreateTrip isLoading={isLoading} dispatch={dispatch} addNewTrip={addNewTrip} />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex h-full flex-col items-center pt-10 text-text">
+    <div className="text-text flex h-full flex-col items-center pt-10">
       {/* <Header>Trips</Header> */}
       <div className="flex w-full justify-between">
         <div className="w-2/3 p-10">
@@ -45,7 +46,7 @@ function Trips({ trips, destinations, isLoading, setIsLoading, addNewTrip }: Tri
           </ul>
         </div>
         <div className="sticky top-0 w-1/3 p-10">
-          <CreateTrip isLoading={isLoading} setIsLoading={setIsLoading} addNewTrip={addNewTrip} />
+          <CreateTrip isLoading={isLoading} addNewTrip={addNewTrip} dispatch={dispatch} />
           <img src="wooster-on-maps-no-bg.png" />
         </div>
       </div>

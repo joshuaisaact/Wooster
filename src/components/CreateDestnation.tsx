@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { FormField, FormItem, FormLabel, FormControl } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Action } from '@/store/reducer';
 
 interface FormData {
   destination: string;
@@ -12,7 +13,7 @@ interface FormData {
 interface CreateDestinationProps {
   addNewDestination?: (Destination: Destination) => void;
   isLoading: boolean;
-  dispatch: React.Dispatch<any>; // Assuming you're using useReducer
+  dispatch: React.Dispatch<Action>; // Assuming you're using useReducer
 }
 
 function CreateDestination({ addNewDestination, isLoading, dispatch }: CreateDestinationProps) {

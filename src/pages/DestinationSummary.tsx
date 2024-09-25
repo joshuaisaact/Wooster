@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Destination, Trip } from '@/types/types';
 import DestinationDetail from '@/components/DestinationDetail';
+import { Action } from '@/store/reducer';
 
 interface DestinationSummaryProps {
   addNewTrip?: (trip: Trip) => void;
   onDeleteDestination?: (destinationId: number) => void;
   onDeleteTrip?: (tripId: string) => void;
-  dispatch: React.Dispatch<any>; // Assuming you're using useReducer
+  dispatch: React.Dispatch<Action>; // Assuming you're using useReducer
   state: { isLoading: boolean; destinations: Destination[] }; // Reducer state
 }
 

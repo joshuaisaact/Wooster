@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { useEffect, useReducer } from 'react';
-import { initialState, reducer } from '@/store/reducer';
+import { initialState, reducer } from '../store/reducer';
 import Sidebar from '../components/Sidebar';
 import Trip from './Trip';
 import Trips from './TripsList';
@@ -94,6 +94,7 @@ function AppLayout() {
                 destinations={state.destinations}
                 isLoading={state.isLoading}
                 addNewTrip={addNewTrip}
+                dispatch={dispatch}
               />
             }
           />
