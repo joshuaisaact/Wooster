@@ -39,8 +39,6 @@ function CreateTrip({ location }: CreateTripProps) {
       itinerary: [],
     };
 
-    console.log(JSON.stringify(formattedData));
-
     try {
       const response = await fetch(`http://localhost:4000/newtripdb`, {
         method: 'POST',

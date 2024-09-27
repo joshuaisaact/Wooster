@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import DestinationDetail from '@/components/DestinationDetail';
 import { useAppContext } from '@/hooks/useAppContext';
+import { Destination } from '@/types/types';
 
 function DestinationSummary() {
   const { state } = useAppContext();
@@ -8,7 +9,9 @@ function DestinationSummary() {
   const { destinationId: destinationName } = useParams<{ destinationId: string }>();
 
   // Check if the destination exists in the state
-  const destination = destinations.find((dest) => dest.destination_name === destinationName);
+  const destination = destinations.find(
+    (dest: Destination) => dest.destination_name === destinationName,
+  );
 
   if (isLoading) {
     return <p>Loading...</p>;
