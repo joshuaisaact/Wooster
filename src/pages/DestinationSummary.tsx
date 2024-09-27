@@ -1,37 +1,16 @@
 import { useParams } from 'react-router-dom';
-import { Destination, Trip } from '@/types/types';
 import DestinationDetail from '@/components/DestinationDetail';
-import { Action } from '@/store/reducer';
+import { useAppContext } from '@/hooks/useAppContext';
 
-interface DestinationSummaryProps {
-  addNewTrip?: (trip: Trip) => void;
-  onDeleteDestination?: (destinationId: number) => void;
-  onDeleteTrip?: (tripId: string) => void;
-  dispatch: React.Dispatch<Action>; // Assuming you're using useReducer
-  state: { isLoading: boolean; destinations: Destination[] }; // Reducer state
-}
-
-function DestinationSummary({
-  addNewTrip,
-  onDeleteDestination,
-  onDeleteTrip,
-  dispatch,
-  state,
-}: DestinationSummaryProps) {
+function DestinationSummary() {
+  const { state } = useAppContext();
+  const { isLoading, destinations } = state;
   const { destinationId: destinationName } = useParams<{ destinationId: string }>();
 
   // Check if the destination exists in the state
-  const destination = state.destinations.find((dest) => dest.destination_name === destinationName);
+  const destination = destinations.find((dest) => dest.destination_name === destinationName);
 
-  if (state.isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (!destination) {
-    return <p>Destination not found.</p>;
-  }
-
-  if (state.isLoading) {
+  if (isLoading) {
     return <p>Loading...</p>;
   }
 
@@ -41,13 +20,7 @@ function DestinationSummary({
 
   return (
     <div className="text-text flex flex-col items-center p-4">
-      <DestinationDetail
-        destination={destination}
-        addNewTrip={addNewTrip}
-        onDeleteDestination={onDeleteDestination}
-        onDeleteTrip={onDeleteTrip}
-        dispatch={dispatch}
-      />
+      <DestinationDetail destination={destination} />
     </div>
   );
 }

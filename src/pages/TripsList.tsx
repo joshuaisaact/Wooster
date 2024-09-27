@@ -2,16 +2,12 @@ import { Destination, Trip } from '../types/types';
 import CreateTrip from '@/components/CreateTrip';
 import TripCard from '@/components/TripCard';
 import { Action } from '@/store/reducer';
+import { useAppContext } from '@/hooks/useAppContext';
 
-interface TripsProps {
-  trips: Trip[];
-  addNewTrip: (trip: Trip) => void;
-  isLoading: boolean;
-  dispatch: React.Dispatch<Action>;
-  destinations: Destination[];
-}
+function Trips() {
+  const { state } = useAppContext();
+  const { trips, destinations } = state;
 
-function Trips({ trips, destinations, isLoading, dispatch, addNewTrip }: TripsProps) {
   if (!trips || trips.length === 0) {
     return (
       <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
@@ -20,7 +16,7 @@ function Trips({ trips, destinations, isLoading, dispatch, addNewTrip }: TripsPr
           <p className="text-muted-foreground text-sm">
             View your upcoming trips here, once you've planned one
           </p>
-          <CreateTrip isLoading={isLoading} dispatch={dispatch} addNewTrip={addNewTrip} />
+          <CreateTrip />
         </div>
       </div>
     );
@@ -46,7 +42,7 @@ function Trips({ trips, destinations, isLoading, dispatch, addNewTrip }: TripsPr
           </ul>
         </div>
         <div className="sticky top-0 w-1/3 p-10">
-          <CreateTrip isLoading={isLoading} addNewTrip={addNewTrip} dispatch={dispatch} />
+          <CreateTrip />
           <img src="wooster-on-maps-no-bg.png" />
         </div>
       </div>

@@ -5,17 +5,12 @@ import CreateDestination from './CreateDestnation';
 import DestinationCard from './DestinationCard';
 import GlobeComponent from '@/pages/GlobeComponent';
 import SavedDestinations from './SavedDestinations';
-import { Destination as DestinationType } from '@/types/types';
+import { useAppContext } from '@/hooks/useAppContext';
 
-interface DestinationListProps {
-  destinations: DestinationType[];
-  handleAddNewDestination: (newDestination: DestinationType) => void;
-  onDeleteDestination?: (destinationId: number) => void;
-}
-
-function DestinationList({ destinations, handleAddNewDestination }: DestinationListProps) {
+function DestinationList() {
+  const { state } = useAppContext();
+  const { destinations, isLoading } = state;
   const [focusedDestination, setFocusedDestination] = useState<Destination | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [globeDimensions, setGlobeDimensions] = useState({ height: 600, width: 600 }); // Default height
 
   function handleButtonClick(destination: Destination) {
@@ -89,11 +84,7 @@ function DestinationList({ destinations, handleAddNewDestination }: DestinationL
           )}
         </div>
         <div className="mt-10 max-w-max rounded-lg bg-white p-6 shadow-md">
-          <CreateDestination
-            addNewDestination={handleAddNewDestination}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-          />
+          <CreateDestination />
         </div>
       </div>
     </div>

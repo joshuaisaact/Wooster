@@ -1,54 +1,36 @@
 import { useForm, FormProvider } from 'react-hook-form';
-import { Destination } from '@/types/types';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FormField, FormItem, FormLabel, FormControl } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Action } from '@/store/reducer';
+import { useAppContext } from '@/hooks/useAppContext';
+import { createDestination } from '@/services/apiService';
 
 interface FormData {
   destination: string;
 }
 
-interface CreateDestinationProps {
-  isLoading: boolean;
-  dispatch: React.Dispatch<Action>; // Assuming you're using useReducer
-}
+function CreateDestination() {
+  const { state, dispatch } = useAppContext();
+  const { isLoading } = state;
 
-function CreateDestination({ isLoading, dispatch }: CreateDestinationProps) {
   const form = useForm({
     defaultValues: {
       destination: '', // The only input field we need for this form
     },
   });
 
+  // Create a new destination via form submission and API service imported function
   async function onSubmit(data: FormData) {
-    const formattedData = {
-      destination: data.destination,
-    };
-
-    dispatch({ type: 'SET_LOADING', payload: true }); // Set loading state to true
+    dispatch({ type: 'SET_LOADING', payload: true });
 
     try {
-      const response = await fetch(`http://localhost:4000/newdestination`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formattedData),
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        const newDestination = result.destination;
-
-        // Dispatch action to add new destination to the state
-        dispatch({ type: 'ADD_DESTINATION', payload: newDestination });
-      }
+      const newDestination = await createDestination(data.destination); // Call the API service
+      dispatch({ type: 'ADD_DESTINATION', payload: newDestination }); // Dispatch action to add new destination
     } catch (error) {
-      console.error(error);
+      console.error('Error creating destination:', error);
     } finally {
-      dispatch({ type: 'SET_LOADING', payload: false }); // Set loading state to false
+      dispatch({ type: 'SET_LOADING', payload: false });
     }
   }
 

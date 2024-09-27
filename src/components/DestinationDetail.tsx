@@ -9,67 +9,42 @@ import { Button } from './ui/button';
 import { Trip as TripType } from '@/types/types';
 import { useNavigate } from 'react-router-dom';
 import ConfirmModal from './ui/ConfirmModal';
-import { Action } from '@/store/reducer';
+import { useAppContext } from '@/hooks/useAppContext';
+import { deleteTrip, deleteDestination } from '@/services/apiService';
 
 interface DestinationDetailProps {
   destination: Destination;
-  addNewTrip?: (trip: TripType) => void;
-  onDeleteDestination?: (destinationId: number) => void;
   trip?: TripType;
   onDeleteTrip?: (tripId: string) => void;
-  dispatch: React.Dispatch<Action>;
 }
 
-function DestinationDetail({
-  destination,
-  addNewTrip,
-  onDeleteDestination,
-  trip,
-  dispatch,
-  onDeleteTrip,
-}: DestinationDetailProps) {
+function DestinationDetail({ destination, trip }: DestinationDetailProps) {
+  const { dispatch } = useAppContext();
   const [tripCreationOpen, setTripCreationOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false); // Control the confirm modal
-
   const navigate = useNavigate();
 
+  // Uses API service to delete a trip
   const handleDeleteTrip = async () => {
     if (!trip) return;
 
-    dispatch({ type: 'SET_LOADING', payload: true }); // Dispatch loading state
+    dispatch({ type: 'SET_LOADING', payload: true });
 
     try {
-      const response = await fetch(`http://localhost:4000/trips/${trip.trip_id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        const errorDetails = await response.json();
-        console.error('Error response from server:', errorDetails);
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      // Trip deleted successfully
+      await deleteTrip(trip.trip_id); // Call the API service to delete the trip
       dispatch({ type: 'REMOVE_TRIP', payload: trip.trip_id });
-
       navigate('/trips');
     } catch (error) {
-      if (error instanceof Error) {
-        console.error('Error deleting trip:', error.message);
-      } else {
-        console.error('An unknown error occurred while deleting trip:', error);
-      }
+      console.error('Error deleting trip:', error instanceof Error ? error.message : error);
     } finally {
-      dispatch({ type: 'SET_LOADING', payload: false }); // End loading state
+      dispatch({ type: 'SET_LOADING', payload: false });
     }
   };
 
+  // Uses API service to delete the destination
   const handleDeleteDestination = async () => {
-    const destination_id = destination?.destination_id;
-    if (!destination_id) {
+    const destinationId = destination?.destination_id;
+    if (!destinationId) {
       console.error('No destination ID found');
       return;
     }
@@ -81,34 +56,16 @@ function DestinationDetail({
       return;
     }
 
-    dispatch({ type: 'SET_LOADING', payload: true }); // Dispatch loading state
+    dispatch({ type: 'SET_LOADING', payload: true });
 
     try {
-      const response = await fetch(`http://localhost:4000/destinations/${destination_id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        const errorDetails = await response.json();
-        console.error('Error response from server:', errorDetails);
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      // Destination deleted successfully
-      dispatch({ type: 'REMOVE_DESTINATION', payload: destination_id });
-
+      await deleteDestination(destinationId);
+      dispatch({ type: 'REMOVE_DESTINATION', payload: destinationId });
       navigate('/destination-list');
     } catch (error) {
-      if (error instanceof Error) {
-        console.error('Error deleting trip:', error.message);
-      } else {
-        console.error('An unknown error occurred while deleting trip:', error);
-      }
+      console.error('Error deleting destination:', error instanceof Error ? error.message : error);
     } finally {
-      dispatch({ type: 'SET_LOADING', payload: false }); // End loading state
+      dispatch({ type: 'SET_LOADING', payload: false });
     }
   };
 
@@ -148,14 +105,12 @@ function DestinationDetail({
           <CardHeader>
             <div className="flex justify-between">
               <CardTitle className="text-2xl">{destination.destination_name}</CardTitle>
-              {addNewTrip && (
-                <button
-                  className="bg-green-500 text-white"
-                  onClick={() => setTripCreationOpen(!tripCreationOpen)}
-                >
-                  {tripCreationOpen ? 'Cancel' : 'Plan Trip'}
-                </button>
-              )}
+              <button
+                className="bg-green-500 text-white"
+                onClick={() => setTripCreationOpen(!tripCreationOpen)}
+              >
+                {tripCreationOpen ? 'Cancel' : 'Plan Trip'}
+              </button>
             </div>
 
             {/* Badges */}
@@ -229,16 +184,14 @@ function DestinationDetail({
                 </Button>
               </div>
             )}
-            {onDeleteDestination && (
-              <div className="mt-4 flex justify-center">
-                <Button
-                  onClick={handleDeleteDestination}
-                  className="bg-red-500 text-white hover:bg-red-600"
-                >
-                  Delete Destination
-                </Button>
-              </div>
-            )}
+            <div className="mt-4 flex justify-center">
+              <Button
+                onClick={handleDeleteDestination}
+                className="bg-red-500 text-white hover:bg-red-600"
+              >
+                Delete Destination
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -246,12 +199,7 @@ function DestinationDetail({
       {/* Right Side - Create Trip Section (appears when button is clicked) */}
       {tripCreationOpen && (
         <div className="flex h-full flex-col justify-between">
-          <CreateTrip
-            location={destination.destination_name}
-            addNewTrip={(trip: TripType) => dispatch({ type: 'ADD_TRIP', payload: trip })}
-            isLoading={false}
-            dispatch={dispatch}
-          />
+          <CreateTrip location={destination.destination_name} />
           <img src="/Wooster-map-planning.png" className="mt-4 h-auto" alt="Map Planning" />
         </div>
       )}

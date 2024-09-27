@@ -13,12 +13,12 @@ import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '@/hooks/useAppContext';
 
 interface CreateTripProps {
-  isLoading: boolean;
   location?: string;
 }
 
-function CreateTrip({ isLoading, location }: CreateTripProps) {
-  const { dispatch } = useAppContext();
+function CreateTrip({ location }: CreateTripProps) {
+  const { state, dispatch } = useAppContext();
+  const { isLoading } = state;
 
   const form = useForm({
     defaultValues: {
