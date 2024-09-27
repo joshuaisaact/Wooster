@@ -4,25 +4,11 @@ import { Destination as DestinationType, Trip } from '@/types/types';
 import TripCard from '@/components/TripCard';
 import SavedDestinations from '@/components/SavedDestinations';
 import CreateTrip from '@/components/CreateTrip';
-import { Action } from '@/store/reducer';
+import { useAppContext } from '@/hooks/useAppContext';
 
-interface DashboardProps {
-  isLoading: boolean;
-  handleAddNewDestination: (newDestination: DestinationType) => void;
-  trips: Trip[];
-  destinations: DestinationType[];
-  addNewTrip: (trip: Trip) => void;
-  dispatch: React.Dispatch<Action>;
-}
-
-function Dashboard({
-  trips,
-  destinations,
-  handleAddNewDestination,
-  isLoading,
-  addNewTrip,
-  dispatch,
-}: DashboardProps) {
+function Dashboard() {
+  const { state } = useAppContext(); // Access state and dispatch
+  const { isLoading, trips, destinations } = state;
   const [selectedDestination, setSelectedDestination] = useState<DestinationType | null>(null);
 
   const getSoonestTrip = (trips: Trip[]) => {
@@ -78,25 +64,17 @@ function Dashboard({
             ) : (
               <p>No upcoming trips found.</p>
             )}
-            <SavedDestinations
-              destinations={destinations}
-              handleButtonClick={handleDestinationClick}
-            />
+            <SavedDestinations handleButtonClick={handleDestinationClick} />
           </div>
         </div>
 
         {/* Sidebar - one-third width */}
         <div className="space-y-10 lg:col-span-1">
           <div className="max-w-max rounded-lg bg-white p-6 shadow-md">
-            <CreateTrip
-              location={selectedDestination?.destination_name}
-              addNewTrip={addNewTrip}
-              isLoading={isLoading}
-              dispatch={dispatch}
-            />
+            <CreateTrip location={selectedDestination} />
           </div>
           <div className="max-w-max rounded-lg bg-white p-6 shadow-md">
-            <CreateDestination isLoading={isLoading} dispatch={dispatch} />
+            <CreateDestination />
           </div>
         </div>
       </div>

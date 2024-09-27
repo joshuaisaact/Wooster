@@ -6,11 +6,7 @@ import ItineraryPage from './ItineraryPage';
 import DestinationDetail from '@/components/DestinationDetail';
 import { Share2 } from 'lucide-react'; // Importing an icon for the share button
 import { Button } from '@/components/ui/button'; // Assuming you have a Button component
-
-interface TripProps {
-  trips: TripType[];
-  destinations: Destination[];
-}
+import { useAppContext } from '@/hooks/useAppContext';
 
 function flattenItinerary(trip: TripType) {
   if (trip.itinerary && Array.isArray(trip.itinerary)) {
@@ -19,9 +15,13 @@ function flattenItinerary(trip: TripType) {
   return trip.itinerary;
 }
 
-function Trip({ trips, destinations }: TripProps) {
+function Trip() {
+  const { state } = useAppContext();
   const { tripId } = useParams<{ tripId: string }>();
   const [currentDay, setCurrentDay] = useState(0); // Start from day 1
+
+  const { trips, destinations } = state;
+
   const trip = trips.find((t) => t.trip_id === tripId);
 
   const handleShare = async () => {

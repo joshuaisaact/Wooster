@@ -1,13 +1,11 @@
 import DestinationCard from './DestinationCard';
 import { Link } from 'react-router-dom';
-import { Destination } from '@/types/types';
+import { useAppContext } from '@/hooks/useAppContext';
 
-interface DestinationFullListProps {
-  destinations: Destination[];
-  isLoading: boolean;
-}
+function DestinationFullList() {
+  const { state } = useAppContext();
+  const { isLoading, destinations } = state;
 
-function DestinationFullList({ destinations, isLoading }: DestinationFullListProps) {
   return (
     <div className="rounded-lg bg-white p-6 shadow-md">
       <h2 className="mb-4 text-2xl font-bold">Destination List</h2>

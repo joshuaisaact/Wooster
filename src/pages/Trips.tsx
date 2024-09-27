@@ -1,18 +1,13 @@
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import { Trip } from '../types/types';
 import CreateTrip from '@/components/CreateTrip';
 import TripCard from '@/components/TripCard';
-import { Action } from '@/store/reducer';
+import { useAppContext } from '@/hooks/useAppContext';
 
-interface TripsProps {
-  trips: Trip[];
-  addNewTrip: (trip: Trip) => void;
-  isLoading: boolean;
-  dispatch: React.Dispatch<Action>;
-}
+function Trips() {
+  const { state } = useAppContext();
+  const { trips } = state;
 
-function Trips({ trips, isLoading, dispatch, addNewTrip }: TripsProps) {
   if (!trips || trips.length === 0) {
     return (
       <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
@@ -21,7 +16,7 @@ function Trips({ trips, isLoading, dispatch, addNewTrip }: TripsProps) {
           <p className="text-muted-foreground text-sm">
             View your upcoming trips here, once you've planned one
           </p>
-          <CreateTrip isLoading={isLoading} dispatch={dispatch} addNewTrip={addNewTrip} />
+          <CreateTrip />
         </div>
       </div>
     );
@@ -41,7 +36,7 @@ function Trips({ trips, isLoading, dispatch, addNewTrip }: TripsProps) {
           ))}
         </ul>
         <div className="flex h-full w-full items-center justify-center p-10">
-          <CreateTrip isLoading={isLoading} dispatch={dispatch} addNewTrip={addNewTrip} />
+          <CreateTrip />
         </div>
       </div>
     </div>

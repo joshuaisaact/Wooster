@@ -2,18 +2,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Destination } from '@/types/types';
+import { useAppContext } from '@/hooks/useAppContext';
 
 interface SavedDestinationsProps {
-  destinations: Destination[];
   handleButtonClick: (destination: Destination) => void;
   focusedDestinationId?: number | null;
 }
 
-export default function SavedDestinations({
-  destinations,
-  handleButtonClick,
-  focusedDestinationId,
-}: SavedDestinationsProps) {
+function SavedDestinations({ handleButtonClick, focusedDestinationId }: SavedDestinationsProps) {
+  const { state } = useAppContext();
+  const { destinations } = state;
   return (
     <Card>
       <CardHeader>
@@ -43,3 +41,5 @@ export default function SavedDestinations({
     </Card>
   );
 }
+
+export default SavedDestinations;

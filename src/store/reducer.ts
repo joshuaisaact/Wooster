@@ -1,15 +1,6 @@
-import { Destination, Trip as Triptype } from '@/types/types';
+import { Action, Destination, State, Trip as Triptype } from '@/types/types';
 
-export type Action =
-  | { type: 'SET_DESTINATIONS'; payload: Destination[] }
-  | { type: 'SET_TRIPS'; payload: Triptype[] }
-  | { type: 'ADD_TRIP'; payload: Triptype }
-  | { type: 'REMOVE_TRIP'; payload: string }
-  | { type: 'ADD_DESTINATION'; payload: Destination }
-  | { type: 'REMOVE_DESTINATION'; payload: number }
-  | { type: 'SET_LOADING'; payload: boolean };
-
-export const initialState = {
+export const initialState: State = {
   destinations: [] as Destination[],
   trips: [] as Triptype[],
   isLoading: false,
