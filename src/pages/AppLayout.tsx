@@ -10,7 +10,6 @@ import DestinationFullList from '@/components/DestinationFullList';
 import DestinationList from '@/components/DestinationList';
 import DestinationSummary from './DestinationSummary';
 import GlobeComponent from './GlobeComponent';
-import { AppProvider } from '@/context/AppContext';
 import type { Destination, Trip as Triptype } from '@/types/types';
 
 function AppLayout() {
