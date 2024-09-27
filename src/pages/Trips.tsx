@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import CreateTrip from '@/components/CreateTrip';
 import TripCard from '@/components/TripCard';
 import { useAppContext } from '@/hooks/useAppContext';
+import { Trip as Triptype } from '@/types/types';
 
 function Trips() {
   const { state } = useAppContext();
@@ -27,7 +28,7 @@ function Trips() {
       <Header>Trips</Header>
       <div className="grid grid-cols-2 justify-center">
         <ul className="grid h-[600px] w-full max-w-4xl grid-cols-1 gap-10 overflow-y-auto px-10">
-          {trips.map((trip) => (
+          {trips.map((trip: Triptype) => (
             <li key={trip.trip_id}>
               <Link to={`/trips/${trip.trip_id}`}>
                 <TripCard trip={trip} />

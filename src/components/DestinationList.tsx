@@ -60,7 +60,6 @@ function DestinationList() {
 
         <div className="flex flex-row">
           <SavedDestinations
-            destinations={destinations}
             handleButtonClick={handleButtonClick}
             focusedDestinationId={focusedDestination?.destination_id || null}
           />

@@ -20,7 +20,7 @@ function SavedDestinations({ handleButtonClick, focusedDestinationId }: SavedDes
       <CardContent>
         <ScrollArea className="w-full">
           <div className="flex flex-wrap gap-2 p-1">
-            {destinations.map((destination) => (
+            {destinations.map((destination: Destination) => (
               <Button
                 key={destination.destination_id}
                 onClick={() => handleButtonClick(destination)}

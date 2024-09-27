@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import CreateDestination from '@/components/CreateDestnation';
-import { Destination as DestinationType, Trip } from '@/types/types';
+import { Destination, Destination as DestinationType, Trip } from '@/types/types';
 import TripCard from '@/components/TripCard';
 import SavedDestinations from '@/components/SavedDestinations';
 import CreateTrip from '@/components/CreateTrip';
@@ -22,7 +22,7 @@ function Dashboard() {
   const soonestTrip = !isLoading ? getSoonestTrip(trips) : null;
   const soonestTripDestination = soonestTrip
     ? destinations.find(
-        (destination) => destination.destination_name === soonestTrip.destination_name,
+        (destination: Destination) => destination.destination_name === soonestTrip.destination_name,
       )
     : null;
 
