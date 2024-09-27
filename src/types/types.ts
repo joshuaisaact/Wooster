@@ -57,6 +57,8 @@ export interface State {
   trips: Trip[];
   destinations: Destination[];
   isLoading: boolean;
+  globeInstance: object | null;
+  points: { lat: number; lng: number; name: string }[];
 }
 
 // Reducer Action types
@@ -67,4 +69,6 @@ export type Action =
   | { type: 'REMOVE_TRIP'; payload: string }
   | { type: 'ADD_DESTINATION'; payload: Destination }
   | { type: 'REMOVE_DESTINATION'; payload: number }
-  | { type: 'SET_LOADING'; payload: boolean };
+  | { type: 'SET_LOADING'; payload: boolean }
+  | { type: 'SET_GLOBE_INSTANCE'; payload: object | null } // New action for setting globe instance
+  | { type: 'SET_POINTS'; payload: { lat: number; lng: number; name: string }[] }; // New action for points

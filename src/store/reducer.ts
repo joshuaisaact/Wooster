@@ -4,6 +4,8 @@ export const initialState: State = {
   destinations: [] as Destination[],
   trips: [] as Triptype[],
   isLoading: false,
+  globeInstance: null,
+  points: [],
 };
 
 export function reducer(state: typeof initialState = initialState, action: Action) {
@@ -37,6 +39,16 @@ export function reducer(state: typeof initialState = initialState, action: Actio
       return {
         ...state,
         destinations: [...state.destinations, action.payload],
+      };
+    case 'SET_GLOBE_INSTANCE': // Handling globe instance
+      return {
+        ...state,
+        globeInstance: action.payload,
+      };
+    case 'SET_POINTS': // Handling globe points
+      return {
+        ...state,
+        points: action.payload,
       };
     default:
       return state;
