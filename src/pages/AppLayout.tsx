@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { useEffect, useReducer } from 'react';
-import { initialState, reducer } from '../store/reducer';
+import { useAppContext } from '@/hooks/useAppContext';
 import Sidebar from '../components/Sidebar';
 import Trip from './Trip';
 import Trips from './TripsList';
@@ -11,44 +10,45 @@ import DestinationFullList from '@/components/DestinationFullList';
 import DestinationList from '@/components/DestinationList';
 import DestinationSummary from './DestinationSummary';
 import GlobeComponent from './GlobeComponent';
+import { AppProvider } from '@/context/AppContext';
 import type { Destination, Trip as Triptype } from '@/types/types';
 
 function AppLayout() {
-  const BASE_URL = 'http://localhost:4000';
-  const [state, dispatch] = useReducer(reducer, initialState);
+  // const BASE_URL = 'http://localhost:4000';
+  const { state, dispatch } = useAppContext();
 
-  async function fetchTrips() {
-    try {
-      dispatch({ type: 'SET_LOADING', payload: true });
-      const res = await fetch(`${BASE_URL}/tripsdb`);
-      const data = await res.json();
-      dispatch({ type: 'SET_TRIPS', payload: data });
-    } catch (error) {
-      console.error('There was an error loading trips:', error);
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false });
-    }
-  }
+  // async function fetchTrips() {
+  //   try {
+  //     dispatch({ type: 'SET_LOADING', payload: true });
+  //     const res = await fetch(`${BASE_URL}/tripsdb`);
+  //     const data = await res.json();
+  //     dispatch({ type: 'SET_TRIPS', payload: data });
+  //   } catch (error) {
+  //     console.error('There was an error loading trips:', error);
+  //   } finally {
+  //     dispatch({ type: 'SET_LOADING', payload: false });
+  //   }
+  // }
 
-  async function fetchDestinations() {
-    try {
-      dispatch({ type: 'SET_LOADING', payload: true });
-      const res = await fetch(`${BASE_URL}/destinations`);
-      const data = await res.json();
-      dispatch({ type: 'SET_DESTINATIONS', payload: data });
-    } catch (error) {
-      console.error('There was an error loading destinations:', error);
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false });
-    }
-  }
+  // async function fetchDestinations() {
+  //   try {
+  //     dispatch({ type: 'SET_LOADING', payload: true });
+  //     const res = await fetch(`${BASE_URL}/destinations`);
+  //     const data = await res.json();
+  //     dispatch({ type: 'SET_DESTINATIONS', payload: data });
+  //   } catch (error) {
+  //     console.error('There was an error loading destinations:', error);
+  //   } finally {
+  //     dispatch({ type: 'SET_LOADING', payload: false });
+  //   }
+  // }
 
-  console.log('Fetched trips and destinations');
+  // console.log('Fetched trips and destinations');
 
-  useEffect(() => {
-    fetchTrips();
-    fetchDestinations();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   fetchTrips();
+  //   fetchDestinations();
+  // }, [dispatch]);
 
   function addNewTrip(newTrip: Triptype) {
     dispatch({ type: 'ADD_TRIP', payload: newTrip });
@@ -73,19 +73,7 @@ function AppLayout() {
       </div>
       <div className="ml-64 flex-1 flex-grow flex-col items-center p-4">
         <Routes>
-          <Route
-            path="home"
-            element={
-              <Dashboard
-                isLoading={state.isLoading}
-                dispatch={dispatch}
-                handleAddNewDestination={handleAddNewDestination}
-                trips={state.trips}
-                destinations={state.destinations}
-                addNewTrip={addNewTrip}
-              ></Dashboard>
-            }
-          />
+          <Route path="home" element={<Dashboard />} />
           <Route
             path="trips"
             element={

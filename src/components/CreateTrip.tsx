@@ -10,17 +10,16 @@ import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { Trip } from '@/types/types';
-import { Action } from '@/store/reducer';
+import { useAppContext } from '@/hooks/useAppContext';
 
 interface CreateTripProps {
-  addNewTrip: (trip: Trip) => void;
   isLoading: boolean;
-  dispatch: React.Dispatch<Action>;
   location?: string;
 }
 
-function CreateTrip({ isLoading, dispatch, location }: CreateTripProps) {
+function CreateTrip({ isLoading, location }: CreateTripProps) {
+  const { dispatch } = useAppContext();
+
   const form = useForm({
     defaultValues: {
       days: 2,
@@ -56,7 +55,7 @@ function CreateTrip({ isLoading, dispatch, location }: CreateTripProps) {
 
         dispatch({ type: 'ADD_TRIP', payload: result.trip });
 
-        // Use the correct path for the trip_id
+        // Navigate to the trip page using the trip_id from the result
         if (result.trip && result.trip.trip_id) {
           navigate(`/trips/${result.trip.trip_id}`);
         }
