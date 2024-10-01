@@ -68,3 +68,20 @@ export type Action =
   | { type: 'ADD_DESTINATION'; payload: Destination }
   | { type: 'REMOVE_DESTINATION'; payload: number }
   | { type: 'SET_LOADING'; payload: boolean };
+
+// Auth State
+export interface AuthState {
+  user: User | null;
+  isAuthenticated: boolean;
+}
+
+// authReducer Action types
+export type AuthAction = { type: 'LOGIN'; payload: User } | { type: 'LOGOUT' };
+
+// User
+export interface User {
+  name: string;
+  email: string;
+  password: string;
+  avatar: string;
+}
