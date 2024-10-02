@@ -48,12 +48,7 @@ function Login() {
             value={password}
           />
         </div>
-        {/* <Link
-        to="/home"
-        className="flex items-center justify-center rounded-lg px-4 py-2 text-gray-300 transition-colors duration-200 hover:bg-gray-700 hover:text-white"
-      >
-        Log in
-      </Link> */}
+
         <div className="m-3">
           <Button>Login</Button>
         </div>
