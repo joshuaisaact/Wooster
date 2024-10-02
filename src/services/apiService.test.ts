@@ -8,14 +8,11 @@ import {
   deleteDestination,
 } from './apiService';
 
-/// Properly mock the global fetch function
 const mockFetch = vi.fn();
 
-// Assign the mock to the global fetch
 global.fetch = mockFetch;
 
 describe('API functions', () => {
-  // Reset fetch mock between each test
   beforeEach(() => {
     mockFetch.mockReset();
   });
@@ -59,6 +56,7 @@ describe('API functions', () => {
     await expect(fetchDestinations()).rejects.toThrow('Failed to fetch destinations');
     expect(mockFetch).toHaveBeenCalledWith(`${BASE_URL}/destinations`);
   });
+
   // Test createDestination
   test('createDestination - should create a new destination successfully', async () => {
     const mockResponse = { destination: 'New York' };
