@@ -5,6 +5,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
-  }
+    },
+    "types": ["vitest", "node"] // Ensure "vitest" is included here
+  },
+  "include": ["vitest.setup.ts"]
 }
