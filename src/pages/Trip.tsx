@@ -22,7 +22,7 @@ function Trip() {
 
   const { trips, destinations } = state;
 
-  const trip = trips.find((t) => t.trip_id === tripId);
+  const trip = trips.find((t: TripType) => t.trip_id === tripId);
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -46,7 +46,7 @@ function Trip() {
   }
 
   const selectedDestination = destinations.find(
-    (d) => d.destination_name === trip.destination_name,
+    (d: Destination) => d.destination_name === trip.destination_name,
   );
 
   const flattenedItinerary = flattenItinerary(trip);

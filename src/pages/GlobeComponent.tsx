@@ -9,7 +9,7 @@ interface Destination {
 
 interface GlobeComponentProps {
   height?: number;
-  width?: string;
+  width?: number;
   destinations?: Destination[];
   focusedDestination?: Destination | null;
 }
