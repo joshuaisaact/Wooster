@@ -131,11 +131,15 @@ This will start a Vite-powered development environment with hot module reloading
 ## Scripts
 
 - `npm run dev`: Start the development server.
-- `npm run build`: Build the project for production.
+- `npm run build`: Build the project for production (TypeScript compilation followed by Vite build).
 - `npm run lint`: Lint the code using ESLint.
 - `npm run lint:fix`: Automatically fix linting issues.
 - `npm run format`: Format the code using Prettier.
 - `npm run type-check`: Run TypeScript type checking without emitting any files.
+- `npm run vitest`: Run Vitest testing suite
+- `npm run vitest:full`: Run the Vitest testing suite in verbose mode, showing all test names (including passing tests).
+- `npm run vitest:ui`: Open the Vitest interactive testing UI.
+- `npm run test:coverage`: Run the Vitest testing suite with coverage reporting.
 
 ## Contributing
 
