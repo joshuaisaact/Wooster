@@ -1,17 +1,8 @@
 import { describe, test, expect } from 'vitest';
 import { reducer, initialState } from './reducer';
 import { State, Action, Destination, Trip as Triptype } from '@/types/types';
-
-// Mock data for testing
-const mockDestinations: Destination[] = [
-  { id: 1, name: 'Paris', country: 'France' },
-  { id: 2, name: 'New York', country: 'USA' },
-];
-
-const mockTrips: Triptype[] = [
-  { trip_id: '1', name: 'Trip to Paris', destination_id: 1 },
-  { trip_id: '2', name: 'Trip to New York', destination_id: 2 },
-];
+import { mockDestinations, mockTokyo } from '@/__mocks__/mockDestinations';
+import { mockTrips, mockItineraryNYC } from '@/__mocks__/mockTrips';
 
 describe('reducer', () => {
   // Test initial state
@@ -40,7 +31,13 @@ describe('reducer', () => {
 
   // Test ADD_TRIP action
   test('should handle ADD_TRIP', () => {
-    const newTrip: Triptype = { trip_id: '3', name: 'Trip to Tokyo', destination_id: 3 };
+    const newTrip: Triptype = {
+      trip_id: '3',
+      destination_name: 'Tokyo, Japan',
+      num_days: 7,
+      start_date: '2024-08-10',
+      itinerary: mockItineraryNYC, // Itinerary for the trip
+    };
     const action: Action = { type: 'ADD_TRIP', payload: newTrip };
     const expectedState: State = { ...initialState, trips: [...initialState.trips, newTrip] };
 
@@ -72,7 +69,7 @@ describe('reducer', () => {
 
   // Test ADD_DESTINATION action
   test('should handle ADD_DESTINATION', () => {
-    const newDestination: Destination = { id: 3, name: 'Tokyo', country: 'Japan' };
+    const newDestination: Destination = mockTokyo[0];
     const action: Action = { type: 'ADD_DESTINATION', payload: newDestination };
     const expectedState: State = {
       ...initialState,
@@ -85,8 +82,8 @@ describe('reducer', () => {
 
   // Test default case (unknown action)
   test('should return the current state for unknown action', () => {
-    const unknownAction: Action = { type: 'UNKNOWN_ACTION' } as Action;
-    const newState = reducer(initialState, unknownAction);
+    const unknownAction = { type: 'UNKNOWN_ACTION' };
+    const newState = reducer(initialState, unknownAction as Action);
     expect(newState).toEqual(initialState);
   });
 });

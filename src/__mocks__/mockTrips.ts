@@ -32,7 +32,7 @@ const mockActivitiesParisDay2: ActivityProps[] = [
 ];
 
 // Mock activities for another trip to New York
-const mockActivitiesNYC: ActivityProps[] = [
+export const mockActivitiesNYC: ActivityProps[] = [
   {
     name: 'Central Park Tour',
     description: 'A guided tour through Central Park, including a visit to Bethesda Terrace.',
@@ -48,7 +48,7 @@ const mockActivitiesNYC: ActivityProps[] = [
 ];
 
 // Mock itinerary items for the Paris trip
-const mockItineraryParis: ItineraryItem[] = [
+export const mockItineraryParis: ItineraryItem[] = [
   {
     day: 1,
     activities: mockActivitiesParisDay1,
@@ -60,7 +60,7 @@ const mockItineraryParis: ItineraryItem[] = [
 ];
 
 // Mock itinerary items for the New York trip
-const mockItineraryNYC: ItineraryItem[] = [
+export const mockItineraryNYC: ItineraryItem[] = [
   {
     day: 1,
     activities: mockActivitiesNYC,

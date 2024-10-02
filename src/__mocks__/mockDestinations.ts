@@ -49,3 +49,30 @@ export const mockDestinations: Destination[] = [
     cultural_significance: 'New York is considered the cultural capital of the world.',
   },
 ];
+
+export const mockTokyo: Destination[] = [
+  {
+    destination_id: 3,
+    destination_name: 'Tokyo, Japan',
+    latitude: 35.6762,
+    longitude: 139.6503,
+    description:
+      'Tokyo is the capital of Japan, known for its modern architecture, shopping, and food scene.',
+    country: 'Japan',
+    created_at: '2024-01-01',
+    best_time_to_visit: 'Spring (March to May) and Autumn (September to November)',
+    average_temperature_low: '5°C',
+    average_temperature_high: '15°C',
+    popular_activities: 'Visit Tokyo Tower, Explore Shibuya, Enjoy sushi',
+    travel_tips: 'Purchase a rail pass for convenient travel.',
+    nearby_attractions: 'Mount Fuji, Hakone, Nikko',
+    transportation_options: 'Subway, Bullet trains, Buses',
+    accessibility_info: 'Most public transport and tourist attractions are wheelchair accessible.',
+    official_language: 'Japanese',
+    currency: 'Japanese Yen (¥)',
+    local_cuisine: 'Sushi, Ramen, Tempura',
+    cost_level: 'Moderate',
+    safety_rating: 'Very High',
+    cultural_significance: 'Tokyo is a blend of traditional and modern Japanese culture.',
+  },
+];
