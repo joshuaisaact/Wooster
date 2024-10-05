@@ -12,8 +12,8 @@ function SidebarNavLink({ to, children }: SidebarNavLinkProps) {
       to={to}
       className={({ isActive }) =>
         isActive
-          ? 'gap-5font-semibold flex items-center gap-3 rounded-lg bg-gray-700 px-4 py-2 text-lg text-white transition-all'
-          : 'flex items-center gap-3 rounded-lg px-4 py-2 text-lg font-semibold text-white transition-all transition-colors duration-200 hover:bg-accent hover:text-white'
+          ? 'flex items-center gap-3 rounded-lg bg-green-800 px-4 py-2 text-lg font-semibold text-white shadow-md transition-colors duration-200 ease-in-out'
+          : 'flex items-center gap-3 rounded-lg px-4 py-2 text-lg font-semibold text-white transition-colors duration-200 ease-in-out hover:bg-green-600 hover:text-yellow-400 hover:shadow-lg'
       }
     >
       {children}
