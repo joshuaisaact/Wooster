@@ -23,7 +23,7 @@ function Login() {
     [isAuthenticated, navigate],
   );
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     if (email && password) login(email, password);
