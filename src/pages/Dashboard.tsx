@@ -36,7 +36,7 @@ function Dashboard() {
   }
 
   return (
-    <div className="text-text flex h-full flex-col items-center pt-10">
+    <div className="flex h-full flex-col items-center pt-10 text-text">
       <div className="grid w-full max-w-7xl grid-cols-1 gap-8 pt-10 lg:grid-cols-3">
         {/* Main content area - two-thirds width */}
         <div className="space-y-7 lg:col-span-2">
