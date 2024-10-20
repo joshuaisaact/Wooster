@@ -8,7 +8,6 @@ function DestinationSummary() {
   const { isLoading, destinations } = state;
   const { destinationId: destinationName } = useParams<{ destinationId: string }>();
 
-  // Check if the destination exists in the state
   const destination = destinations.find(
     (dest: Destination) => dest.destination_name === destinationName,
   );
@@ -22,7 +21,7 @@ function DestinationSummary() {
   }
 
   return (
-    <div className="text-text flex flex-col items-center p-4">
+    <div className="flex flex-col items-center p-4 text-text">
       <DestinationDetail destination={destination} />
     </div>
   );
