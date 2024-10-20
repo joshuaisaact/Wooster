@@ -40,7 +40,7 @@ function CreateTrip({ location }: CreateTripProps) {
     };
 
     try {
-      const response = await fetch(`http://localhost:4000/newtripdb`, {
+      const response = await fetch(`http://localhost:4000/trip`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

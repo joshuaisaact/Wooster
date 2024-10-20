@@ -3,7 +3,7 @@ export const BASE_URL: string = 'http://localhost:4000';
 
 // Fetch trips data
 export const fetchTrips = async () => {
-  const res = await fetch(`${BASE_URL}/tripsdb`);
+  const res = await fetch(`${BASE_URL}/trips`);
   if (!res.ok) throw new Error('Failed to fetch trips');
   return res.json();
 };
@@ -17,7 +17,7 @@ export const fetchDestinations = async () => {
 
 // Create a new destination
 export const createDestination = async (destinationName: string) => {
-  const response = await fetch(`${BASE_URL}/newdestination`, {
+  const response = await fetch(`${BASE_URL}/destination`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

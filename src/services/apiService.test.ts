@@ -27,14 +27,14 @@ describe('API functions', () => {
 
     const trips = await fetchTrips();
     expect(trips).toEqual(mockTrips);
-    expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/tripsdb`);
+    expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/trips`);
   });
 
   test('fetchTrips - should throw error on failed fetch', async () => {
     mockFetch.mockResolvedValueOnce({ ok: false });
 
     await expect(fetchTrips()).rejects.toThrow('Failed to fetch trips');
-    expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/tripsdb`);
+    expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/trips`);
   });
 
   // Test fetchDestinations
@@ -67,7 +67,7 @@ describe('API functions', () => {
 
     const destination = await createDestination('New York');
     expect(destination).toEqual('New York');
-    expect(mockFetch).toHaveBeenCalledWith(`${BASE_URL}/newdestination`, {
+    expect(mockFetch).toHaveBeenCalledWith(`${BASE_URL}/destination`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ destination: 'New York' }),
@@ -80,7 +80,7 @@ describe('API functions', () => {
     await expect(createDestination('InvalidDestination')).rejects.toThrow(
       'Failed to create destination',
     );
-    expect(mockFetch).toHaveBeenCalledWith(`${BASE_URL}/newdestination`, {
+    expect(mockFetch).toHaveBeenCalledWith(`${BASE_URL}/destination`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ destination: 'InvalidDestination' }),
