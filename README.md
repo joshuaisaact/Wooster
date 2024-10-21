@@ -29,10 +29,6 @@ The backend for this project powers AI recommendations, manages user data, and i
 
 </div>
 
-## Related Repositories
-
-- Backend: [Wooster-server](https://github.com/joshuaisaact/Wooster-server/tree/main#)
-
 ## Table of Contents
 
 - [Overview](#overview)
