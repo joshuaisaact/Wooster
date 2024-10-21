@@ -2,6 +2,10 @@
 
 Wooster is an AI-powered trip planning application that helps users explore and plan trips with personalized recommendations. The frontend is built with TypeScript, Tailwind CSS, and React, incorporating interactive elements like a 3D globe and map using Leaflet and Three.js. The app communicates with the backend service (Gemini) to generate trips and detailed destination data.
 
+## Related Repositories
+
+- Backend: [Wooster-server](https://github.com/joshuaisaact/Wooster-server/tree/main#)
+
 ## Table of Contents
 
 - [Overview](#overview)
