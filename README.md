@@ -48,22 +48,9 @@ The backend for this project powers AI recommendations, manages user data, and i
 
 Wooster's frontend provides users with an interactive interface to explore destinations and plan trips. It includes an "Explore" page featuring a 3D globe where users can visualize destinations and trip details. The application fetches data from the Gemini backend via an Express.js API to generate trips and display detailed destination data.
 
-## Technologies Used
-
-Wooster's frontend leverages a modern tech stack for development:
-
-- **TypeScript**: Ensures type safety and scalability.
-- **React**: Builds the user interface components.
-- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
-- **Leaflet & React-Leaflet**: For map rendering and interactive destination views.
-- **Three.js & Globe.gl**: For the 3D globe on the Explore page.
-- **Radix UI**: Accessible, unstyled components used for dialogs, sliders, and more.
-- **Zod**: Schema validation for user inputs and forms.
-- **Vite**: A fast development environment and build tool.
-
 ## Project Structure
 
-Below is the core project structure based on the provided files and features:
+Below is the core project structure:
 
 ```plaintext
 src/
