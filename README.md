@@ -1,6 +1,33 @@
-# Wooster - AI-Powered Trip Planning Frontend
+<div align="center">
+<h2> Wooster </h2>
 
-Wooster is an AI-powered trip planning application that helps users explore and plan trips with personalized recommendations. The frontend is built with TypeScript, Tailwind CSS, and React, incorporating interactive elements like a 3D globe and map using Leaflet and Three.js. The app communicates with the backend service (Gemini) to generate trips and detailed destination data.
+## AI-Powered Trip Planning
+
+Leverage AI-generated trip recommendations, explore the world with an interactive 3D globe, and build detailed, personalized itineraries.
+
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
+![Demo GIF](./docs/videos/wooster.gif)
+
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Context API](https://img.shields.io/badge/contextapi-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Threejs](https://img.shields.io/badge/threejs-black?style=for-the-badge&logo=three.js&logoColor=white)
+![Vitest](https://img.shields.io/badge/-Vitest-252529?style=for-the-badge&logo=vitest&logoColor=FCC72B)
+
+## Backend Repository
+
+The backend for this project powers AI recommendations, manages user data, and integrates with external APIs.
+
+### [**Explore the Wooster Backend API and Server**](https://github.com/joshuaisaact/Wooster-server/tree/main#)
+
+![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![Supabase](https://img.shields.io/badge/supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/postgresql-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+
+</div>
 
 ## Table of Contents
 
