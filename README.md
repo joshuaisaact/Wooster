@@ -1,6 +1,8 @@
 <div align="center">
 <h2> Wooster </h2>
 
+<img src="./public/wooster-face-front-no-bg-alt.png" alt="Wooster Logo" width="200"/>
+
 ## AI-Powered Trip Planning
 
 Leverage AI-generated trip recommendations, explore the world with an interactive 3D globe, and build detailed, personalized itineraries.
