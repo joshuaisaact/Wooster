@@ -47,49 +47,6 @@ The backend for this project powers AI recommendations, manages user data, and i
 
 Wooster's frontend provides users with an interactive interface to explore destinations and plan trips. It includes an "Explore" page featuring a 3D globe where users can visualize destinations and trip details. The application fetches data from the Gemini backend via an Express.js API to generate trips and display detailed destination data.
 
-## Project Structure
-
-Below is the core project structure:
-
-```plaintext
-src/
-│
-├── components/
-│   ├── Activity.tsx                # Activity card component
-│   ├── CreateDestination.tsx       # Create Destination card component
-│   ├── CreateTrip.tsx              # Create Trip card component
-│   ├── DayNav.tsx                  # Navigate between days component
-│   ├── DestinationDetail.tsx       # Destination detail card component
-│   ├── DayNav.tsx                  # Navigate between days component
-│   ├── Dashboard.tsx               # Main dashboard for trip overviews
-│   ├── DestinationSummary.tsx      # Component to show destination summaries
-│   ├── Map.tsx                     # 2D Map component (using Leaflet.js)
-│   ├── SavedDestinations.tsx       # Saved destination list component
-│   ├── Sidebar.tsx                 # Sidebar component
-│   ├── SidebarNav.tsx              # Sidebar navigation component
-│   ├── Trip.tsx                    # Component to show a detailed trip
-│   ├── Trips.tsx                   # Main trip page, listing user trips
-│   ├── TripCard.tsx                # Trip card component
-│   ├── TripsList.tsx               # Component to list all trips
-│   ├── AppLayout.tsx               # Layout component for navigation and routing
-│   └── reducer.ts                  # State management logic
-│
-├── pages/
-│   ├── AppLayout.tsx              # Top-level page including fetch logic and routes
-│   ├── Dashboard.tsx              # Main dashboard
-│   ├── DestinationSummary.tsx     # Detailed destination summary page
-│   ├── Explore.tsx                # Explore page with 3D globe.
-│   ├── Homepage.tsx               # Pre-login page.
-│   ├── ItineraryPage.tsx          # Detailed itinerary page for a trip
-│   ├── Profile.tsx                # Settings page
-│   └── Trip.tsx                   # Trip overview page
-│   └── Trips.tsx                  # Trips page
-│   └── TripsList.tsx              # List of Trips page
-│
-│
-└── main.tsx                        # Entry point for the React app
-```
-
 ## Key Features
 
 1. **Explore Destinations**:
