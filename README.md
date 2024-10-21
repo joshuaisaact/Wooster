@@ -35,7 +35,6 @@ The backend for this project powers AI recommendations, manages user data, and i
 ## Table of Contents
 
 - [Overview](#overview)
-- [Technologies Used](#technologies-used)
 - [Project Structure](#project-structure)
 - [Key Features](#key-features)
 - [Installation](#installation)
