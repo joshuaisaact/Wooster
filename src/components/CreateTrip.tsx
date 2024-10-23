@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '@/hooks/useAppContext';
+import { createTrip } from '@/services/apiService';
 
 interface CreateTripProps {
   location?: string;
@@ -33,6 +34,8 @@ function CreateTrip({ location }: CreateTripProps) {
   async function onSubmit(data: { days: number; location: string; startDate: Date | undefined }) {
     dispatch({ type: 'SET_LOADING', payload: true });
     const formattedData = {
+      // REFACTOR WITH AUTH DO NOT FORGET
+      userId: 'e92ad976-973d-406d-92d4-34b6ef182e1a', // Hardcoded userId, refactor later when auth is live
       days: data.days,
       location: data.location,
       start_date: data.startDate ? data.startDate.toISOString() : null, // Convert Date to ISO string
@@ -40,31 +43,20 @@ function CreateTrip({ location }: CreateTripProps) {
     };
 
     try {
-      const response = await fetch(`http://localhost:4000/trip`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formattedData),
-      });
+      const result = await createTrip(formattedData);
 
-      if (response.ok) {
-        const result = await response.json();
+      dispatch({ type: 'ADD_TRIP', payload: result.trip });
 
-        dispatch({ type: 'ADD_TRIP', payload: result.trip });
-
-        // Navigate to the trip page using the trip id from the result
-        if (result.trip && result.trip.tripId) {
-          navigate(`/trips/${result.trip.tripId}`);
-        }
+      if (result.trip && result.trip.tripId) {
+        navigate(`/trips/${result.trip.tripId}`);
       }
     } catch (error) {
-      console.error(error);
+      console.error('Error creating trip:', error);
+      // dispatch({ type: 'SET_ERROR', payload: 'Failed to create trip' });
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false });
     }
   }
-
   return (
     <Card className="w-80">
       <CardHeader>
