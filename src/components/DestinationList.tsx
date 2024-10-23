@@ -73,7 +73,7 @@ function DestinationList() {
         <div className="max-w-max rounded-lg bg-white p-6 shadow-md">
           {focusedDestination ? (
             <Link
-              to={`/destinations/${encodeURIComponent(focusedDestination.destination_name)}`}
+              to={`/destinations/${encodeURIComponent(focusedDestination.destinationName)}`}
               className="block"
             >
               <DestinationCard destination={focusedDestination} />

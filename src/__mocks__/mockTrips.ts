@@ -67,20 +67,20 @@ export const mockItineraryNYC: ItineraryItem[] = [
   },
 ];
 
-// Mock trips
-export const mockTrips: Trip[] = [
-  {
-    trip_id: 'trip_1',
-    destination_name: 'Paris, France',
-    num_days: 5,
-    start_date: '2024-05-01',
-    itinerary: mockItineraryParis,
-  },
-  {
-    trip_id: 'trip_2',
-    destination_name: 'New York, USA',
-    num_days: 3,
-    start_date: '2024-07-15',
-    itinerary: mockItineraryNYC,
-  },
-];
+// // Mock trips
+// export const mockTrips: Trip[] = [
+//   {
+//     tripId: 'trip_1',
+//     destinationName: 'Paris, France',
+//     num_days: 5,
+//     start_date: '2024-05-01',
+//     itinerary: mockItineraryParis,
+//   },
+//   {
+//     trip_id: 'trip_2',
+//     destination_name: 'New York, USA',
+//     num_days: 3,
+//     start_date: '2024-07-15',
+//     itinerary: mockItineraryNYC,
+//   },
+// ];

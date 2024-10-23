@@ -24,18 +24,18 @@ function CreateTrip({ location }: CreateTripProps) {
     defaultValues: {
       days: 2,
       location: location,
-      start_date: undefined,
+      startDate: undefined,
     },
   });
 
   const navigate = useNavigate();
 
-  async function onSubmit(data: { days: number; location: string; start_date: Date | undefined }) {
+  async function onSubmit(data: { days: number; location: string; startDate: Date | undefined }) {
     dispatch({ type: 'SET_LOADING', payload: true });
     const formattedData = {
       days: data.days,
       location: data.location,
-      start_date: data.start_date ? data.start_date.toISOString() : null, // Convert Date to ISO string
+      start_date: data.startDate ? data.startDate.toISOString() : null, // Convert Date to ISO string
       itinerary: [],
     };
 
@@ -53,9 +53,9 @@ function CreateTrip({ location }: CreateTripProps) {
 
         dispatch({ type: 'ADD_TRIP', payload: result.trip });
 
-        // Navigate to the trip page using the trip_id from the result
-        if (result.trip && result.trip.trip_id) {
-          navigate(`/trips/${result.trip.trip_id}`);
+        // Navigate to the trip page using the trip id from the result
+        if (result.trip && result.trip.tripId) {
+          navigate(`/trips/${result.trip.tripId}`);
         }
       }
     } catch (error) {

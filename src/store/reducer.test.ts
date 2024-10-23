@@ -32,10 +32,10 @@ describe('reducer', () => {
   // Test ADD_TRIP action
   test('should handle ADD_TRIP', () => {
     const newTrip: Triptype = {
-      trip_id: '3',
-      destination_name: 'Tokyo, Japan',
+      tripId: '3',
+      destinationName: 'Tokyo, Japan',
       num_days: 7,
-      start_date: '2024-08-10',
+      startDate: '2024-08-10',
       itinerary: mockItineraryNYC, // Itinerary for the trip
     };
     const action: Action = { type: 'ADD_TRIP', payload: newTrip };
@@ -51,7 +51,7 @@ describe('reducer', () => {
     const action: Action = { type: 'REMOVE_TRIP', payload: '1' };
     const expectedState: State = {
       ...initialState,
-      trips: mockTrips.filter((trip) => trip.trip_id !== '1'),
+      trips: mockTrips.filter((trip) => trip.tripId !== '1'),
     };
 
     const newState = reducer(currentState, action);

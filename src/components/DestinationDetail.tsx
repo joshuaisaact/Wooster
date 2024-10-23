@@ -31,8 +31,8 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
     dispatch({ type: 'SET_LOADING', payload: true });
 
     try {
-      await deleteTrip(trip.trip_id); // Call the API service to delete the trip
-      dispatch({ type: 'REMOVE_TRIP', payload: trip.trip_id });
+      await deleteTrip(trip.tripId); // Call the API service to delete the trip
+      dispatch({ type: 'REMOVE_TRIP', payload: trip.tripId });
       navigate('/trips');
     } catch (error) {
       console.error('Error deleting trip:', error instanceof Error ? error.message : error);
@@ -43,7 +43,7 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
 
   // Uses API service to delete the destination
   const handleDeleteDestination = async () => {
-    const destinationId = destination?.destination_id;
+    const destinationId = destination?.destinationId;
     if (!destinationId) {
       console.error('No destination ID found');
       return;
@@ -104,7 +104,7 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
         <Card className="h-full overflow-auto">
           <CardHeader>
             <div className="flex justify-between">
-              <CardTitle className="text-2xl">{destination.destination_name}</CardTitle>
+              <CardTitle className="text-2xl">{destination.destinationName}</CardTitle>
               <button
                 className="bg-green-500 text-white"
                 onClick={() => setTripCreationOpen(!tripCreationOpen)}
@@ -120,10 +120,10 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
                 <span>{destination.country}</span>
               </Badge>
               <Badge variant="secondary" className="flex items-center gap-1">
-                💰 {destination.cost_level}
+                💰 {destination.costLevel}
               </Badge>
               <Badge variant="secondary" className="flex items-center gap-1">
-                🛡️ {destination.safety_rating}
+                🛡️ {destination.safetyRating}
               </Badge>
             </div>
           </CardHeader>
@@ -136,17 +136,17 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
               <InfoItem
                 icon={<Calendar className="h-4 w-4" />}
                 label="Best Time to Visit"
-                value={destination.best_time_to_visit}
+                value={destination.bestTimeToVisit}
               />
               <InfoItem
                 icon={<Thermometer className="h-4 w-4" />}
                 label="Avg. Temperature"
-                value={`${destination.average_temperature_low}°F - ${destination.average_temperature_high}°F`}
+                value={`${destination.averageTemperatureLow}°F - ${destination.averageTemperatureHigh}°F`}
               />
               <InfoItem
                 icon={<Globe className="h-4 w-4" />}
                 label="Language"
-                value={destination.official_language}
+                value={destination.officialLanguage}
               />
               <InfoItem
                 icon={<Info className="h-4 w-4" />}
@@ -158,19 +158,19 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
             {/* Other Information Sections */}
             <div>
               <h3 className="mb-2 font-semibold">Popular Activities</h3>
-              <p className="text-muted-foreground text-sm">{destination.popular_activities}</p>
+              <p className="text-muted-foreground text-sm">{destination.popularActivities}</p>
             </div>
             <div>
               <h3 className="mb-2 font-semibold">Travel Tips</h3>
-              <p className="text-muted-foreground text-sm">{destination.travel_tips}</p>
+              <p className="text-muted-foreground text-sm">{destination.travelTips}</p>
             </div>
             <div>
               <h3 className="mb-2 font-semibold">Local Cuisine</h3>
-              <p className="text-muted-foreground text-sm">{destination.local_cuisine}</p>
+              <p className="text-muted-foreground text-sm">{destination.localCuisine}</p>
             </div>
             <div>
               <h3 className="mb-2 font-semibold">Cultural Significance</h3>
-              <p className="text-muted-foreground text-sm">{destination.cultural_significance}</p>
+              <p className="text-muted-foreground text-sm">{destination.culturalSignificance}</p>
             </div>
 
             {/* Buttons */}
@@ -199,7 +199,7 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
       {/* Right Side - Create Trip Section (appears when button is clicked) */}
       {tripCreationOpen && (
         <div className="flex h-full flex-col justify-between">
-          <CreateTrip location={destination.destination_name} />
+          <CreateTrip location={destination.destinationName} />
           <img src="/Wooster-map-planning.png" className="mt-4 h-auto" alt="Map Planning" />
         </div>
       )}

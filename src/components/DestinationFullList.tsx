@@ -14,9 +14,9 @@ function DestinationFullList() {
       ) : (
         <ul className="grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
           {destinations.map((destination) => (
-            <li key={destination.destination_id}>
+            <li key={destination.destinationId}>
               <Link
-                to={`/destinations/${encodeURIComponent(destination.destination_name)}`}
+                to={`/destinations/${encodeURIComponent(destination.destinationName)}`}
                 className="block"
               >
                 <DestinationCard destination={destination} />

@@ -22,17 +22,17 @@ function SavedDestinations({ handleButtonClick, focusedDestinationId }: SavedDes
           <div className="flex flex-wrap gap-2 p-1">
             {destinations.map((destination: Destination) => (
               <Button
-                key={destination.destination_id}
+                key={destination.destinationId}
                 onClick={() => handleButtonClick(destination)}
                 variant="outline"
                 size="sm"
                 className={`text-s ${
-                  focusedDestinationId === destination.destination_id
+                  focusedDestinationId === destination.destinationId
                     ? 'bg-green-600 text-white'
                     : 'bg-white text-black'
                 }`}
               >
-                {destination.destination_name}
+                {destination.destinationName}
               </Button>
             ))}
           </div>
