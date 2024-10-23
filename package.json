@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "drizzle:migrate": "drizzle-kit generate:migration && drizzle-kit migrate",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json}'",
@@ -55,6 +56,7 @@
     "@vitejs/plugin-react-swc": "^3.5.0",
     "@vitest/coverage-istanbul": "^2.1.1",
     "autoprefixer": "^10.4.20",
+    "drizzle-kit": "^0.26.2",
     "eslint": "^9.9.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
