@@ -8,7 +8,7 @@ interface DestinationProps {
 }
 
 function DestinationCard({ destination }: DestinationProps) {
-  const { destination_name, description, country, cost_level } = destination;
+  const { destinationName, description, country, costLevel } = destination;
 
   const truncateText = (text: string, maxLength: number) => {
     if (text.length <= maxLength) return text;
@@ -18,7 +18,7 @@ function DestinationCard({ destination }: DestinationProps) {
   return (
     <Card className="flex min-w-72 max-w-80 flex-col">
       <CardHeader>
-        <CardTitle className="text-lg">{destination_name}</CardTitle>
+        <CardTitle className="text-lg">{destinationName}</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-1 flex-col">
         <div className="mb-4">
@@ -32,7 +32,7 @@ function DestinationCard({ destination }: DestinationProps) {
             <span className="truncate">{country}</span>
           </Badge>
           <Badge variant="secondary" className="mt-auto flex items-center gap-1">
-            💰 {cost_level}
+            💰 {costLevel}
           </Badge>
         </div>
       </CardContent>

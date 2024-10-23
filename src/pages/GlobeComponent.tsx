@@ -4,7 +4,7 @@ import Globe from 'globe.gl';
 interface Destination {
   latitude: number;
   longitude: number;
-  destination_name: string;
+  destinationName: string;
 }
 
 interface GlobeComponentProps {
@@ -26,10 +26,10 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
 
   const points = useMemo(
     () =>
-      destinations.map(({ latitude, longitude, destination_name }) => ({
+      destinations.map(({ latitude, longitude, destinationName }) => ({
         lat: latitude,
         lng: longitude,
-        name: destination_name,
+        name: destinationName,
       })),
     [destinations],
   );

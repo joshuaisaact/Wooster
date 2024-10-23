@@ -17,11 +17,11 @@ function TripCard({ trip, destination }: TripCardProps) {
     return null; // Return null to avoid rendering if the destination is not ready
   }
 
-  const { trip_id, destination_name, num_days, start_date } = trip;
-  const formatted_start_date = format(start_date, 'E, do MMMM yyyy');
+  const { tripId, destinationName, num_days, startDate } = trip;
+  const formattedStartDate = format(startDate, 'E, do MMMM yyyy');
 
   return (
-    <Link to={`/trips/${trip_id}`}>
+    <Link to={`/trips/${tripId}`}>
       <div className="flex w-full flex-row items-stretch gap-1">
         <div className="w-1/3">
           <Map
@@ -35,8 +35,8 @@ function TripCard({ trip, destination }: TripCardProps) {
         <div className="w-2/3">
           <Card className="flex flex-col rounded-lg transition-all hover:shadow-lg">
             <CardHeader>
-              <CardTitle className="text-xl font-semibold">{destination_name}</CardTitle>
-              <p className="text-sm text-gray-500">{formatted_start_date}</p>
+              <CardTitle className="text-xl font-semibold">{destinationName}</CardTitle>
+              <p className="text-sm text-gray-500">{formattedStartDate}</p>
             </CardHeader>
             <CardContent className="flex flex-1 flex-col">
               <div className="mb-2 flex justify-between"></div>

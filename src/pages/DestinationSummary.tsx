@@ -9,7 +9,7 @@ function DestinationSummary() {
   const { destinationId: destinationName } = useParams<{ destinationId: string }>();
 
   const destination = destinations.find(
-    (dest: Destination) => dest.destination_name === destinationName,
+    (dest: Destination) => dest.destinationName === destinationName,
   );
 
   if (isLoading) {

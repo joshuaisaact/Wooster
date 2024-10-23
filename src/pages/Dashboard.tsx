@@ -14,15 +14,15 @@ function Dashboard() {
   const getSoonestTrip = (trips: Trip[]) => {
     const today = new Date();
     return trips
-      .filter((trip) => new Date(trip.start_date) >= today)
-      .sort((a, b) => new Date(a.start_date).getTime() - new Date(b.start_date).getTime())[0];
+      .filter((trip) => new Date(trip.startDate) >= today)
+      .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())[0];
   };
 
   // Get the soonest trip only if not loading
   const soonestTrip = !isLoading ? getSoonestTrip(trips) : null;
   const soonestTripDestination = soonestTrip
     ? destinations.find(
-        (destination: Destination) => destination.destination_name === soonestTrip.destination_name,
+        (destination: Destination) => destination.destinationName === soonestTrip.destinationName,
       )
     : null;
 
@@ -48,8 +48,8 @@ function Dashboard() {
                   <strong>Your next adventure is just around the corner.</strong>
                 </span>
                 <p className="mt-5">
-                  Ready to continue planning your trip to {soonestTripDestination?.destination_name}
-                  ? Wooster has all the tools you need to make it unforgettable.
+                  Ready to continue planning your trip to {soonestTripDestination?.destinationName}?
+                  Wooster has all the tools you need to make it unforgettable.
                 </p>
               </section>
               <img src="./wooster-suitcase-no-bg.png" className="h-40" />

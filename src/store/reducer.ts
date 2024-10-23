@@ -26,7 +26,7 @@ export function reducer(state: typeof initialState = initialState, action: Actio
     case 'REMOVE_TRIP':
       return {
         ...state,
-        trips: state.trips.filter((trip: Triptype) => trip.trip_id !== action.payload),
+        trips: state.trips.filter((trip: Triptype) => trip.tripId !== action.payload),
       };
     case 'SET_LOADING':
       return {

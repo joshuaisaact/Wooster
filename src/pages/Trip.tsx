@@ -22,13 +22,13 @@ function Trip() {
 
   const { trips, destinations } = state;
 
-  const trip = trips.find((t: TripType) => t.trip_id === tripId);
+  const trip = trips.find((t: TripType) => t.tripId === tripId);
 
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `Check out my trip to ${trip?.destination_name}!`,
+          title: `Check out my trip to ${trip?.destinationName}!`,
           url: window.location.href,
         });
       } catch (error) {
@@ -46,16 +46,16 @@ function Trip() {
   }
 
   const selectedDestination = destinations.find(
-    (d: Destination) => d.destination_name === trip.destination_name,
+    (d: Destination) => d.destinationName === trip.destinationName,
   );
 
   const flattenedItinerary = flattenItinerary(trip);
   const currentDayItinerary = flattenedItinerary ? flattenedItinerary[currentDay - 1] : [];
 
   return (
-    <div className="text-text flex h-full w-full flex-col pt-10">
+    <div className="flex h-full w-full flex-col pt-10 text-text">
       <div className="mb-4 flex items-center justify-between px-4">
-        <h1 className="text-2xl font-bold">{trip.destination_name} Trip</h1>
+        <h1 className="text-2xl font-bold">{trip.destinationName} Trip</h1>
         <Button
           className="flex items-center bg-green-600 text-white hover:bg-blue-600"
           onClick={handleShare}

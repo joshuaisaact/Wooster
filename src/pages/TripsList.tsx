@@ -23,18 +23,18 @@ function Trips() {
   }
 
   return (
-    <div className="text-text flex h-full flex-col items-center pt-10">
+    <div className="flex h-full flex-col items-center pt-10 text-text">
       {/* <Header>Trips</Header> */}
       <div className="flex w-full justify-between">
         <div className="w-2/3 p-10">
           <ul className="h-[calc(100vh-120px)] overflow-y-auto">
             {trips.map((trip) => {
               const destination = destinations.find(
-                (dest) => dest.destination_name === trip.destination_name,
+                (dest) => dest.destinationName === trip.destinationName,
               );
 
               return (
-                <li key={trip.trip_id} className="mb-10">
+                <li key={trip.tripId} className="mb-10">
                   <TripCard trip={trip} destination={destination} />
                 </li>
               );
