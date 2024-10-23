@@ -23,7 +23,7 @@ Leverage AI-generated trip recommendations, explore the world with an interactiv
 
 The backend for this project powers AI recommendations, manages user data, and integrates with external APIs.
 
-<img src="./public/wooster-server.png" alt="Wooster Logo" width="200"/>
+<img src="./public/wooster-server.png" alt="Wooster Logo" width="250"/>
 
 ### [**Explore the Wooster Backend API and Server**](https://github.com/joshuaisaact/Wooster-server/tree/main#)
 
