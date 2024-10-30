@@ -1,5 +1,5 @@
 import { Destination } from '@/types/types';
-import CreateTrip from '@/components/CreateTrip';
+import CreateTrip from '@/components/shared/CreateTrip';
 import CreateDestination from '../CreateDestination';
 
 interface SidebarProps {

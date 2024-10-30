@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPinIcon, Calendar, Thermometer, Globe, Info } from 'lucide-react';
 import Map from './Map';
-import CreateTrip from './CreateTrip';
+import CreateTrip from './shared/CreateTrip';
 import { Button } from './ui/button';
 import { Trip as TripType } from '@/types/types';
 import { useNavigate } from 'react-router-dom';

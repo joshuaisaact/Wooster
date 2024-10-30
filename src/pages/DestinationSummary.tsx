@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import DestinationDetail from '@/components/DestinationDetail';
+import DestinationView from '@/components/destination/DestinationView';
 import { useAppContext } from '@/hooks/useAppContext';
 import { Destination } from '@/types/types';
 
@@ -13,16 +13,20 @@ function DestinationSummary() {
   );
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <div className="flex h-full items-center justify-center">Loading...</div>;
   }
 
   if (!destination) {
-    return <p>Destination not found.</p>;
+    return (
+      <div className="flex h-full items-center justify-center">
+        <p className="text-lg">Destination not found.</p>
+      </div>
+    );
   }
 
   return (
-    <div className="flex flex-col items-center p-4 text-text">
-      <DestinationDetail destination={destination} />
+    <div className="container mx-auto p-4">
+      <DestinationView destination={destination} />
     </div>
   );
 }
