@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-
 import Sidebar from '../components/Sidebar';
 import Trip from './Trip';
 import Trips from './TripsList';
@@ -7,9 +6,7 @@ import Profile from './Profile';
 import Dashboard from './Dashboard';
 import Explore from './Explore';
 import DestinationFullList from '@/components/DestinationFullList';
-import DestinationList from '@/components/DestinationList';
 import DestinationSummary from './DestinationSummary';
-import GlobeComponent from './GlobeComponent';
 
 function AppLayout() {
   return (
@@ -24,16 +21,8 @@ function AppLayout() {
           <Route path="trips/:tripId" element={<Trip />}>
             <Route path="summary/:destinationId" element={<DestinationSummary />} />
           </Route>
-          <Route
-            path="explore"
-            element={
-              <Explore>
-                <DestinationList />
-              </Explore>
-            }
-          />
+          <Route path="explore" element={<Explore />} />
           <Route path="destinations/:destinationId" element={<DestinationSummary />} />
-          <Route path="globe" element={<GlobeComponent />} />
           <Route path="destination-list" element={<DestinationFullList />} />
           <Route path="settings" element={<Profile />} />
         </Routes>

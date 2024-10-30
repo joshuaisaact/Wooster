@@ -1,6 +1,6 @@
 import { Destination } from '@/types/types';
 import CreateTrip from '@/components/CreateTrip';
-import CreateDestination from '../CreateDestnation';
+import CreateDestination from '../CreateDestination';
 
 interface SidebarProps {
   selectedDestination: Destination | null;
