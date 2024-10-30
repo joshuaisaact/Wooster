@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useMemo, useCallback } from 'react';
 import Globe from 'globe.gl';
+import { GlobeInstance, GlobePoint } from './types';
 
 interface Destination {
   latitude: number;
@@ -9,7 +10,7 @@ interface Destination {
 
 interface GlobeComponentProps {
   height?: number;
-  width?: number;
+  width?: number | string; // Allow both number and string
   destinations?: Destination[];
   focusedDestination?: Destination | null;
 }
@@ -21,8 +22,7 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
   focusedDestination = null,
 }) => {
   const globeEl = useRef<HTMLDivElement>(null);
-  const globeInstanceRef = useRef<object | null>(null);
-  console.log(globeInstanceRef);
+  const globeInstanceRef = useRef<GlobeInstance | null>(null);
 
   const points = useMemo(
     () =>
@@ -47,19 +47,19 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
   }, [focusedDestination, focusOnCoordinates]);
 
   useEffect(() => {
-    // Store the current globeEl reference to avoid accessing a potentially stale value
     const currentGlobeEl = globeEl.current;
+    if (!currentGlobeEl) return;
 
-    const globe = Globe()
+    const globe = Globe() as GlobeInstance;
+
+    globe
       .globeImageUrl('/earth-texture.png')
       .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-      // .backgroundImageUrl('//unpkg.com/three-globe/example/img/night-sky.png')
       .backgroundColor('#F0F7F4')
-      .width(width)
+      .width(typeof width === 'string' ? currentGlobeEl.clientWidth : width)
       .height(height)
       .htmlElementsData(points)
-      .htmlElement((d) => {
-        console.log(d);
+      .htmlElement((d: GlobePoint) => {
         const el = document.createElement('div');
         el.innerHTML = `
           <div class="flex flex-col items-center">
@@ -80,26 +80,26 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
         return el;
       });
 
-    // Initialize globe on the current element
-    if (currentGlobeEl) {
-      globe(currentGlobeEl);
-    }
-
+    globe(currentGlobeEl);
     globeInstanceRef.current = globe;
 
-    // Cleanup function
     return () => {
       if (currentGlobeEl) {
-        currentGlobeEl.innerHTML = ''; // Safely clear the reference
+        currentGlobeEl.innerHTML = '';
       }
       globeInstanceRef.current = null;
     };
   }, [height, width, points]);
 
+  const containerStyles = {
+    width: typeof width === 'string' ? width : `${width}px`,
+    height: `${height}px`,
+  };
+
   return (
     <div
       ref={globeEl}
-      style={{ width: `${width}px`, height: `${height}px` }}
+      style={containerStyles}
       className="flex items-center justify-center overflow-hidden rounded-lg bg-white"
     />
   );
