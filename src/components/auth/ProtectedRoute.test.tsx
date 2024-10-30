@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
-import ProtectedRoute from '../components/auth/ProtectedRoute';
+import ProtectedRoute from './ProtectedRoute';
 import { useAuth } from '@/context/AuthContext';
 import { MemoryRouter, useNavigate } from 'react-router-dom';
 
