@@ -1,7 +1,7 @@
 import { Trip, Destination } from '@/types/types';
 import WelcomeSection from './WelcomeSection';
 import NextTripSection from './NextTripSection';
-import SavedDestinations from '@/components/SavedDestinations';
+import { SavedDestinations } from '../destination/SavedDestinations';
 
 interface MainContentProps {
   soonestTrip: Trip | null;
@@ -19,7 +19,11 @@ function MainContent({
       <div className="flex min-h-[600px] flex-col gap-10 rounded-lg bg-white p-8 shadow-md">
         <WelcomeSection nextDestination={soonestTripDestination} />
         <NextTripSection trip={soonestTrip} destination={soonestTripDestination} />
-        <SavedDestinations handleButtonClick={onDestinationClick} />
+        <SavedDestinations
+          onDestinationSelect={onDestinationClick}
+          selectedDestinationId={null}
+          className="border-none shadow-none"
+        />
       </div>
     </div>
   );
