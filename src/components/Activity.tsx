@@ -10,7 +10,7 @@ interface ActivityProps {
 }
 
 function Activity({ activity, isSelected, onSelect }: ActivityProps) {
-  const { activity_name, description, location, price } = activity;
+  const { activityName, description, location, price } = activity;
 
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
 
@@ -22,11 +22,11 @@ function Activity({ activity, isSelected, onSelect }: ActivityProps) {
       onClick={onSelect}
     >
       <CardHeader className="flex flex-shrink-0 flex-row justify-between">
-        <CardTitle className="text-2xl">{activity_name}</CardTitle>
+        <CardTitle className="text-2xl">{activityName}</CardTitle>
         {isSelected && (
           <img
             src="/wooster-look-left-no-bg.png" // URL of the image
-            alt={`${activity_name} image`} // Alternative text for the image
+            alt={`${activityName} image`} // Alternative text for the image
             className="absolute right-2 top-2 h-16 w-16" // Style for the image
           />
         )}

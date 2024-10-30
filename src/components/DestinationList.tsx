@@ -15,7 +15,7 @@ function DestinationList() {
 
   function handleButtonClick(destination: Destination) {
     setFocusedDestination((prevFocusedDestination) =>
-      prevFocusedDestination?.destination_id === destination.destination_id ? null : destination,
+      prevFocusedDestination?.destinationId === destination.destinationId ? null : destination,
     );
   }
 
@@ -61,7 +61,7 @@ function DestinationList() {
         <div className="flex flex-row">
           <SavedDestinations
             handleButtonClick={handleButtonClick}
-            focusedDestinationId={focusedDestination?.destination_id || null}
+            focusedDestinationId={focusedDestination?.destinationId || null}
           />
           <div className="mt-6 flex items-center justify-center">
             <img src="wooster-suitcase-yellow-no-bg.png" className="h-72 max-w-max p-6" />

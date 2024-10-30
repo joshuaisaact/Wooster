@@ -1,7 +1,5 @@
-import { Destination, Trip } from '../types/types';
 import CreateTrip from '@/components/CreateTrip';
 import TripCard from '@/components/TripCard';
-import { Action } from '@/store/reducer';
 import { useAppContext } from '@/hooks/useAppContext';
 
 function Trips() {
