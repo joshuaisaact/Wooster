@@ -6,6 +6,8 @@ export interface Trip {
   itinerary: ItineraryItem[];
 }
 
+export type TripTab = 'summary' | number;
+
 export interface ActivityProps {
   name: string;
   description: string;
@@ -15,7 +17,7 @@ export interface ActivityProps {
 
 export interface ItineraryItem {
   day: number;
-  activities: ActivityProps[];
+  activities: Activity[];
 }
 
 export interface Destination {
@@ -49,7 +51,9 @@ export interface Activity {
   location: string;
   latitude: number;
   longitude: number;
-  price: string;
+  startTime: string;
+  endTime: string;
+  category: string;
 }
 
 // State type

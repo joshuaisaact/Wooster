@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
-import Trip from './Trip';
+import TripPage from './Trip';
 import Trips from './TripsList';
 import Profile from './Profile';
 import Dashboard from './Dashboard';
@@ -18,7 +18,7 @@ function AppLayout() {
         <Routes>
           <Route path="home" element={<Dashboard />} />
           <Route path="trips" element={<Trips />} />
-          <Route path="trips/:tripId" element={<Trip />}>
+          <Route path="trips/:tripId" element={<TripPage />}>
             <Route path="summary/:destinationId" element={<DestinationSummary />} />
           </Route>
           <Route path="explore" element={<Explore />} />
