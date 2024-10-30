@@ -22,41 +22,42 @@ export function DestinationCard({ destination }: DestinationCardProps) {
   } = destination || {};
 
   return (
-    <Card className="h-full transition-shadow hover:shadow-lg">
-      <CardHeader>
-        <CardTitle className="text-xl">{destinationName}</CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-1 flex-col space-y-4">
-        <p className="text-muted-foreground flex-1 text-sm">
-          {description ? truncateText(description, 150) : 'No description available'}
-        </p>
-
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <Badge variant="secondary" className="flex items-center gap-1">
-              <MapPinIcon className="h-3 w-3" />
-              <span className="truncate">{country}</span>
-            </Badge>
-            <Badge variant="secondary">💰 {costLevel}</Badge>
+    <Card className="group h-full overflow-hidden transition-all duration-200 hover:shadow-lg">
+      <CardHeader className="border-b bg-gray-50/50 pb-4">
+        <div className="flex items-start justify-between">
+          <div>
+            <CardTitle className="text-xl font-bold">{destinationName}</CardTitle>
+            <div className="mt-1 flex items-center gap-2">
+              <MapPinIcon className="text-muted-foreground h-3 w-3" />
+              <span className="text-muted-foreground text-sm">{country}</span>
+            </div>
           </div>
-
-          <div className="flex items-center justify-between">
-            <Badge variant="outline" className="flex items-center gap-1">
-              <Calendar className="h-3 w-3" />
-              <span className="text-xs">{bestTimeToVisit}</span>
+          <div className="flex flex-col items-end gap-2">
+            <Badge variant="secondary" className="text-xs">
+              💰 {costLevel}
             </Badge>
-            <Badge variant="outline" className="flex items-center gap-1">
-              <Thermometer className="h-3 w-3" />
-              <span className="text-xs">
-                {averageTemperatureLow}°-{averageTemperatureHigh}°F
-              </span>
-            </Badge>
-          </div>
-
-          <div className="flex justify-end">
             <Badge variant={getSafetyBadgeVariant(safetyRating)} className="text-xs">
               🛡️ {safetyRating}
             </Badge>
+          </div>
+        </div>
+      </CardHeader>
+
+      <CardContent className="flex flex-col gap-4 p-4">
+        <p className="text-muted-foreground line-clamp-3 text-sm">
+          {description || 'No description available'}
+        </p>
+
+        <div className="mt-auto flex items-center justify-between border-t pt-4">
+          <div className="flex items-center gap-2">
+            <Calendar className="text-muted-foreground h-4 w-4" />
+            <span className="text-muted-foreground text-xs">{bestTimeToVisit}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Thermometer className="text-muted-foreground h-4 w-4" />
+            <span className="text-muted-foreground text-xs">
+              {averageTemperatureLow}°-{averageTemperatureHigh}°F
+            </span>
           </div>
         </div>
       </CardContent>

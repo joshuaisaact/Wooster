@@ -1,7 +1,7 @@
 // components/destination/DestinationResults.tsx
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import DestinationCard from '../DestinationCard';
+import DestinationCard from './DestinationCard';
 import { Destination } from '@/types/types';
 
 interface DestinationResultsProps {
