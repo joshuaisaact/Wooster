@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPinIcon, Calendar, Thermometer } from 'lucide-react';
 import { Destination } from '@/types/types';
-import { truncateText } from '@/utils/text';
 
 interface DestinationCardProps {
   destination: Destination;
