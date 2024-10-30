@@ -43,20 +43,21 @@ const Markers = ({
   activities: Activity[];
   selectedActivityId: number | null;
 }) => {
+  console.log('Markers activities:', activities);
   return (
     <>
       {activities.map((activity) => (
         <Marker
-          key={activity.activity_id}
+          key={activity.activityId}
           position={[activity.latitude, activity.longitude]}
           icon={
-            selectedActivityId === activity.activity_id
+            selectedActivityId === activity.activityId
               ? createCustomIcon('red')
               : createCustomIcon('blue')
           }
         >
           <Popup>
-            <strong>{activity.activity_name}</strong>
+            <strong>{activity.activityName}</strong>
             <br />
             {activity.description}
           </Popup>
@@ -115,7 +116,7 @@ const Map = forwardRef(
 
     useEffect(() => {
       if (selectedActivityId && mapRef.current) {
-        const activity = activities.find((act) => act.activity_id === selectedActivityId);
+        const activity = activities.find((act) => act.activityId === selectedActivityId);
         if (activity) {
           const latLng = [activity.latitude, activity.longitude];
           mapRef.current.flyTo(latLng, 17);

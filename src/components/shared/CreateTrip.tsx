@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/hooks/useAppContext';
 import { Destination } from '@/types/types';
-import { useCreateTrip } from '@/hooks/trips/useCreateTrip';
+import { useCreateTrip } from '@/hooks/trip/useCreateTrip';
 
 interface CreateTripProps {
   location: Destination | null;

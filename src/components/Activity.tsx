@@ -25,9 +25,9 @@ function Activity({ activity, isSelected, onSelect }: ActivityProps) {
         <CardTitle className="text-2xl">{activityName}</CardTitle>
         {isSelected && (
           <img
-            src="/wooster-look-left-no-bg.png" // URL of the image
-            alt={`${activityName} image`} // Alternative text for the image
-            className="absolute right-2 top-2 h-16 w-16" // Style for the image
+            src="/wooster-look-left-no-bg.png"
+            alt={`${activityName} image`}
+            className="absolute right-2 top-2 h-16 w-16"
           />
         )}
       </CardHeader>
