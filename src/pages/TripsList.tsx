@@ -1,4 +1,4 @@
-import CreateTrip from '@/components/CreateTrip';
+import CreateTrip from '@/components/shared/CreateTrip';
 import TripCard from '@/components/TripCard';
 import { useAppContext } from '@/hooks/useAppContext';
 

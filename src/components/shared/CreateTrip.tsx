@@ -3,61 +3,53 @@ import { cn } from '@/lib/utils';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form';
-import { Slider } from './ui/slider';
+import { Slider } from '../ui/slider';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '@/hooks/useAppContext';
-import { createTrip } from '@/services/apiService';
 import { Destination } from '@/types/types';
+import { useCreateTrip } from '@/hooks/trips/useCreateTrip';
 
 interface CreateTripProps {
   location: Destination | null;
+  onClose?: () => void;
 }
 
-function CreateTrip({ location }: CreateTripProps) {
-  const { state, dispatch } = useAppContext();
-  const { isLoading } = state;
+interface TripFormData {
+  days: number;
+  startDate: Date | undefined;
+  location?: string;
+}
 
-  const form = useForm({
+function CreateTrip({ location, onClose }: CreateTripProps) {
+  const { state } = useAppContext();
+  const { isLoading } = state;
+  const { handleCreateTrip } = useCreateTrip(onClose);
+
+  const form = useForm<TripFormData>({
     defaultValues: {
       days: 2,
-      location: location,
       startDate: undefined,
+      location: location?.destinationName || '',
     },
   });
 
-  const navigate = useNavigate();
-
-  async function onSubmit(data: { days: number; location: string; startDate: Date | undefined }) {
-    dispatch({ type: 'SET_LOADING', payload: true });
-    const formattedData = {
-      // REFACTOR WITH AUTH DO NOT FORGET
-      userId: 'e92ad976-973d-406d-92d4-34b6ef182e1a', // Hardcoded userId, refactor later when auth is live
-      days: data.days,
-      location: data.location,
-      start_date: data.startDate ? data.startDate.toISOString() : null, // Convert Date to ISO string
-      itinerary: [],
-    };
-
+  async function onSubmit(data: TripFormData) {
     try {
-      const result = await createTrip(formattedData);
-
-      dispatch({ type: 'ADD_TRIP', payload: result.trip });
-
-      if (result.trip && result.trip.tripId) {
-        navigate(`/trips/${result.trip.tripId}`);
-      }
+      await handleCreateTrip({
+        days: data.days,
+        location: location?.destinationName || data.location || '',
+        startDate: data.startDate,
+      });
     } catch (error) {
-      console.error('Error creating trip:', error);
-      // dispatch({ type: 'SET_ERROR', payload: 'Failed to create trip' });
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false });
+      // Handle form submission error
+      console.error('Form submission failed:', error);
     }
   }
+
   return (
     <Card className="w-80">
       <CardHeader>
@@ -70,7 +62,6 @@ function CreateTrip({ location }: CreateTripProps) {
         ) : (
           <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {/* Form fields go here, same as before */}
               <FormField
                 control={form.control}
                 name="days"
@@ -134,14 +125,16 @@ function CreateTrip({ location }: CreateTripProps) {
               />
 
               {location ? (
+                // Read-only destination field when location is provided
                 <FormItem>
                   <FormLabel>Destination</FormLabel>
                   <FormControl>
-                    <Input value={location} readOnly className="text-base" />
+                    <Input value={location.destinationName} readOnly className="text-base" />
                   </FormControl>
                   <FormDescription>Your destination</FormDescription>
                 </FormItem>
               ) : (
+                // Editable destination field when no location is provided
                 <FormField
                   control={form.control}
                   name="location"
