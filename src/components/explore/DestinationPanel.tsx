@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Destination } from '@/types/types';
-import DestinationCard from '@/components/DestinationCard';
+import DestinationCard from '../destination/DestinationCard';
 import CreateDestination from '../CreateDestination';
 
 interface DestinationPanelProps {

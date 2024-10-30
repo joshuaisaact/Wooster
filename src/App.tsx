@@ -4,7 +4,7 @@ import AppLayout from './pages/AppLayout';
 import { AppProvider } from './context/AppContext';
 import { AuthProvider } from './context/AuthContext';
 import Login from './pages/Login';
-import ProtectedRoute from './pages/ProtectedRoute';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 function App() {
   return (

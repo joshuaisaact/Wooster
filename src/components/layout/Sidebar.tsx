@@ -1,5 +1,5 @@
-import Logo from './Logo';
-import Footer from './Footer';
+import { Logo } from './Logo';
+import { Footer } from './Footer';
 import SidebarNav from './SidebarNav';
 
 function Sidebar() {

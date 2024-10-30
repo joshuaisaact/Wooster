@@ -1,4 +1,4 @@
-import SidebarNavLink from './SidebarNavLink';
+import { SidebarNavLink } from './SidebarNavLink';
 import {
   HiOutlineCog6Tooth,
   HiOutlineGlobeEuropeAfrica,
@@ -35,9 +35,6 @@ function SidebarNav() {
             <span>Explore</span>
           </SidebarNavLink>
         </li>
-        {/* <li>
-          <SidebarNavLink to="/globe" label="Globe" />
-        </li> */}
 
         <li>
           <SidebarNavLink to="/settings">

@@ -1,4 +1,4 @@
-import SavedDestinations from '@/components/SavedDestinations';
+import { SavedDestinations } from '../destination/SavedDestinations';
 import { Destination } from '@/types/types';
 
 interface ExplorationSectionProps {
@@ -10,8 +10,8 @@ function ExplorationSection({ onDestinationClick, focusedDestinationId }: Explor
   return (
     <div className="flex flex-row">
       <SavedDestinations
-        handleButtonClick={onDestinationClick}
-        focusedDestinationId={focusedDestinationId}
+        onDestinationSelect={onDestinationClick}
+        selectedDestinationId={focusedDestinationId}
       />
       <div className="mt-6 flex items-center justify-center">
         <img
