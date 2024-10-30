@@ -21,7 +21,7 @@ function DayNav({ trip, currentDay, setCurrentDay }: DayNavProps) {
             Destination Summary
           </button>
         </Link>
-        {Array.from({ length: trip.num_days }, (_, index) => (
+        {Array.from({ length: trip.numDays }, (_, index) => (
           <li key={index}>
             <button
               className={`flex items-center justify-center rounded-lg px-4 py-2 font-semibold transition-colors duration-200 ${

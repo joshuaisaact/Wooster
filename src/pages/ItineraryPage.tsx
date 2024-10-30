@@ -19,7 +19,7 @@ function ItineraryPage({ currentDay }: ItineraryPageProps) {
     setSelectedActivityId(activityId);
 
     const selectedActivity = currentDay.activities.find(
-      (activity) => activity.activity_id === activityId,
+      (activity) => activity.activityId === activityId,
     );
 
     // If the activity is found and the map ref is available, move the map
@@ -44,11 +44,11 @@ function ItineraryPage({ currentDay }: ItineraryPageProps) {
         <CardContent className="space-y-4">
           <ul className="flex flex-col gap-4">
             {currentDay.activities.map((activity) => (
-              <li key={activity.activity_id}>
+              <li key={activity.activityId}>
                 <Activity
                   activity={activity}
-                  isSelected={selectedActivityId === activity.activity_id}
-                  onSelect={() => handleActivitySelect(activity.activity_id)}
+                  isSelected={selectedActivityId === activity.activityId}
+                  onSelect={() => handleActivitySelect(activity.activityId)}
                 />
               </li>
             ))}

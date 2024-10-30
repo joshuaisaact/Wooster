@@ -77,7 +77,7 @@ function CreateTrip({ location }: CreateTripProps) {
                   <FormItem>
                     <Controller
                       control={form.control}
-                      name="start_date"
+                      name="startDate"
                       render={({ field }) => (
                         <FormItem className="flex flex-col">
                           <FormLabel>Date</FormLabel>

@@ -17,7 +17,7 @@ function TripCard({ trip, destination }: TripCardProps) {
     return null; // Return null to avoid rendering if the destination is not ready
   }
 
-  const { tripId, destinationName, num_days, startDate } = trip;
+  const { tripId, destinationName, numDays, startDate } = trip;
   const formattedStartDate = format(startDate, 'E, do MMMM yyyy');
 
   return (
@@ -45,7 +45,7 @@ function TripCard({ trip, destination }: TripCardProps) {
                 <Badge variant="secondary" className="flex items-center gap-1">
                   <CalendarIcon className="h-4 w-4" />
                   <span>
-                    {num_days} {num_days === 1 ? 'day' : 'days'}
+                    {numDays} {numDays === 1 ? 'day' : 'days'}
                   </span>
                 </Badge>
                 <Badge variant="secondary" className="flex items-center gap-1">

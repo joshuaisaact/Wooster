@@ -2,18 +2,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPinIcon } from 'lucide-react';
 import { Destination } from '@/types/types';
+import { truncateText } from '@/utils/text';
 
 interface DestinationProps {
   destination: Destination;
 }
 
 function DestinationCard({ destination }: DestinationProps) {
-  const { destinationName, description, country, costLevel } = destination;
-
-  const truncateText = (text: string, maxLength: number) => {
-    if (text.length <= maxLength) return text;
-    return text.slice(0, maxLength) + '...';
-  };
+  const {
+    destinationName = 'Unnamed Destination',
+    description = '',
+    country = 'Unknown Location',
+    costLevel = 'N/A',
+  } = destination || {};
 
   return (
     <Card className="flex min-w-72 max-w-80 flex-col">
@@ -23,7 +24,7 @@ function DestinationCard({ destination }: DestinationProps) {
       <CardContent className="flex flex-1 flex-col">
         <div className="mb-4">
           <p className="text-muted-foreground flex-1 overflow-y-auto text-sm">
-            {truncateText(description, 150)}
+            {description ? truncateText(description, 150) : 'No description available'}
           </p>
         </div>
         <div className="flex items-center justify-between">
