@@ -5,7 +5,7 @@ import Trips from './TripsList';
 import Profile from './Profile';
 import Dashboard from './Dashboard';
 import Explore from './Explore';
-import DestinationFullList from '@/components/DestinationFullList';
+import DestinationListPage from './DestinationList';
 import DestinationSummary from './DestinationSummary';
 
 function AppLayout() {
@@ -23,7 +23,7 @@ function AppLayout() {
           </Route>
           <Route path="explore" element={<Explore />} />
           <Route path="destinations/:destinationId" element={<DestinationSummary />} />
-          <Route path="destination-list" element={<DestinationFullList />} />
+          <Route path="destination-list" element={<DestinationListPage />} />
           <Route path="settings" element={<Profile />} />
         </Routes>
       </div>
