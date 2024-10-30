@@ -11,10 +11,18 @@ import DestinationSummary from './DestinationSummary';
 function AppLayout() {
   return (
     <div className="flex min-h-screen">
-      <div className="fixed left-0 top-0 h-full w-64 bg-green-700">
+      {/* Sidebar for Desktop (large and above) */}
+      <div className="fixed left-0 top-0 hidden h-full md:block md:w-48 lg:w-64">
         <Sidebar />
       </div>
-      <div className="ml-64 flex-1 flex-grow flex-col items-center p-4">
+
+      {/* Sidebar for Mobile (small and medium screens) */}
+      <div className="fixed inset-x-0 bottom-0 z-10 block md:hidden">
+        <Sidebar />
+      </div>
+
+      {/* Main content area with responsive padding */}
+      <div className="flex-1 flex-grow flex-col items-center p-4 pb-16 md:ml-48 md:pb-0 lg:ml-64 lg:pb-0">
         <Routes>
           <Route path="home" element={<Dashboard />} />
           <Route path="trips" element={<Trips />} />

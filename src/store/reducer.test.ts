@@ -34,7 +34,7 @@ describe('reducer', () => {
     const newTrip: Triptype = {
       tripId: '3',
       destinationName: 'Tokyo, Japan',
-      num_days: 7,
+      numDays: 7,
       startDate: '2024-08-10',
       itinerary: mockItineraryNYC, // Itinerary for the trip
     };
