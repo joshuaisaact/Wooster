@@ -12,9 +12,10 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '@/hooks/useAppContext';
 import { createTrip } from '@/services/apiService';
+import { Destination } from '@/types/types';
 
 interface CreateTripProps {
-  location?: string;
+  location: Destination | null;
 }
 
 function CreateTrip({ location }: CreateTripProps) {
