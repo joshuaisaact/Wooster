@@ -1,47 +1,31 @@
-import { authReducer, initialState } from '@/store/authreducer';
-import { createContext, ReactNode, useContext, useReducer } from 'react';
-import { User } from '@/types/types';
-import { DUMMY_USER } from '@/store/dummyData';
-
-interface AuthProviderProps {
-  children: ReactNode;
-}
+import { createContext, useState, useEffect, ReactNode } from 'react';
+import { Session } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
 
 interface AuthContextType {
-  user: User | null;
-  isAuthenticated: boolean;
-  login: (email: string, password: string) => void;
-  logout: () => void;
+  session: Session | null;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType>({ session: null });
 
-function AuthProvider({ children }: AuthProviderProps) {
-  const [{ user, isAuthenticated }, dispatch] = useReducer(authReducer, initialState);
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [session, setSession] = useState<Session | null>(null);
 
-  function login(email: string, password: string) {
-    if (email === DUMMY_USER.email && password === DUMMY_USER.password) {
-      dispatch({ type: 'LOGIN', payload: DUMMY_USER });
-    }
-  }
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
 
-  function logout() {
-    dispatch({ type: 'LOGOUT' });
-  }
+    // Listen for changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
 
-  return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    return () => subscription.unsubscribe();
+  }, []);
+
+  return <AuthContext.Provider value={{ session }}>{children}</AuthContext.Provider>;
 }
-
-function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('AuthContext was used outside the AuthProvider!');
-  }
-  return context;
-}
-
-export { AuthProvider, useAuth };
