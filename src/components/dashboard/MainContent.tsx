@@ -2,28 +2,39 @@ import { Trip, Destination } from '@/types/types';
 import WelcomeSection from './WelcomeSection';
 import NextTripSection from './NextTripSection';
 import { SavedDestinations } from '../destination/SavedDestinations';
+import { cn } from '@/lib/utils';
 
 interface MainContentProps {
   soonestTrip: Trip | null;
   soonestTripDestination: Destination | null;
   onDestinationClick: (destination: Destination) => void;
+  className?: string;
 }
 
 function MainContent({
   soonestTrip,
   soonestTripDestination,
   onDestinationClick,
+  className,
 }: MainContentProps) {
   return (
-    <div className="space-y-7 lg:col-span-2">
-      <div className="flex min-h-[600px] flex-col gap-10 rounded-lg bg-white p-8 shadow-md">
-        <WelcomeSection nextDestination={soonestTripDestination} />
-        <NextTripSection trip={soonestTrip} destination={soonestTripDestination} />
-        <SavedDestinations
-          onDestinationSelect={onDestinationClick}
-          selectedDestinationId={null}
-          className="border-none shadow-none"
-        />
+    <div className={cn('space-y-6', className)}>
+      <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm">
+        <div className="divide-y divide-gray-100">
+          <div className="p-6 md:p-8">
+            <WelcomeSection nextDestination={soonestTripDestination} />
+          </div>
+          <div className="p-6 md:p-8">
+            <NextTripSection trip={soonestTrip} destination={soonestTripDestination} />
+          </div>
+          <div className="p-6 md:p-8">
+            <SavedDestinations
+              onDestinationSelect={onDestinationClick}
+              selectedDestinationId={null}
+              className="border-none shadow-none"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

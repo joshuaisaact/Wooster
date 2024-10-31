@@ -22,12 +22,15 @@ export function ItineraryView({ currentDay }: ItineraryViewProps) {
         selectedActivityId={selectedActivityId}
         ref={mapRef}
       />
-      <ItineraryList
-        day={currentDay.day}
-        activities={currentDay.activities}
-        selectedActivityId={selectedActivityId}
-        onActivitySelect={handleActivitySelect}
-      />
+
+      <div className="h-full w-full md:w-1/2">
+        <ItineraryList
+          day={currentDay.day}
+          activities={currentDay.activities}
+          selectedActivityId={selectedActivityId}
+          onActivitySelect={handleActivitySelect}
+        />
+      </div>
     </div>
   );
 }

@@ -1,47 +1,153 @@
+import { useState } from 'react';
 import CreateTrip from '@/components/shared/CreateTrip';
-import TripCard from '@/components/TripCard';
+import { TripCard } from '@/components/trip/trip-card';
 import { useAppContext } from '@/hooks/useAppContext';
+import { Search } from 'lucide-react';
+import { sortTripsByDate, filterTripsByStatus, searchTrips } from '@/utils/trips';
 
 function Trips() {
   const { state } = useAppContext();
   const { trips, destinations } = state;
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showPastTrips, setShowPastTrips] = useState(false);
+
+  // Create a map of destination countries for search
+  const destinationCountries = destinations.reduce(
+    (acc, dest) => ({
+      ...acc,
+      [dest.destinationName]: dest.country,
+    }),
+    {} as Record<string, string>,
+  );
 
   if (!trips || trips.length === 0) {
     return (
-      <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
-        <div className="flex flex-col items-center gap-1 text-center">
-          <h3 className="text-2xl font-bold tracking-tight">You have no planned trips!</h3>
-          <p className="text-muted-foreground text-sm">
-            View your upcoming trips here, once you've planned one
-          </p>
-          <CreateTrip />
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-gradient-to-b from-green-50/50 via-white/50 to-green-50/50 p-4">
+        <div className="max-w-md rounded-xl bg-white/70 p-8 text-center shadow-lg backdrop-blur-sm">
+          <div className="space-y-4">
+            <h3 className="text-2xl font-bold tracking-tight text-green-900">
+              You have no planned trips!
+            </h3>
+            <p className="text-sm text-gray-600">
+              View your upcoming trips here, once you've planned one
+            </p>
+            <div className="pt-4">
+              <CreateTrip location={null} />
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
-  return (
-    <div className="flex h-full flex-col items-center pt-10 text-text">
-      {/* <Header>Trips</Header> */}
-      <div className="flex w-full justify-between">
-        <div className="w-2/3 p-10">
-          <ul className="h-[calc(100vh-120px)] overflow-y-auto">
-            {trips.map((trip) => {
-              const destination = destinations.find(
-                (dest) => dest.destinationName === trip.destinationName,
-              );
+  const { upcomingTrips, pastTrips } = filterTripsByStatus(trips);
+  const sortedTrips = sortTripsByDate(showPastTrips ? pastTrips : upcomingTrips);
+  const filteredTrips = searchTrips(sortedTrips, searchQuery, destinationCountries);
 
-              return (
-                <li key={trip.tripId} className="mb-10">
-                  <TripCard trip={trip} destination={destination} />
-                </li>
-              );
-            })}
-          </ul>
+  return (
+    <div className="min-h-[calc(100vh-4rem)] w-full bg-gradient-to-b from-green-50/50 via-white/50 to-green-50/50">
+      <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
+        {/* Header Section */}
+        <div className="mb-6 md:mb-8 lg:mb-12">
+          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+            <div>
+              <div className="flex items-center gap-3">
+                <h1 className="text-2xl font-bold tracking-tight text-green-900 md:text-3xl lg:text-4xl">
+                  Your Trips
+                </h1>
+                <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
+                  {filteredTrips.length} {filteredTrips.length === 1 ? 'trip' : 'trips'}
+                </span>
+              </div>
+              <p className="mt-2 text-base text-gray-600 md:text-lg">
+                Manage and explore your planned adventures
+              </p>
+
+              {/* Trip type toggle */}
+              <div className="mt-4 flex gap-4">
+                <button
+                  onClick={() => setShowPastTrips(false)}
+                  className={`text-sm font-medium ${
+                    !showPastTrips
+                      ? 'text-green-800 underline decoration-2 underline-offset-4'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  Upcoming ({upcomingTrips.length})
+                </button>
+                <button
+                  onClick={() => setShowPastTrips(true)}
+                  className={`text-sm font-medium ${
+                    showPastTrips
+                      ? 'text-green-800 underline decoration-2 underline-offset-4'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  Past ({pastTrips.length})
+                </button>
+              </div>
+            </div>
+
+            {/* Search Bar */}
+            <div className="relative max-w-md flex-1 md:max-w-xs">
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <Search className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Search trips..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-lg border border-gray-200 bg-white/90 py-2 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-500 focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
+              />
+            </div>
+          </div>
         </div>
-        <div className="sticky top-0 w-1/3 p-10">
-          <CreateTrip />
-          <img src="wooster-on-maps-no-bg.png" />
+
+        {/* Main Content */}
+        <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
+          {/* Trip List */}
+          <div className="lg:col-span-2">
+            <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm">
+              {filteredTrips.length > 0 ? (
+                <ul className="divide-y divide-gray-100">
+                  {filteredTrips.map((trip) => {
+                    const destination = destinations.find(
+                      (dest) => dest.destinationName === trip.destinationName,
+                    );
+
+                    return (
+                      <li key={trip.tripId} className="p-4 transition-colors hover:bg-white/50">
+                        <TripCard trip={trip} destination={destination} />
+                      </li>
+                    );
+                  })}
+                </ul>
+              ) : (
+                <div className="p-8 text-center">
+                  <p className="text-gray-600">
+                    No {showPastTrips ? 'past' : 'upcoming'} trips match your search
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="w-full lg:col-span-1">
+            <div className="space-y-6 lg:sticky lg:top-8">
+              <div className="rounded-xl bg-white/70 p-6 shadow-lg backdrop-blur-sm">
+                <CreateTrip location={null} />
+              </div>
+              <div className="hidden text-center lg:block">
+                <img
+                  src="wooster-on-maps-no-bg.png"
+                  alt="Wooster"
+                  className="mx-auto w-48 opacity-80 transition-opacity duration-200 hover:opacity-100"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

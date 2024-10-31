@@ -6,7 +6,7 @@ import {
   createDestination,
   deleteTrip,
   deleteDestination,
-} from './apiService';
+} from '../../src/services/apiService';
 
 const mockFetch = vi.fn();
 

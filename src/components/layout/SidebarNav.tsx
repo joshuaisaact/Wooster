@@ -9,37 +9,37 @@ import { IoAirplaneOutline } from 'react-icons/io5';
 
 function SidebarNav() {
   return (
-    <nav className="flex w-64 justify-center p-6">
-      <ul className="space-y-6">
+    <nav className="flex w-full justify-center p-4 lg:w-64 lg:p-6">
+      <ul className="flex space-x-6 lg:flex-col lg:space-x-0 lg:space-y-6">
         <li>
           <SidebarNavLink to="/home">
             <HiOutlineHome className="h-6 w-6" />
-            <span>Home</span>
+            <span className="hidden lg:ml-2 lg:inline">Home</span>
           </SidebarNavLink>
         </li>
         <li>
           <SidebarNavLink to="/trips">
             <IoAirplaneOutline className="h-6 w-6" />
-            Trips
+            <span className="hidden lg:ml-2 lg:inline">Trips</span>
           </SidebarNavLink>
         </li>
         <li>
           <SidebarNavLink to="/destination-list">
             <HiOutlineMap className="h-6 w-6" />
-            <span>Destinations</span>
+            <span className="hidden lg:ml-2 lg:inline">Destinations</span>
           </SidebarNavLink>
         </li>
         <li>
           <SidebarNavLink to="/explore">
             <HiOutlineGlobeEuropeAfrica className="h-6 w-6" />
-            <span>Explore</span>
+            <span className="hidden lg:ml-2 lg:inline">Explore</span>
           </SidebarNavLink>
         </li>
 
         <li>
           <SidebarNavLink to="/settings">
             <HiOutlineCog6Tooth className="h-6 w-6" />
-            <span>Settings</span>
+            <span className="hidden lg:ml-2 lg:inline">Settings</span>
           </SidebarNavLink>
         </li>
       </ul>

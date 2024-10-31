@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { authReducer, initialState } from './authreducer';
+import { authReducer, initialState } from '@/store/authreducer';
 import { AuthState, AuthAction } from '@/types/types';
 
 // Mock data for a sample user

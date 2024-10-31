@@ -4,9 +4,14 @@ import SidebarNav from './SidebarNav';
 
 function Sidebar() {
   return (
-    <div className="flex min-h-screen max-w-xs flex-col items-center justify-between bg-green-700 px-20 py-12 pb-[3.5rem] text-white">
-      <div className="flex flex-col items-center">
-        <Logo height="h-40" width="w-40" link="/" />
+    <div className="flex h-16 w-full flex-row items-center justify-between bg-green-700/95 px-4 py-2 text-white shadow-xl backdrop-blur-sm transition-all duration-200 ease-in-out md:h-full md:min-h-screen md:w-48 md:flex-col md:px-6 md:py-8 lg:w-64 lg:px-8">
+      <div className="flex w-full flex-row items-center justify-between md:flex-col md:items-center md:justify-start md:gap-8">
+        <Logo
+          height="h-8 md:h-24 lg:h-32"
+          width="w-8 md:w-24 lg:w-32"
+          link="/"
+          className="transition-transform duration-200 hover:scale-105"
+        />
         <SidebarNav />
       </div>
       <Footer />
