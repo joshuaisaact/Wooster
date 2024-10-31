@@ -1,45 +1,45 @@
 import { useState, useMemo } from 'react';
-import { Destination } from '@/types/types';
-import { type SortOption } from '@/components/destination/DestinationSearchBar';
+import { Destination, SortOption } from '@/types/types';
 
 export function useDestinationFilters(destinations: Destination[]) {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('name');
   const [selectedCostLevel, setSelectedCostLevel] = useState('all');
   const [selectedSafetyRating, setSelectedSafetyRating] = useState('all');
+  const [selectedCountry, setSelectedCountry] = useState('all');
 
   const filteredDestinations = useMemo(() => {
     return destinations
       .filter((destination) => {
-        const matchesSearch =
-          destination.destinationName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          destination.country.toLowerCase().includes(searchQuery.toLowerCase());
-
+        const matchesSearch = destination.destinationName
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase());
         const matchesCost =
-          selectedCostLevel === 'all' ? true : destination.costLevel === selectedCostLevel;
+          selectedCostLevel === 'all' || destination.costLevel === selectedCostLevel;
         const matchesSafety =
-          selectedSafetyRating === 'all' ? true : destination.safetyRating === selectedSafetyRating;
+          selectedSafetyRating === 'all' || destination.safetyRating === selectedSafetyRating;
+        const matchesCountry = selectedCountry === 'all' || destination.country === selectedCountry;
 
-        return matchesSearch && matchesCost && matchesSafety;
+        return matchesSearch && matchesCost && matchesSafety && matchesCountry;
       })
       .sort((a, b) => {
-        switch (sortBy) {
-          case 'name':
-            return a.destinationName.localeCompare(b.destinationName);
-          case 'cost':
-            return a.costLevel.localeCompare(b.costLevel);
-          case 'safety':
-            return b.safetyRating.localeCompare(a.safetyRating);
-          default:
-            return 0;
+        if (sortBy === 'name') {
+          return a.destinationName.localeCompare(b.destinationName);
+        } else if (sortBy === 'costLevel') {
+          return a.costLevel.localeCompare(b.costLevel);
+        } else if (sortBy === 'safetyRating') {
+          return a.safetyRating.localeCompare(b.safetyRating);
         }
+        return 0;
       });
-  }, [destinations, searchQuery, sortBy, selectedCostLevel, selectedSafetyRating]);
+  }, [destinations, searchQuery, sortBy, selectedCostLevel, selectedSafetyRating, selectedCountry]);
 
   const resetFilters = () => {
     setSearchQuery('');
+    setSortBy('name');
     setSelectedCostLevel('all');
     setSelectedSafetyRating('all');
+    setSelectedCountry('all');
   };
 
   return {
@@ -47,11 +47,13 @@ export function useDestinationFilters(destinations: Destination[]) {
     sortBy,
     selectedCostLevel,
     selectedSafetyRating,
+    selectedCountry,
     filteredDestinations,
     setSearchQuery,
     setSortBy,
     setSelectedCostLevel,
     setSelectedSafetyRating,
+    setSelectedCountry,
     resetFilters,
   };
 }

@@ -90,3 +90,5 @@ export interface User {
   password: string;
   avatar: string;
 }
+
+export type SortOption = 'name' | 'costLevel' | 'safetyRating';

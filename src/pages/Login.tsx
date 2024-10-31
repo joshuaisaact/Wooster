@@ -1,58 +1,28 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Logo } from '@/components/layout/Logo';
-import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { Button } from '@/components/ui/button';
+import { Logo } from '@/components/layout/Logo';
+import { LoginForm } from '@/components/auth/LoginForm';
 
 function Login() {
-  // Pre-filled for dev purposes
-
-  const [email, setEmail] = useState('josh@example.com');
-  const [password, setPassword] = useState('qwerty');
-
-  const { login, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(
-    function () {
-      console.log('Is authenticated:', isAuthenticated);
-      if (isAuthenticated) {
-        navigate('/home', { replace: true });
-      }
-    },
-    [isAuthenticated, navigate],
-  );
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    if (email && password) login(email, password);
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/home', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
-    <div className="flex h-full flex-col items-center justify-center bg-green-800">
-      <Logo height={'h-72'} image={'/wooster-homepage-no-bg.png'} />
-      <h1 className="text-grey py-10 font-black">Wooster</h1>
-      <h3 className="py-10">Your trip companion</h3>
-      <form onSubmit={handleSubmit}>
-        <div className="m-1 flex flex-col">
-          <label htmlFor="email">Email address</label>
-          <input type="email" id="email" onChange={(e) => setEmail(e.target.value)} value={email} />
-        </div>
-        <div className="m-1 flex flex-col">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-        </div>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-green-800 to-green-900 px-4">
+      <div className="mb-8 flex flex-col items-center">
+        <Logo height="h-32" image="/wooster-homepage-no-bg.png" />
+        <h1 className="mt-6 text-3xl font-black text-white">Wooster</h1>
+        <p className="mt-2 text-lg text-green-100">Your trip companion</p>
+      </div>
 
-        <div className="m-3">
-          <Button>Login</Button>
-        </div>
-      </form>
+      <LoginForm />
     </div>
   );
 }

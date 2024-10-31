@@ -1,22 +1,15 @@
 // components/destination/DestinationSearchBar.tsx
-import { Search, SlidersHorizontal } from 'lucide-react';
+import { FilterIcon, SearchIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-
-export type SortOption = 'name' | 'cost' | 'safety';
+import { Select } from '@/components/ui/select';
+import { SortOption } from '@/types/types';
 
 interface DestinationSearchBarProps {
   searchQuery: string;
-  onSearchChange: (query: string) => void;
   sortBy: SortOption;
-  onSortChange: (sort: SortOption) => void;
+  onSearchChange: (value: string) => void;
+  onSortChange: (value: SortOption) => void;
   onToggleFilters: () => void;
 }
 
@@ -28,30 +21,30 @@ export function DestinationSearchBar({
   onToggleFilters,
 }: DestinationSearchBarProps) {
   return (
-    <div className="mb-6 flex flex-wrap items-center gap-4">
+    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="relative flex-1">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
+        <SearchIcon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
         <Input
+          type="text"
           placeholder="Search destinations..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="pl-10"
+          className="bg-white/50 pl-9"
         />
       </div>
-      <Button variant="outline" onClick={onToggleFilters} className="flex items-center gap-2">
-        <SlidersHorizontal className="h-4 w-4" />
-        Filters
-      </Button>
-      <Select value={sortBy} onValueChange={onSortChange}>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Sort by..." />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="name">Sort by Name</SelectItem>
-          <SelectItem value="cost">Sort by Cost</SelectItem>
-          <SelectItem value="safety">Sort by Safety</SelectItem>
-        </SelectContent>
-      </Select>
+      <div className="flex items-center gap-2">
+        <Select value={sortBy} onValueChange={onSortChange}>
+          {/* ... */}
+        </Select>
+        <Button
+          variant="outline"
+          className="border-gray-200 bg-white/50 text-gray-900 hover:bg-white/80 hover:text-green-700"
+          onClick={onToggleFilters}
+        >
+          <FilterIcon className="mr-2 h-4 w-4" />
+          Filters
+        </Button>
+      </div>
     </div>
   );
 }

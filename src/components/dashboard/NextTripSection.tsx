@@ -1,5 +1,5 @@
 import { Trip, Destination } from '@/types/types';
-import TripCard from '@/components/TripCard';
+import { TripCard } from '../trip/trip-card';
 
 interface NextTripSectionProps {
   trip: Trip | null;

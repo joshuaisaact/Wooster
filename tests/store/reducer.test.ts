@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import { reducer, initialState } from './reducer';
+import { reducer, initialState } from '../../src/store/reducer';
 import { State, Action, Destination, Trip as Triptype } from '@/types/types';
 import { mockDestinations, mockTokyo } from '@/__mocks__/mockDestinations';
 import { mockTrips, mockItineraryNYC } from '@/__mocks__/mockTrips';

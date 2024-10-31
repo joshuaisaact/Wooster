@@ -25,5 +25,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": [
+    "src",
+    "tests/utils/trips.test.ts",
+    "tests/utils/text.test.ts",
+    "tests/components/auth/ProtectedRoute.test.tsx",
+    "tests/services/apiService.test.ts",
+    "tests/store/reducer.test.ts"
+  ]
 }

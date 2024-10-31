@@ -15,28 +15,34 @@ export function SavedDestinationsList({
 }: SavedDestinationsListProps) {
   if (!destinations.length) {
     return (
-      <div className="text-muted-foreground flex h-full items-center justify-center">
-        No saved destinations yet
+      <div className="text-muted-foreground flex h-32 items-center justify-center text-sm">
+        <p className="text-center">
+          No saved destinations yet
+          <br />
+          <span className="text-xs">Add some destinations to get started!</span>
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 lg:grid-cols-4">
       {destinations.map((destination) => (
         <Button
           key={destination.destinationId}
           onClick={() => onSelect(destination)}
           variant={selectedDestinationId === destination.destinationId ? 'default' : 'outline'}
           className={cn(
-            'w-full justify-start overflow-hidden text-ellipsis whitespace-nowrap',
+            'border-input/50 group w-full justify-start overflow-hidden text-ellipsis whitespace-nowrap transition-all duration-200',
             selectedDestinationId === destination.destinationId
-              ? 'bg-green-600 text-white hover:bg-green-700'
-              : 'hover:bg-green-50 hover:text-green-600',
+              ? 'bg-green-700 text-white hover:bg-green-800'
+              : 'bg-white/50 hover:border-green-600/30 hover:bg-green-50/50 hover:text-green-700',
           )}
           size="sm"
         >
-          {destination.destinationName}
+          <span className="inline-block max-w-full overflow-hidden text-ellipsis">
+            {destination.destinationName}
+          </span>
         </Button>
       ))}
     </div>

@@ -19,21 +19,41 @@ function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="text-lg">Loading...</div>
+      <div className="flex h-[calc(100vh-4rem)] items-center justify-center bg-gradient-to-b from-green-50/50 to-white/50">
+        <div className="text-muted-foreground animate-pulse text-lg">
+          Loading your adventures...
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="flex h-full flex-col items-center pt-10 text-text">
-      <div className="grid w-full max-w-7xl grid-cols-1 gap-8 pt-10 lg:grid-cols-3">
-        <MainContent
-          soonestTrip={soonestTrip}
-          soonestTripDestination={soonestTripDestination}
-          onDestinationClick={setSelectedDestination}
-        />
-        <Sidebar selectedDestination={selectedDestination} />
+    <div className="min-h-[calc(100vh-4rem)] w-full bg-gradient-to-b from-green-50/50 via-white/50 to-green-50/50">
+      <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
+        {/* Welcome section with better spacing */}
+        <div className="mb-6 md:mb-8 lg:mb-12">
+          <h1 className="text-2xl font-bold tracking-tight text-green-900 md:text-3xl lg:text-4xl">
+            Welcome Back!
+          </h1>
+          <p className="mt-2 text-base text-gray-600 md:text-lg">Let's plan your next adventure</p>
+        </div>
+
+        {/* Main grid with improved spacing */}
+        <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
+          {/* Main content area */}
+          <MainContent
+            soonestTrip={soonestTrip}
+            soonestTripDestination={soonestTripDestination}
+            onDestinationClick={setSelectedDestination}
+            className="lg:col-span-2"
+          />
+
+          {/* Sidebar with better positioning */}
+          <Sidebar
+            selectedDestination={selectedDestination}
+            className="space-y-6 lg:sticky lg:top-8"
+          />
+        </div>
       </div>
     </div>
   );
