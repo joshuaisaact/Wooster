@@ -12,7 +12,7 @@
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "test": "vitest",
-    "test:ci": "vitest run --coverage --reporter=verbose",
+    "test:ci": "vitest run --reporter=verbose",
     "test:full": "vitest --reporter verbose",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage"
