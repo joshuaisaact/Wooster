@@ -1,10 +1,27 @@
 import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
+import { useState } from 'react';
+import { supabase } from '@/lib/supabase';
+import { useNavigate } from 'react-router-dom';
 
 export function LogoutSection() {
-  const handleLogout = () => {
-    // TODO: Implement logout functionality
-    alert('Logging out...');
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogout = async () => {
+    try {
+      setIsLoading(true);
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        throw error;
+      }
+      navigate('/', { replace: true });
+    } catch (error) {
+      console.error('Error signing out:', error);
+      alert('Error signing out. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -21,8 +38,9 @@ export function LogoutSection() {
         onClick={handleLogout}
         variant="destructive"
         className="w-full transition-colors sm:w-auto"
+        disabled={isLoading}
       >
-        Sign Out
+        {isLoading ? 'Signing out...' : 'Sign Out'}
       </Button>
     </div>
   );
