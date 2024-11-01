@@ -1,7 +1,6 @@
 import { Logo } from '@/components/layout/Logo';
 import { LoginForm } from '@/components/auth/LoginForm';
-import { Globe, Linkedin, Mail } from 'lucide-react';
-import { IoLogoGithub } from 'react-icons/io5';
+import SocialLinks from '@/components/ui/social/SocialLinks';
 
 export default function Login() {
   return (
@@ -36,42 +35,7 @@ export default function Login() {
           </div>
 
           {/* Contact Links */}
-          <div className="flex gap-6">
-            <a
-              href="https://joshtuddenham.tech"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="animate-fade-in-up flex items-center gap-2 rounded-md bg-white/10 px-4 py-2 text-sm text-white opacity-0 transition-all duration-300 [animation-delay:700ms] hover:-translate-y-0.5 hover:bg-white/15 hover:shadow-lg"
-            >
-              <Globe className="h-4 w-4" />
-              Portfolio
-            </a>
-            <a
-              href="https://github.com/yourusername"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="animate-fade-in-up flex items-center gap-2 rounded-md bg-white/10 px-4 py-2 text-sm text-white opacity-0 transition-all duration-300 [animation-delay:800ms] hover:-translate-y-0.5 hover:bg-white/20 hover:shadow-lg"
-            >
-              <IoLogoGithub className="h-4 w-4" />
-              GitHub
-            </a>
-            <a
-              href="https://www.linkedin.com/in/joshuatuddenham/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="animate-fade-in-up flex items-center gap-2 rounded-md bg-white/10 px-4 py-2 text-sm text-white opacity-0 transition-all duration-300 [animation-delay:700ms] hover:-translate-y-0.5 hover:bg-white/15 hover:shadow-lg"
-            >
-              <Linkedin className="h-4 w-4" />
-              LinkedIn
-            </a>
-            <a
-              href="mailto:joshuaisaact@gmail.com"
-              className="animate-fade-in-up flex items-center gap-2 rounded-md bg-white/10 px-4 py-2 text-sm text-white opacity-0 transition-all duration-300 [animation-delay:900ms] hover:-translate-y-0.5 hover:bg-white/20 hover:shadow-lg"
-            >
-              <Mail className="h-4 w-4" />
-              Email
-            </a>
-          </div>
+          <SocialLinks />
         </div>
 
         <div className="animate-fade-in-up mt-4 w-full max-w-md opacity-0 [animation-delay:1100ms]">

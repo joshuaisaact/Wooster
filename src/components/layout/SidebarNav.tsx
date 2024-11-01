@@ -26,7 +26,7 @@ function SidebarNav() {
         <li>
           <SidebarNavLink to="/destination-list">
             <HiOutlineMap className="h-6 w-6" />
-            <span className="hidden lg:ml-2 lg:inline">Destinations</span>
+            <span className="a hidden lg:ml-2 lg:inline">Destinations</span>
           </SidebarNavLink>
         </li>
         <li>
