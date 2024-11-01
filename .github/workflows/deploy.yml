@@ -37,9 +37,10 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            rm -rf /home/wooster/frontend/dist/*
-            mkdir -p /home/wooster/frontend/dist
-            chmod -R 775 /home/wooster/frontend/dist
+            sudo rm -rf /home/wooster/frontend/dist
+            sudo mkdir -p /home/wooster/frontend/dist
+            sudo chown -R wooster:www-data /home/wooster/frontend/dist
+            sudo chmod -R 775 /home/wooster/frontend/dist
 
       - name: Deploy to server
         uses: appleboy/scp-action@master
