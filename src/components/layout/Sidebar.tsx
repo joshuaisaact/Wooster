@@ -1,6 +1,7 @@
 import { Logo } from './Logo';
 import { Footer } from './Footer';
 import SidebarNav from './SidebarNav';
+import JobHunt from './JobHunt';
 
 function Sidebar() {
   return (
@@ -14,6 +15,7 @@ function Sidebar() {
         />
         <SidebarNav />
       </div>
+      <JobHunt />
       <Footer />
     </div>
   );
