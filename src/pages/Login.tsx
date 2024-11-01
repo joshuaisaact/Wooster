@@ -1,6 +1,6 @@
 import { Logo } from '@/components/layout/Logo';
 import { LoginForm } from '@/components/auth/LoginForm';
-import { Globe, Mail } from 'lucide-react';
+import { Globe, Linkedin, Mail } from 'lucide-react';
 import { IoLogoGithub } from 'react-icons/io5';
 
 export default function Login() {
@@ -19,15 +19,20 @@ export default function Login() {
 
         {/* Job Search Banner */}
         <div className="animate-fade-in-up my-6 flex flex-col items-center gap-4 opacity-0 [animation-delay:600ms]">
-          <div className="transform rounded-lg bg-white/10 px-6 py-4 backdrop-blur-sm transition-all duration-300 hover:bg-white/15">
-            <p className="text-center font-medium text-white">
-              🚀 Software Developer Open to Opportunities
-            </p>
-            <p className="mt-2 text-center text-sm text-green-100">
-              I'm currently looking for my next role in software development.
-              <br />
-              Let's create something impactful together!
-            </p>
+          <div className="grid grid-cols-1 items-center gap-4 rounded-lg bg-white/10 px-6 py-4 backdrop-blur-sm transition-all duration-300 hover:bg-white/15 sm:grid-cols-[auto,1fr]">
+            <img
+              src="./me.jpg"
+              className="mx-auto h-20 w-20 rounded-full border-2 border-green-200 shadow-lg sm:mx-0"
+              alt="Profile"
+            />
+            <div className="text-center sm:text-left">
+              <p className="font-medium text-white">🚀 Software Developer Open to Opportunities</p>
+              <p className="mt-2 text-sm text-green-100">
+                I'm currently looking for my next role in software development.
+                <br />
+                Let's create something impactful together!
+              </p>
+            </div>
           </div>
 
           {/* Contact Links */}
@@ -49,6 +54,15 @@ export default function Login() {
             >
               <IoLogoGithub className="h-4 w-4" />
               GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/joshuatuddenham/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="animate-fade-in-up flex items-center gap-2 rounded-md bg-white/10 px-4 py-2 text-sm text-white opacity-0 transition-all duration-300 [animation-delay:700ms] hover:-translate-y-0.5 hover:bg-white/15 hover:shadow-lg"
+            >
+              <Linkedin className="h-4 w-4" />
+              LinkedIn
             </a>
             <a
               href="mailto:joshuaisaact@gmail.com"
