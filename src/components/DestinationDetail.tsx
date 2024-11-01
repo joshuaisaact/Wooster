@@ -125,7 +125,7 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
       {/* Right Side - Create Trip Section (appears when button is clicked) */}
       {tripCreationOpen && (
         <div className="flex h-full flex-col justify-between">
-          <CreateTrip location={destination.destinationName} />
+          <CreateTrip location={destination} />
           <img src="/Wooster-map-planning.png" className="mt-4 h-auto" alt="Map Planning" />
         </div>
       )}
