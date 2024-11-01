@@ -29,6 +29,18 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: npm run build
 
+      - name: Prepare deploy directory
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          script: |
+            rm -rf /home/wooster/frontend/dist/*
+            mkdir -p /home/wooster/frontend/dist
+            chmod -R 775 /home/wooster/frontend/dist
+
       - name: Deploy to server
         uses: appleboy/scp-action@master
         with:
