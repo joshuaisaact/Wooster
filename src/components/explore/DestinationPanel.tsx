@@ -1,6 +1,6 @@
 import { Destination } from '@/types/types';
 import { Button } from '@/components/ui/button';
-import { MapPinIcon, StarIcon, DollarSignIcon, ShieldCheckIcon } from 'lucide-react';
+import { MapPinIcon, DollarSignIcon, Sun, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,14 +22,24 @@ function DestinationPanel({ focusedDestination }: DestinationPanelProps) {
     );
   }
 
-  const { destinationName, country, description, safetyRating, costLevel } = focusedDestination;
+  const {
+    destinationName,
+    country,
+    description,
+    costLevel,
+    bestTimeToVisit,
+    averageTemperatureHigh,
+    averageTemperatureLow,
+    officialLanguage,
+    currency,
+  } = focusedDestination;
 
   // Helper function for cost level display
   const getCostLevelDetails = (level: string) => {
     const levels = {
-      low: { label: 'Budget Friendly', dots: 1 },
-      medium: { label: 'Moderate', dots: 2 },
-      high: { label: 'Premium', dots: 3 },
+      Low: { label: 'Budget Friendly', dots: 1 },
+      Medium: { label: 'Moderate', dots: 2 },
+      High: { label: 'Premium', dots: 3 },
     };
     return levels[level as keyof typeof levels] || { label: 'Unknown', dots: 0 };
   };
@@ -52,44 +62,54 @@ function DestinationPanel({ focusedDestination }: DestinationPanelProps) {
 
       {/* Stats */}
       <div className="grid gap-4">
-        {/* Safety Rating */}
-        <div className="flex items-center justify-between rounded-lg bg-white/50 p-3">
+        {/* Best Time & Temperature */}
+        <div className="grid grid-cols-1 gap-2 rounded-lg bg-white/50 p-3 transition-all duration-200 hover:bg-white/70 hover:shadow-sm">
           <div className="flex items-center gap-2">
-            <ShieldCheckIcon className="h-4 w-4 text-green-600" />
-            <span className="text-sm font-medium text-gray-900">Safety Rating</span>
+            <Sun className="h-4 w-4 text-green-600" />
+            <span className="text-sm font-medium text-gray-900">Best Time to Visit</span>
           </div>
-          <div className="flex items-center">
-            {[...Array(5)].map((_, i) => (
-              <StarIcon
-                key={i}
-                className={cn(
-                  'h-4 w-4',
-                  i < safetyRating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300',
-                )}
-              />
-            ))}
+          <div className="flex flex-col gap-2">
+            <span className="text-sm text-gray-600">{bestTimeToVisit}</span>
+            <span className="text-xs text-gray-500">
+              {averageTemperatureLow}°F - {averageTemperatureHigh}°F
+            </span>
           </div>
         </div>
 
         {/* Cost Level */}
-        <div className="flex items-center justify-between rounded-lg bg-white/50 p-3">
+        <div className="grid grid-cols-1 gap-2 rounded-lg bg-white/50 p-3 transition-all duration-200 hover:bg-white/70 hover:shadow-sm">
           <div className="flex items-center gap-2">
             <DollarSignIcon className="h-4 w-4 text-green-600" />
             <span className="text-sm font-medium text-gray-900">Cost Level</span>
           </div>
-          <div className="flex items-center gap-1">
-            <span className="mr-2 text-sm text-gray-600">{costDetails.label}</span>
-            <div className="flex gap-1">
-              {[...Array(3)].map((_, i) => (
-                <div
-                  key={i}
-                  className={cn(
-                    'h-2 w-2 rounded-full',
-                    i < costDetails.dots ? 'bg-green-600' : 'bg-gray-300',
-                  )}
-                />
-              ))}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-600">{costDetails.label}</span>
+              <div className="flex gap-1">
+                {[...Array(3)].map((_, i) => (
+                  <div
+                    key={i}
+                    className={cn(
+                      'h-2 w-2 rounded-full transition-all duration-200',
+                      i < costDetails.dots ? 'bg-green-600' : 'bg-gray-300',
+                      i < costDetails.dots && 'group-hover:bg-green-700',
+                    )}
+                  />
+                ))}
+              </div>
             </div>
+          </div>
+        </div>
+
+        {/* Language & Currency */}
+        <div className="grid grid-cols-1 gap-2 rounded-lg bg-white/50 p-3 transition-all duration-200 hover:bg-white/70 hover:shadow-sm">
+          <div className="flex items-center gap-2">
+            <Globe className="h-4 w-4 text-green-600" />
+            <span className="text-sm font-medium text-gray-900">Local Info</span>
+          </div>
+          <div className="flex flex-col gap-2">
+            <span className="text-sm text-gray-600">{officialLanguage}</span>
+            <span className="text-xs text-gray-500">{currency}</span>
           </div>
         </div>
       </div>

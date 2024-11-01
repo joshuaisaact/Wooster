@@ -13,12 +13,12 @@ function AppLayout() {
   return (
     <div className="min-h-screen bg-background antialiased">
       {/* Desktop Sidebar */}
-      <div className="fixed left-0 top-0 hidden h-full md:block">
+      <div className="fixed left-0 top-0 z-50 hidden md:block">
         <Sidebar />
       </div>
 
       {/* Mobile Bottom Navigation */}
-      <div className="fixed inset-x-0 bottom-0 block shadow-lg md:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-50 block md:hidden">
         <Sidebar />
       </div>
 

@@ -15,7 +15,6 @@ export function LoginForm() {
       navigate('/home', { replace: true });
     }
   }, [session, navigate]);
-  const currentOrigin = window.location.origin;
 
   return (
     <Card className="w-full max-w-md">

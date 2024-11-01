@@ -5,12 +5,9 @@ import { Badge } from '@/components/ui/badge';
 import { MapPinIcon, Calendar, Thermometer, Globe, Info } from 'lucide-react';
 import { Map } from './shared/map';
 import CreateTrip from './shared/CreateTrip';
-import { Button } from './ui/button';
 import { Trip as TripType } from '@/types/types';
-import { useNavigate } from 'react-router-dom';
-import ConfirmModal from './ui/ConfirmModal';
-import { useAppContext } from '@/hooks/useAppContext';
-import { deleteTrip, deleteDestination } from '@/services/apiService';
+import DeleteTripButton from './trip/DeleteTripButton';
+import DeleteDestinationButton from './destination/DeleteDestinationButton';
 
 interface DestinationDetailProps {
   destination: Destination;
@@ -19,68 +16,7 @@ interface DestinationDetailProps {
 }
 
 function DestinationDetail({ destination, trip }: DestinationDetailProps) {
-  const { dispatch } = useAppContext();
   const [tripCreationOpen, setTripCreationOpen] = useState(false);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false); // Control the confirm modal
-  const navigate = useNavigate();
-
-  // Uses API service to delete a trip
-  const handleDeleteTrip = async () => {
-    if (!trip) return;
-
-    dispatch({ type: 'SET_LOADING', payload: true });
-
-    try {
-      await deleteTrip(trip.tripId); // Call the API service to delete the trip
-      dispatch({ type: 'REMOVE_TRIP', payload: trip.tripId });
-      navigate('/trips');
-    } catch (error) {
-      console.error('Error deleting trip:', error instanceof Error ? error.message : error);
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false });
-    }
-  };
-
-  // Uses API service to delete the destination
-  const handleDeleteDestination = async () => {
-    const destinationId = destination?.destinationId;
-    if (!destinationId) {
-      console.error('No destination ID found');
-      return;
-    }
-
-    const confirmDelete = window.confirm(
-      'Are you sure you want to delete this destination? This action is not reversible.',
-    );
-    if (!confirmDelete) {
-      return;
-    }
-
-    dispatch({ type: 'SET_LOADING', payload: true });
-
-    try {
-      await deleteDestination(destinationId);
-      dispatch({ type: 'REMOVE_DESTINATION', payload: destinationId });
-      navigate('/destination-list');
-    } catch (error) {
-      console.error('Error deleting destination:', error instanceof Error ? error.message : error);
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false });
-    }
-  };
-
-  const openConfirmModal = () => {
-    setIsConfirmModalOpen(true);
-  };
-
-  const closeConfirmModal = () => {
-    setIsConfirmModalOpen(false);
-  };
-
-  const confirmDeleteTrip = () => {
-    closeConfirmModal();
-    handleDeleteTrip();
-  };
 
   return (
     <div className="flex w-full flex-col gap-4 md:flex-row">
@@ -176,21 +112,11 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
             {/* Buttons */}
             {trip && (
               <div className="mt-4 flex justify-center">
-                <Button
-                  onClick={openConfirmModal}
-                  className="bg-red-500 text-white hover:bg-red-600"
-                >
-                  Delete Trip
-                </Button>
+                <DeleteTripButton tripId={trip.tripId} />
               </div>
             )}
             <div className="mt-4 flex justify-center">
-              <Button
-                onClick={handleDeleteDestination}
-                className="bg-red-500 text-white hover:bg-red-600"
-              >
-                Delete Destination
-              </Button>
+              <DeleteDestinationButton destinationId={destination.destinationId} />
             </div>
           </CardContent>
         </Card>
@@ -199,20 +125,10 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
       {/* Right Side - Create Trip Section (appears when button is clicked) */}
       {tripCreationOpen && (
         <div className="flex h-full flex-col justify-between">
-          <CreateTrip location={destination.destinationName} />
+          <CreateTrip location={destination} />
           <img src="/Wooster-map-planning.png" className="mt-4 h-auto" alt="Map Planning" />
         </div>
       )}
-
-      <ConfirmModal
-        title="Confirm Trip Deletion"
-        description="Are you sure you want to delete this trip? This action is irreversible."
-        confirmLabel="Delete"
-        cancelLabel="Cancel"
-        isOpen={isConfirmModalOpen}
-        onConfirm={confirmDeleteTrip}
-        onCancel={closeConfirmModal}
-      />
     </div>
   );
 }

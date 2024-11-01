@@ -1,5 +1,18 @@
+import { SupabaseClient } from '@supabase/supabase-js';
+
 // Global backend URL for fetching data
 export const BASE_URL: string = 'http://localhost:4000';
+
+// Helper function to get auth token
+const getAuthHeader = async (supabase: SupabaseClient) => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  return {
+    Authorization: `Bearer ${session?.access_token}`,
+    'Content-Type': 'application/json',
+  };
+};
 
 // Fetch destinations data
 export const fetchDestinations = async () => {
@@ -8,13 +21,12 @@ export const fetchDestinations = async () => {
   return res.json();
 };
 
-// Create a new destination
-export const createDestination = async (destinationName: string) => {
+// Create a new destination (protected route)
+export const createDestination = async (supabase: SupabaseClient, destinationName: string) => {
+  const headers = await getAuthHeader(supabase);
   const response = await fetch(`${BASE_URL}/destination`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({ destination: destinationName }),
   });
 
@@ -23,41 +35,46 @@ export const createDestination = async (destinationName: string) => {
   }
 
   const result = await response.json();
-  return result.destination; // Return the newly created destination
+  return result.destination;
 };
 
-// Delete a destination
-export const deleteDestination = async (destinationId: number) => {
+// Delete a destination (protected route)
+export const deleteDestination = async (supabase: SupabaseClient, destinationId: number) => {
+  const headers = await getAuthHeader(supabase);
   const response = await fetch(`${BASE_URL}/destinations/${destinationId}`, {
     method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
   });
   if (!response.ok) {
     throw new Error(`Failed to delete destination: ${response.statusText}`);
   }
 };
 
-// Fetch trips data
-export const fetchTrips = async () => {
-  const res = await fetch(`${BASE_URL}/trips`);
+// Fetch trips data (protected route)
+export const fetchTrips = async (supabase: SupabaseClient) => {
+  const headers = await getAuthHeader(supabase);
+  const res = await fetch(`${BASE_URL}/trips`, {
+    headers,
+  });
   if (!res.ok) throw new Error('Failed to fetch trips');
   return res.json();
 };
 
-// Create a trip
-export const createTrip = async (tripData: {
-  userId: string;
-  days: number;
-  location: string;
-  start_date: string | null;
-}) => {
+// Create a trip (protected route)
+export const createTrip = async (
+  supabase: SupabaseClient,
+  tripData: {
+    days: number; // removed userId since it comes from auth
+    location: string;
+    startDate: string | null;
+  },
+) => {
+  const headers = await getAuthHeader(supabase);
+  console.log('Sending trip data:', tripData);
+
   const response = await fetch(`${BASE_URL}/trip`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify(tripData),
   });
 
@@ -69,13 +86,12 @@ export const createTrip = async (tripData: {
   return result;
 };
 
-// Delete a trip
-export const deleteTrip = async (tripId: string) => {
+// Delete a trip (protected route)
+export const deleteTrip = async (supabase: SupabaseClient, tripId: string) => {
+  const headers = await getAuthHeader(supabase);
   const response = await fetch(`${BASE_URL}/trips/${tripId}`, {
     method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
   });
   if (!response.ok) {
     throw new Error(`Failed to delete trip: ${response.statusText}`);

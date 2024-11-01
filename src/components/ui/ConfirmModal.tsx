@@ -24,10 +24,10 @@ function ConfirmModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="w-80 rounded-lg bg-white p-6 shadow-lg">
-        <h2 className="text-xl font-semibold">{title}</h2>
-        <p className="text-muted-foreground mt-2 text-sm">{description}</p>
+        <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
+        <p className="text-muted-foreground mt-2 text-sm text-gray-600">{description}</p>
         <div className="mt-4 flex justify-end space-x-2">
-          <Button onClick={onCancel} variant="outline">
+          <Button onClick={onCancel} variant="outline" className="text-gray-600">
             {cancelLabel}
           </Button>
           <Button onClick={onConfirm} className="bg-red-500 text-white">

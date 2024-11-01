@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '@/hooks/useAppContext';
 import { createTrip } from '@/services/apiService';
+import { supabase } from '@/lib/supabase';
 
 interface CreateTripData {
   days: number;
@@ -23,12 +24,12 @@ export function useCreateTrip(onClose?: () => void) {
       userId: 'e92ad976-973d-406d-92d4-34b6ef182e1a', // TODO: Replace with auth
       days: data.days,
       location: data.location,
-      start_date: data.startDate ? data.startDate.toISOString() : null,
+      startDate: data.startDate ? data.startDate.toISOString() : null,
       itinerary: [],
     };
 
     try {
-      const result = await createTrip(formattedData);
+      const result = await createTrip(supabase, formattedData);
       dispatch({ type: 'ADD_TRIP', payload: result.trip });
 
       if (result.trip?.tripId) {

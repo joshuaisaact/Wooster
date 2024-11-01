@@ -2,6 +2,7 @@ import { createContext, useEffect, useReducer, ReactNode, Dispatch } from 'react
 import { initialState, reducer } from '../store/reducer';
 import { fetchTrips, fetchDestinations } from '@/services/apiService';
 import { Action, State } from '@/types/types';
+import { supabase } from '@/lib/supabase';
 
 interface AppProviderProps {
   children: ReactNode; // Explicitly typing children as ReactNode
@@ -25,7 +26,7 @@ export function AppProvider({ children }: AppProviderProps) {
       dispatch({ type: 'SET_LOADING', payload: true });
 
       // Fetch trips and dispatch the data
-      const tripsData = await fetchTrips();
+      const tripsData = await fetchTrips(supabase);
       dispatch({ type: 'SET_TRIPS', payload: tripsData });
 
       // Fetch destinations and dispatch the data
