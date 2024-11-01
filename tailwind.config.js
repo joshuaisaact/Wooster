@@ -19,15 +19,48 @@ export default {
         sidebar: '#4A9F76',
         text: '#2C3E50',
         accent: '#E9B44C',
-        // Dark mode colors
-        'background-dark': '#1E1E2F', // Dark background color
-        'window-dark': '#2A2A37', // Dark window color
-        'sidebar-dark': '#4A9F76', // Sidebar color can remain the same
-        'text-dark': '#E0E0E0', // Light text color for dark mode
-        'accent-dark': '#E9B44C', // Accent color can remain the same
+        'background-dark': '#1E1E2F',
+        'window-dark': '#2A2A37',
+        'sidebar-dark': '#4A9F76',
+        'text-dark': '#E0E0E0',
+        'accent-dark': '#E9B44C',
       },
+      keyframes: {
+        'fade-in-up': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(10px)'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)'
+          }
+        },
+        'fade-in': {
+          '0%': {
+            opacity: '0'
+          },
+          '100%': {
+            opacity: '1'
+          }
+        },
+        'slide-in': {
+          '0%': {
+            transform: 'translateY(-100%)',
+            opacity: '0'
+          },
+          '100%': {
+            transform: 'translateY(0)',
+            opacity: '1'
+          }
+        }
+      },
+      animation: {
+        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+        'fade-in': 'fade-in 0.5s ease-out forwards',
+        'slide-in': 'slide-in 0.5s ease-out forwards',
+      }
     }
   },
   plugins: [require("tailwindcss-animate")],
 }
-

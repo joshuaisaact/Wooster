@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { getSoonestTrip } from '../../src/utils/trips';
-import { mockTrips } from '@/__mocks__/mockTrips';
+import { mockTrips } from '../__mocks__/mockTrips';
 
 describe('getSoonestTrip', () => {
   const mockToday = new Date(2024, 4, 30); // Fixed date for testing (May 30, 2024)

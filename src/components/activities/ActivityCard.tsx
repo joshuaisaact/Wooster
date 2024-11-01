@@ -10,6 +10,7 @@ import {
   Gauge,
   Tag,
 } from 'lucide-react';
+import { Activity } from '@/types/types';
 
 interface ActivityCardProps {
   activity: Activity;

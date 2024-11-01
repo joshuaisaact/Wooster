@@ -1,13 +1,30 @@
 {
-  "files": [],
-  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
   "compilerOptions": {
-    "jsx": "react",
+    "target": "ES2020", // or "ESNext", depending on your needs
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "outDir": "./dist", // Common output directory
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"], // Configure paths for module resolution
+      "tests/*": ["tests/*"] // Add this line
     },
-    "types": ["vitest", "node"]
+    "jsx": "react-jsx", // Use the new JSX transform
+    "strict": true, // Enable all strict type-checking options
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "isolatedModules": true, // Allow all files to be transpiled independently
+    "moduleResolution": "bundler", // Adjust based on your module resolution needs
+    "allowImportingTsExtensions": true, // Allows importing .ts/.tsx without needing to specify the extension
+    "noEmit": true // Prevent emitting any files
   },
-  "include": ["src/**/*", "tests/**/*", "vitest.setup.ts"]
+  "include": [
+    "src/**/*", // Include all source files
+    "tests/**/*" // Include all test files
+  ],
+  "exclude": [
+    "node_modules" // Exclude node_modules
+  ]
 }

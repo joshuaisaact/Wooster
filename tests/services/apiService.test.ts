@@ -7,22 +7,10 @@ import {
   deleteTrip,
   deleteDestination,
 } from '../../src/services/apiService';
+import { mockSupabase } from '../__mocks__/mockSupabase';
 
 const mockFetch = vi.fn();
 global.fetch = mockFetch;
-
-// Mock Supabase client
-const mockSupabase = {
-  auth: {
-    getSession: vi.fn().mockResolvedValue({
-      data: {
-        session: {
-          access_token: 'fake-token',
-        },
-      },
-    }),
-  },
-};
 
 describe('API functions', () => {
   beforeEach(() => {

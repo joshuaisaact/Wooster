@@ -13,6 +13,9 @@ const mockActivitiesParisDay1: Activity[] = [
     endTime: '11:00',
     category: 'Sightseeing',
     price: '25 EUR',
+    duration: '3 hours',
+    difficulty: 'Medium',
+    bestTime: 'Morning',
   },
   {
     activityId: 2,
@@ -25,6 +28,9 @@ const mockActivitiesParisDay1: Activity[] = [
     endTime: '14:00',
     category: 'Dining',
     price: '150 EUR',
+    duration: '3 hours',
+    difficulty: 'Medium',
+    bestTime: 'Morning',
   },
 ];
 
@@ -40,6 +46,9 @@ const mockActivitiesParisDay2: Activity[] = [
     endTime: '13:00',
     category: 'Museum',
     price: '17 EUR',
+    duration: '3 hours',
+    difficulty: 'Medium',
+    bestTime: 'Morning',
   },
   {
     activityId: 4,
@@ -52,6 +61,9 @@ const mockActivitiesParisDay2: Activity[] = [
     endTime: '22:00',
     category: 'Dining',
     price: '220 EUR',
+    duration: '3 hours',
+    difficulty: 'Medium',
+    bestTime: 'Morning',
   },
 ];
 
@@ -68,6 +80,9 @@ export const mockActivitiesNYC: Activity[] = [
     endTime: '11:00',
     category: 'Tour',
     price: 'Free',
+    duration: '3 hours',
+    difficulty: 'Medium',
+    bestTime: 'Morning',
   },
   {
     activityId: 6,
@@ -80,6 +95,9 @@ export const mockActivitiesNYC: Activity[] = [
     endTime: '16:00',
     category: 'Sightseeing',
     price: '40 USD',
+    duration: '3 hours',
+    difficulty: 'Medium',
+    bestTime: 'Morning',
   },
 ];
 
