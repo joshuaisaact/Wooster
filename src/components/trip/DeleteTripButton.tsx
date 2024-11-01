@@ -1,38 +1,35 @@
+// DeleteTripButton.tsx
 import { useState } from 'react';
 import { useAppContext } from '@/hooks/useAppContext';
-import { deleteDestination } from '@/services/apiService';
+import { deleteTrip } from '@/services/apiService';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { supabase } from '@/lib/supabase';
 import { toast } from 'sonner';
 import ConfirmModal from '../ui/ConfirmModal';
 
-interface DeleteDestinationButtonProps {
-  destinationId: number;
+interface DeleteTripButtonProps {
+  tripId: string;
 }
 
-function DeleteDestinationButton({ destinationId }: DeleteDestinationButtonProps) {
+function DeleteTripButton({ tripId }: DeleteTripButtonProps) {
   const navigate = useNavigate();
   const { dispatch } = useAppContext();
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
-  const handleDeleteDestination = async () => {
-    if (!destinationId) {
-      console.error('No destination ID found');
-      toast.error('Invalid destination ID');
-      return;
-    }
+  const handleDeleteTrip = async () => {
+    if (!tripId) return;
 
     dispatch({ type: 'SET_LOADING', payload: true });
 
     try {
-      await deleteDestination(supabase, destinationId);
-      dispatch({ type: 'REMOVE_DESTINATION', payload: destinationId });
-      navigate('/destination-list');
-      toast.success('Destination deleted successfully');
+      await deleteTrip(supabase, tripId);
+      dispatch({ type: 'REMOVE_TRIP', payload: tripId });
+      navigate('/trips');
+      toast.success('Trip deleted successfully');
     } catch (error) {
-      console.error('Error deleting destination:', error instanceof Error ? error.message : error);
-      toast.error('Failed to delete destination');
+      console.error('Error deleting trip:', error instanceof Error ? error.message : error);
+      toast.error('Failed to delete trip');
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false });
     }
@@ -45,18 +42,18 @@ function DeleteDestinationButton({ destinationId }: DeleteDestinationButtonProps
         variant="destructive"
         className="bg-red-500 text-white hover:bg-red-600"
       >
-        Delete Destination
+        Delete Trip
       </Button>
 
       <ConfirmModal
-        title="Confirm Destination Deletion"
-        description="Are you sure you want to delete this destination? This action cannot be undone."
+        title="Confirm Trip Deletion"
+        description="Are you sure you want to delete this trip? This action is irreversible."
         confirmLabel="Delete"
         cancelLabel="Cancel"
         isOpen={isConfirmModalOpen}
         onConfirm={() => {
           setIsConfirmModalOpen(false);
-          handleDeleteDestination();
+          handleDeleteTrip();
         }}
         onCancel={() => setIsConfirmModalOpen(false)}
       />
@@ -64,4 +61,4 @@ function DeleteDestinationButton({ destinationId }: DeleteDestinationButtonProps
   );
 }
 
-export default DeleteDestinationButton;
+export default DeleteTripButton;

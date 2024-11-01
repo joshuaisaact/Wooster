@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/hooks/useAppContext';
 import { useCreateDestination } from '@/hooks/destination/useCreateDestination';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 interface CreateDestinationProps {
   onClose?: () => void;
@@ -27,13 +28,22 @@ function CreateDestination({ onClose, className }: CreateDestinationProps) {
   });
 
   async function onSubmit(data: DestinationFormData) {
-    try {
-      await handleCreateDestination({
+    toast.promise(
+      handleCreateDestination({
         destinationName: data.destination,
-      });
-    } catch (error) {
-      console.error('Form submission failed:', error);
-    }
+      }),
+      {
+        loading: 'Fetching your destination...',
+        success: () => {
+          if (onClose) onClose();
+          return '🎉 Destination created successfully! Time to explore!';
+        },
+        error: (err) => {
+          console.error('Form submission failed:', err);
+          return `Failed to find your destination: ${err instanceof Error ? err.message : 'please try again'}`;
+        },
+      },
+    );
   }
 
   return (
@@ -59,7 +69,7 @@ function CreateDestination({ onClose, className }: CreateDestinationProps) {
                   <FormControl>
                     <Input
                       placeholder="Enter destination name"
-                      className="bg-white/50 transition-shadow duration-200 focus:ring-2 focus:ring-green-500/20"
+                      className="bg-white/50 text-gray-600 transition-shadow duration-200 focus:ring-2 focus:ring-green-500/20"
                       {...field}
                       required
                     />

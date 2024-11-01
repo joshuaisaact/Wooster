@@ -17,7 +17,7 @@ function WelcomeSection({ nextDestination }: WelcomeSectionProps) {
           <p className="font-medium text-green-800">
             {nextDestination ? 'Your journey is taking shape' : 'Where will Wooster take you?'}
           </p>
-          <p className="text-muted-foreground text-sm text-green-800">
+          <p className="text-muted-foreground text-sm text-gray-800">
             {nextDestination
               ? `Let's fine-tune your plans for ${nextDestination.destinationName}.
                  Wooster's here to help make every detail perfect.`

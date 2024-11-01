@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/hooks/useAppContext';
 import { Destination } from '@/types/types';
 import { useCreateTrip } from '@/hooks/trip/useCreateTrip';
+import { toast } from 'sonner';
 
 interface CreateTripProps {
   location: Destination | null;
@@ -39,15 +40,24 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
   });
 
   async function onSubmit(data: TripFormData) {
-    try {
-      await handleCreateTrip({
+    toast.promise(
+      handleCreateTrip({
         days: data.days,
         location: location?.destinationName || data.location || '',
         startDate: data.startDate,
-      });
-    } catch (error) {
-      console.error('Form submission failed:', error);
-    }
+      }),
+      {
+        loading: 'Planning your adventure...',
+        success: () => {
+          if (onClose) onClose();
+          return '🎉 Trip created successfully! Time to pack your bags!';
+        },
+        error: (err) => {
+          console.error('Form submission failed:', err);
+          return `Failed to create trip: ${err instanceof Error ? err.message : 'Please try again'}`;
+        },
+      },
+    );
   }
 
   return (
@@ -81,7 +91,7 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
                               <Button
                                 variant="outline"
                                 className={cn(
-                                  'w-full justify-start bg-white/50 font-normal hover:bg-white/80',
+                                  'w-full justify-start bg-white/50 font-normal text-gray-600 hover:bg-white/80',
                                   !field.value && 'text-muted-foreground',
                                 )}
                               >
@@ -91,7 +101,7 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
                                 ) : (
                                   <span className="text-muted-foreground text-gray-900">
                                     Pick a date
-                                  </span> // Changed from text-gray-600
+                                  </span>
                                 )}
                               </Button>
                             </FormControl>
@@ -172,9 +182,10 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
 
             <Button
               type="submit"
-              className="w-full bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98]"
+              disabled={form.formState.isSubmitting}
+              className="w-full bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] disabled:opacity-50"
             >
-              Let's Go!
+              {form.formState.isSubmitting ? 'Creating...' : "Let's Go!"}
             </Button>
           </form>
         </FormProvider>

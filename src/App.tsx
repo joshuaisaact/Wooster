@@ -5,6 +5,7 @@ import { AppProvider } from './context/AppContext';
 import { AuthProvider } from './context/AuthContext';
 import Login from './pages/Login';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import { Toaster } from 'sonner';
 
 function App() {
   return (
@@ -23,6 +24,15 @@ function App() {
             }
           />
         </Routes>
+        <Toaster
+          position="top-right"
+          richColors
+          closeButton
+          // Optional: customize theme and behavior
+          // theme="dark"
+          // duration={4000}
+          // expand={false}
+        />
       </BrowserRouter>
     </AuthProvider>
   );

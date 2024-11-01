@@ -34,16 +34,21 @@ export function searchTrips(
   searchQuery: string,
   destinationCountries: Record<string, string>,
 ): Trip[] {
+  if (!searchQuery.trim()) return trips;
+
   const searchLower = searchQuery.toLowerCase();
 
   return trips.filter((trip) => {
-    const country = destinationCountries[trip.destinationName];
+    if (!trip) return false;
+
+    const destinationName = trip.destinationName || '';
+    const country = destinationCountries[destinationName] || '';
+    const startDate = trip.startDate ? new Date(trip.startDate).toLocaleDateString() : '';
 
     return (
-      trip.destinationName.toLowerCase().includes(searchLower) ||
-      // trip.notes?.toLowerCase().includes(searchLower) ||
-      country?.toLowerCase().includes(searchLower) ||
-      new Date(trip.startDate).toLocaleDateString().toLowerCase().includes(searchLower)
+      destinationName.toLowerCase().includes(searchLower) ||
+      country.toLowerCase().includes(searchLower) ||
+      startDate.toLowerCase().includes(searchLower)
     );
   });
 }
