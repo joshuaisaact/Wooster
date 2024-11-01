@@ -1,7 +1,7 @@
 import { SupabaseClient } from '@supabase/supabase-js';
 
 // Global backend URL for fetching data
-export const BASE_URL: string = process.env.REACT_APP_BASE_URL || 'http://localhost:4000';
+export const BASE_URL: string = import.meta.env.VITE_BASE_URL || 'http://localhost:4000';
 
 // Helper function to get auth token
 const getAuthHeader = async (supabase: SupabaseClient) => {
