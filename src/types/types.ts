@@ -55,6 +55,9 @@ export interface Activity {
   endTime: string;
   category: string;
   price: string;
+  duration: string;
+  difficulty: string;
+  bestTime: string;
 }
 
 // State type
