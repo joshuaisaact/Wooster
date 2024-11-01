@@ -9,8 +9,8 @@ import { IoAirplaneOutline } from 'react-icons/io5';
 
 function SidebarNav() {
   return (
-    <nav className="flex w-full justify-center p-4 lg:w-64 lg:p-6">
-      <ul className="flex space-x-6 lg:flex-col lg:space-x-0 lg:space-y-6">
+    <nav className="flex w-full justify-center p-4 md:p-6 lg:w-64">
+      <ul className="flex space-x-6 md:flex-col md:space-x-0 md:space-y-6">
         <li>
           <SidebarNavLink to="/home">
             <HiOutlineHome className="h-6 w-6" />

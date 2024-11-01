@@ -12,12 +12,12 @@ import DestinationSummary from './DestinationSummary';
 function AppLayout() {
   return (
     <div className="min-h-screen bg-background antialiased">
-      {/* Desktop Sidebar */}
+      {/* Desktop Sidebar (md and up) */}
       <div className="fixed left-0 top-0 z-50 hidden md:block">
         <Sidebar />
       </div>
 
-      {/* Mobile Bottom Navigation */}
+      {/* Mobile Bottom Navigation (below md) */}
       <div className="fixed inset-x-0 bottom-0 z-50 block md:hidden">
         <Sidebar />
       </div>
