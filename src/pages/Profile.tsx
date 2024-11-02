@@ -1,6 +1,5 @@
-// src/pages/Profile.tsx
-import { EmailUpdateForm } from '@/components/profile/EmailUpdateForm';
-import { PasswordUpdateForm } from '@/components/profile/PasswordUpdateForm';
+// import { EmailUpdateForm } from '@/components/profile/EmailUpdateForm';
+// import { PasswordUpdateForm } from '@/components/profile/PasswordUpdateForm';
 import { LogoutSection } from '@/components/profile/LogoutSection';
 import { Separator } from '@/components/ui/separator';
 
