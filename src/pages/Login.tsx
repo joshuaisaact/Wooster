@@ -5,7 +5,7 @@ import { Github } from 'lucide-react';
 
 export default function Login() {
   return (
-    <div className="relative min-h-screen bg-gradient-to-b from-green-900 to-green-950">
+    <div className="relative min-h-screen bg-gradient-to-b from-green-900 via-green-900/95 to-green-950">
       <div className="mx-auto flex min-h-screen max-w-screen-xl flex-col items-center justify-between px-4 py-8 sm:py-12">
         {/* Main Content Section */}
         <div className="animate-fade-in flex w-full flex-1 flex-col items-center justify-center opacity-0">
@@ -21,40 +21,42 @@ export default function Login() {
             Your trip companion
           </p>
 
+          <div className="animate-fade-in-up mb-8 w-full max-w-md py-5 opacity-0 [animation-delay:600ms]">
+            <LoginForm />
+          </div>
+
+          <p className="animate-fade-in-up max-w-sm text-center text-sm text-green-100/80 opacity-0 [animation-delay:700ms]">
+            A full-stack portfolio project showcasing modern web development
+          </p>
+
           {/* Job Search Banner */}
-          <div className="animate-fade-in-up my-8 flex flex-col items-center gap-4 opacity-0 [animation-delay:600ms] sm:my-10">
-            <div className="grid grid-cols-1 items-center gap-4 rounded-lg bg-green-800/30 px-6 py-4 backdrop-blur-sm transition-all duration-300 hover:bg-green-800/40 sm:grid-cols-[auto,1fr]">
-              <img
-                src="./me.jpg"
-                className="mx-auto h-20 w-20 rounded-full border-2 border-green-200/20 shadow-lg sm:mx-0"
-                alt="Profile"
-              />
-              <div className="text-center sm:text-left">
-                <p className="font-medium text-white">
-                  🚀 Software Developer Open to Opportunities
-                </p>
-                <p className="mt-2 text-sm text-green-100">
-                  I'm currently looking for my next role in software development.
-                  <br />
-                  Let's create something impactful together!
-                </p>
+          <div className="animate-fade-in-up my-8 flex flex-col items-center gap-4 opacity-0 [animation-delay:800ms] sm:my-10">
+            <div className="max-w-[320px] rounded-lg bg-green-800/30 p-4 backdrop-blur-sm transition-all duration-300 hover:bg-green-800/40 sm:max-w-[640px]">
+              <div className="grid grid-cols-1 items-center gap-4 sm:grid-cols-[auto,1fr]">
+                <img
+                  src="./me.jpg"
+                  className="mx-auto h-16 w-16 rounded-full border-2 border-green-200/20 shadow-lg sm:mx-0 sm:h-20 sm:w-20"
+                  alt="Profile"
+                />
+                <div className="text-center sm:text-left">
+                  <p className="font-medium text-white">
+                    🚀 Software Developer Open to Opportunities
+                  </p>
+                  <p className="mt-2 text-sm text-green-100">
+                    Seeking my next challenge in software development.
+                    <span className="hidden sm:inline"> Let's build something exceptional.</span>
+                    <span className="sm:hidden"> Ready to build something exceptional.</span>
+                  </p>
+                </div>
               </div>
             </div>
 
             <SocialLinks />
           </div>
-
-          <div className="animate-fade-in-up mb-8 w-full max-w-md opacity-0 [animation-delay:1100ms]">
-            <LoginForm />
-          </div>
-
-          <p className="animate-fade-in-up text-sm text-green-100/80 opacity-0 [animation-delay:1000ms]">
-            A full-stack portfolio project showcasing modern web development
-          </p>
         </div>
 
         {/* GitHub Section */}
-        <div className="animate-fade-in-up w-full pt-8 opacity-0 [animation-delay:1200ms] sm:pt-12">
+        <div className="animate-fade-in-up w-full pt-8 opacity-0 [animation-delay:900ms] sm:pt-12">
           <div className="flex flex-col items-center gap-3">
             <p className="text-sm text-green-100/90">Explore this open-source project</p>
             <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
