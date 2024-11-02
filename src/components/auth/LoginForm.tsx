@@ -16,12 +16,15 @@ export function LoginForm() {
       navigate('/home', { replace: true });
     }
   }, [session, navigate]);
+
   return (
-    <Card className="w-full max-w-md border-white/20 bg-white/10 backdrop-blur-sm">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold tracking-tight text-white">Welcome back</CardTitle>
-        <CardDescription className="text-green-100/80">
-          Sign in to access your trips
+    <Card className="w-full max-w-md border-white/20 bg-white/10 text-center backdrop-blur-sm">
+      <CardHeader className="space-y-1 text-center">
+        <CardTitle className="text-center text-2xl font-bold tracking-tight text-white">
+          Welcome
+        </CardTitle>
+        <CardDescription className="text-center text-green-100/80">
+          Plan and track your adventures
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -35,12 +38,36 @@ export function LoginForm() {
                 colors: {
                   brand: '#4A9F76',
                   brandAccent: '#3d8862',
+                  defaultButtonBackground: 'rgba(255, 255, 255, 0.15)',
+                  defaultButtonBackgroundHover: 'rgba(255, 255, 255, 0.25)',
+                  defaultButtonText: 'white',
+                  dividerBackground: 'rgba(255, 255, 255, 0.2)',
                 },
               },
             },
-            className: {
-              anchor: 'auth-anchor',
-              button: 'auth-button',
+            style: {
+              button: {
+                flex: '1',
+                flexDirection: 'column',
+                gap: '8px',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '16px',
+                border: '1px solid rgba(255, 255, 255, 0.25)',
+              },
+              divider: {
+                textAlign: 'center',
+              },
+              container: {
+                textAlign: 'center',
+              },
+            },
+          }}
+          localization={{
+            variables: {
+              sign_in: {
+                social_provider_text: 'Sign in with {{provider}}',
+              },
             },
           }}
           providers={['google', 'github']}

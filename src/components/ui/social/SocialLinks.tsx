@@ -3,7 +3,7 @@ import { SOCIAL_LINKS } from '@/lib/constants/social';
 
 function SocialLinks() {
   return (
-    <div className="flex gap-6">
+    <div className="grid grid-cols-2 gap-4 sm:flex sm:gap-6">
       {SOCIAL_LINKS.map((link) => (
         <SocialLink
           key={link.label}
