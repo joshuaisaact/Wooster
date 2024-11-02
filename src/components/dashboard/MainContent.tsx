@@ -19,8 +19,8 @@ function MainContent({
 }: MainContentProps) {
   return (
     <div className={cn('space-y-6', className)}>
-      <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm">
-        <div className="divide-y divide-gray-100">
+      <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm transition-colors dark:bg-green-800/30 dark:shadow-green-900/20">
+        <div className="divide-y divide-gray-100/30 dark:divide-white/10">
           <div className="p-6 md:p-8">
             <WelcomeSection nextDestination={soonestTripDestination} />
           </div>

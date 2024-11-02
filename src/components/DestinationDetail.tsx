@@ -32,7 +32,9 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
             className="h-full w-full" // Ensure map fills the container
           />
         ) : (
-          <p>No map available for this destination.</p>
+          <p className="text-gray-700 dark:text-green-100">
+            No map available for this destination.
+          </p>
         )}
       </div>
 
@@ -40,12 +42,14 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
       <div
         className={`flex h-full w-full flex-col md:w-1/2 ${tripCreationOpen ? 'flex-grow' : ''}`}
       >
-        <Card className="h-full overflow-auto">
+        <Card className="h-full overflow-auto border-none bg-white shadow-lg dark:bg-green-800/30 dark:shadow-green-900/20">
           <CardHeader>
             <div className="flex justify-between">
-              <CardTitle className="text-2xl">{destination.destinationName}</CardTitle>
+              <CardTitle className="text-2xl text-gray-900 dark:text-white">
+                {destination.destinationName}
+              </CardTitle>
               <button
-                className="bg-green-500 text-white"
+                className="rounded bg-green-500 px-4 py-2 text-white transition hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-600"
                 onClick={() => setTripCreationOpen(!tripCreationOpen)}
               >
                 {tripCreationOpen ? 'Cancel' : 'Plan Trip'}
@@ -54,20 +58,29 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
 
             {/* Badges */}
             <div className="mt-2 flex flex-wrap gap-2">
-              <Badge variant="secondary" className="flex items-center gap-1">
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-1 dark:bg-green-900 dark:text-green-100"
+              >
                 <MapPinIcon className="h-3 w-3" />
                 <span>{destination.country}</span>
               </Badge>
-              <Badge variant="secondary" className="flex items-center gap-1">
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-1 dark:bg-green-900 dark:text-green-100"
+              >
                 💰 {destination.costLevel}
               </Badge>
-              <Badge variant="secondary" className="flex items-center gap-1">
+              <Badge
+                variant="secondary"
+                className="flex items-center gap-1 dark:bg-green-900 dark:text-green-100"
+              >
                 🛡️ {destination.safetyRating}
               </Badge>
             </div>
           </CardHeader>
 
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 text-gray-700 dark:text-green-100">
             <p className="text-muted-foreground">{destination.description}</p>
 
             {/* Information Items */}
@@ -129,7 +142,11 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
       {tripCreationOpen && (
         <div className="flex h-full flex-col justify-between">
           <CreateTrip location={destination} />
-          <img src="/Wooster-map-planning.png" className="mt-4 h-auto" alt="Map Planning" />
+          <img
+            src="/Wooster-map-planning.png"
+            className="mt-4 h-auto opacity-80 dark:opacity-70"
+            alt="Map Planning"
+          />
         </div>
       )}
     </div>
@@ -138,7 +155,7 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
 
 function InfoItem({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2 text-gray-700 dark:text-green-100">
       {icon}
       <div>
         <p className="text-sm font-medium">{label}</p>

@@ -28,7 +28,7 @@ export function ActivityCard({ activity, isSelected, onSelect }: ActivityCardPro
       )}
 
       <CardHeader>
-        <CardTitle className="flex items-start justify-between text-xl font-semibold">
+        <CardTitle className="flex items-start justify-between text-xl font-semibold dark:text-white/95 dark:group-hover:text-white">
           <span className="text-green-900">{activity.activityName}</span>
           <Badge variant="outline" className="text-xs">
             <Tag className="mr-1 h-3 w-3" /> {activity.category}
@@ -40,20 +40,20 @@ export function ActivityCard({ activity, isSelected, onSelect }: ActivityCardPro
         <p className="text-muted-foreground line-clamp-3 text-sm">{activity.description}</p>
 
         <div className="grid grid-cols-2 gap-3 text-sm">
-          <div className="flex items-center text-gray-600">
-            <DollarSignIcon className="mr-2 h-4 w-4 text-gray-400" />
+          <div className="flex items-center text-gray-600 dark:text-green-100/70">
+            <DollarSignIcon className="mr-2 h-4 w-4 text-gray-400 dark:text-green-100/70" />
             <span>{activity.price}</span>
           </div>
-          <div className="flex items-center text-gray-600">
-            <Clock className="mr-2 h-4 w-4 text-gray-400" />
+          <div className="flex items-center text-gray-600 dark:text-green-100/70">
+            <Clock className="mr-2 h-4 w-4 text-gray-400 dark:text-green-100/70" />
             <span>{activity.duration}</span>
           </div>
-          <div className="flex items-center text-gray-600">
-            <Gauge className="mr-2 h-4 w-4 text-gray-400" />
+          <div className="flex items-center text-gray-600 dark:text-green-100/70">
+            <Gauge className="mr-2 h-4 w-4 text-gray-400 dark:text-green-100/70" />
             <span>{activity.difficulty}</span>
           </div>
-          <div className="flex items-center text-gray-600">
-            <Sun className="mr-2 h-4 w-4 text-gray-400" />
+          <div className="flex items-center text-gray-600 dark:text-green-100/70">
+            <Sun className="mr-2 h-4 w-4 text-gray-400 dark:text-green-100/70" />
             <span>{activity.bestTime}</span>
           </div>
         </div>

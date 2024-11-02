@@ -21,9 +21,9 @@ export function SavedDestinations({
   } = useAppContext();
 
   return (
-    <Card className={cn('min-w-[300px]', className)}>
-      <CardHeader className="border-b pb-3">
-        <CardTitle>My Saved Destinations</CardTitle>
+    <Card className={cn('min-w-[300px] bg-white/70 dark:bg-green-800/30', className)}>
+      <CardHeader className="border-b border-gray-100/30 pb-3 dark:border-white/10">
+        <CardTitle className="text-gray-900 dark:text-white/95">My Saved Destinations</CardTitle>
       </CardHeader>
       <CardContent className="pt-4">
         <ScrollArea className="h-[300px] w-full pr-4">

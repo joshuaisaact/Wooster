@@ -21,7 +21,7 @@ export function EmailUpdateForm() {
         <Mail className="h-5 w-5 text-gray-500" />
         <div>
           <h2 className="font-semibold tracking-tight text-gray-900">Email Address</h2>
-          <p className="text-sm text-gray-500">Update your email address</p>
+          <p className="text-sm text-gray-600 dark:text-green-100/70">Update your email address</p>
         </div>
       </div>
 
@@ -32,7 +32,9 @@ export function EmailUpdateForm() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-gray-700">New Email Address</FormLabel>
+                <FormLabel className="font-medium text-gray-900 dark:text-white/90">
+                  New Email Address
+                </FormLabel>
                 <FormControl>
                   <Input {...field} placeholder="Enter new email" className="bg-white/50" />
                 </FormControl>

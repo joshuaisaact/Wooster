@@ -63,12 +63,14 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
   return (
     <div className={cn('w-full', className)}>
       <div className="mb-6 space-y-1">
-        <h2 className="text-xl font-semibold tracking-tight text-green-900">Create a Trip</h2>
-        <p className="text-sm text-gray-600">Plan your next adventure</p>
+        <h2 className="text-xl font-semibold tracking-tight text-green-900 dark:text-white/95">
+          Create a Trip
+        </h2>
+        <p className="text-sm text-gray-600 dark:text-green-100/70">Plan your next adventure</p>
       </div>
 
       {isLoading ? (
-        <div className="flex items-center justify-center py-4 text-gray-600">
+        <div className="flex items-center justify-center py-4 text-gray-600 dark:text-green-100/70">
           <span className="animate-pulse">Creating your trip...</span>
         </div>
       ) : (
@@ -84,22 +86,24 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
                     name="startDate"
                     render={({ field }) => (
                       <FormItem className="space-y-2">
-                        <FormLabel className="font-medium text-gray-900">Start Date</FormLabel>
+                        <FormLabel className="font-medium text-gray-900 dark:text-white/90">
+                          Start Date
+                        </FormLabel>
                         <Popover>
                           <PopoverTrigger asChild>
                             <FormControl>
                               <Button
                                 variant="outline"
                                 className={cn(
-                                  'w-full justify-start bg-white/50 font-normal text-gray-600 hover:bg-white/80',
-                                  !field.value && 'text-muted-foreground',
+                                  'w-full justify-start bg-white/50 font-normal text-gray-600 hover:bg-white/80 dark:bg-green-800/30 dark:text-green-100/90 dark:hover:bg-green-800/40',
+                                  !field.value && 'text-muted-foreground dark:text-green-100/70',
                                 )}
                               >
-                                <CalendarIcon className="mr-2 h-4 w-4 text-gray-900" />
+                                <CalendarIcon className="mr-2 h-4 w-4 text-gray-900 dark:text-green-100" />
                                 {field.value ? (
                                   format(field.value, 'PPP')
                                 ) : (
-                                  <span className="text-muted-foreground text-gray-900">
+                                  <span className="text-gray-900 dark:text-green-100/90">
                                     Pick a date
                                   </span>
                                 )}
@@ -112,19 +116,21 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
                               selected={field.value}
                               onSelect={field.onChange}
                               initialFocus
-                              className="rounded-md border bg-white p-3"
+                              className="rounded-md border bg-white p-3 dark:border-white/10 dark:bg-green-800/30"
                             />
                           </PopoverContent>
                         </Popover>
-                        <FormDescription className="text-xs text-gray-600">
+                        <FormDescription className="text-xs text-gray-600 dark:text-green-100/70">
                           When do you want to start your trip?
                         </FormDescription>
                       </FormItem>
                     )}
                   />
-                  <FormLabel className="mt-4 flex justify-between font-medium text-gray-900">
+                  <FormLabel className="mt-4 flex justify-between font-medium text-gray-900 dark:text-white/90">
                     Duration
-                    <span className="font-normal text-gray-600">{field.value} days</span>
+                    <span className="font-normal text-gray-600 dark:text-green-100/80">
+                      {field.value} days
+                    </span>
                   </FormLabel>
                   <FormControl>
                     <Slider
@@ -136,7 +142,7 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
                       className="py-4"
                     />
                   </FormControl>
-                  <FormDescription className="text-xs text-gray-600">
+                  <FormDescription className="text-xs text-gray-600 dark:text-green-100/70">
                     Select the number of days for your trip
                   </FormDescription>
                 </FormItem>
@@ -145,15 +151,17 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
 
             {location ? (
               <FormItem className="space-y-2">
-                <FormLabel className="font-medium text-gray-900">Destination</FormLabel>
+                <FormLabel className="font-medium text-gray-900 dark:text-white/90">
+                  Destination
+                </FormLabel>
                 <FormControl>
                   <Input
                     value={location.destinationName}
                     readOnly
-                    className="bg-white/50 text-base text-gray-900"
+                    className="bg-white/50 text-base text-gray-900 dark:bg-green-800/30 dark:text-green-100"
                   />
                 </FormControl>
-                <FormDescription className="text-xs text-gray-600">
+                <FormDescription className="text-xs text-gray-600 dark:text-green-100/70">
                   Your destination
                 </FormDescription>
               </FormItem>
@@ -163,16 +171,18 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
                 name="location"
                 render={({ field }) => (
                   <FormItem className="space-y-2">
-                    <FormLabel className="font-medium text-gray-900">Destination</FormLabel>
+                    <FormLabel className="font-medium text-gray-900 dark:text-white/90">
+                      Destination
+                    </FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter a destination"
-                        className="bg-white/50 text-gray-900 transition-shadow duration-200 focus:ring-2 focus:ring-green-500/20"
+                        className="bg-white/50 text-gray-900 transition-shadow duration-200 focus:ring-2 focus:ring-green-500/20 dark:bg-green-800/30 dark:text-green-100 dark:focus:ring-green-400/20"
                         {...field}
                         required
                       />
                     </FormControl>
-                    <FormDescription className="text-xs text-gray-600">
+                    <FormDescription className="text-xs text-gray-600 dark:text-green-100/70">
                       Where do you want to go?
                     </FormDescription>
                   </FormItem>
@@ -183,7 +193,7 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
             <Button
               type="submit"
               disabled={form.formState.isSubmitting}
-              className="w-full bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] disabled:opacity-50"
+              className="w-full bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] disabled:opacity-50 dark:bg-green-600 dark:hover:bg-green-700"
             >
               {form.formState.isSubmitting ? 'Creating...' : "Let's Go!"}
             </Button>

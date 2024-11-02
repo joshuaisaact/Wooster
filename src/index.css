@@ -2,123 +2,154 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  height: 100vh;
-  width: 100vw;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #f0f7f4;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-#root {
-  width: 100%; /* Ensure the root div takes full width */
-  height: 100vh; /* Ensure the root div takes full height */
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #1ea16b;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
 @layer base {
   :root {
+    /* Core theme colors */
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 142.1 76.2% 36.3%;
+    --accent-foreground: 355.7 100% 97.3%;
     --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 162 47.4% 8.2%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 120 16.7% 14.9%;
+    --card-foreground: 60 9.1% 97.8%;
+    --muted: 120 6.7% 20.9%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 142.4 71.8% 29.2%;
+    --accent-foreground: 60 9.1% 97.8%;
+  }
+
+  /* Base styles */
+  html,
+  body,
+  #root {
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    min-width: 320px;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    background-color: hsl(var(--background));
+    color-scheme: light dark;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    place-items: center;
+  }
+
+  /* Typography */
+  h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+  }
+
+  .font-display {
+    font-family: 'Outfit', sans-serif;
   }
 }
 
-body {
-  font-family: 'Montserrat', sans-serif;
+/* Button Styles */
+@layer components {
+  button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.25s;
+  }
+
+  button:hover {
+    border-color: #1ea16b;
+  }
+
+  button:focus,
+  button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+
+  /* Auth specific buttons */
+  .auth-button {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .auth-button:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  .auth-anchor {
+    color: #4a9f76 !important;
+    transition: color 0.2s ease !important;
+  }
+
+  .auth-anchor:hover {
+    color: #3d8862 !important;
+  }
 }
 
-*/ .leaflet-pane {
-  z-index: 1 !important; /* Lower the z-index */
+/* Also update scrollbar colors for dark mode */
+@layer utilities {
+  /* Webkit scrollbar */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background dark:bg-green-950;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-black/20 dark:bg-white/10;
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-black/40 dark:bg-white/20;
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-color: rgba(0, 0, 0, 0.2) var(--background);
+    scrollbar-width: thin;
+  }
+
+  .dark * {
+    scrollbar-color: rgba(255, 255, 255, 0.1) hsl(var(--background));
+  }
 }
 
-::-webkit-scrollbar {
-  width: 12px;
+/* Map Styles */
+.leaflet-pane {
+  z-index: 1 !important;
 }
 
-::-webkit-scrollbar-track {
-  background-color: #f0f7f4; /* Match your background color */
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2); /* Customize the thumb (scroll handle) color */
-  border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.4); /* Darken the thumb on hover */
-}
-
-/* Scrollbar styling for Firefox */
-* {
-  scrollbar-color: rgba(0, 0, 0, 0.2) #f0f7f4;
-  scrollbar-width: thin;
-}
-
-/* authStyles.css */
-.auth-button {
-  background: rgba(255, 255, 255, 0.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  color: white !important;
-  transition: all 0.2s ease !important;
-}
-
-.auth-button:hover {
-  background: rgba(255, 255, 255, 0.15) !important;
-  transform: translateY(-1px) !important;
-}
-
-.auth-anchor {
-  color: #4a9f76 !important;
-  transition: color 0.2s ease !important;
-}
-
-.auth-anchor:hover {
-  color: #3d8862 !important;
-}
-
-/* Adjust the Map container to be responsive */
 .map-container {
   width: 100%;
-  height: 100%; /* Full height of its container */
+  height: 100%;
 }
 
 @media (max-width: 768px) {
   .map-container {
-    height: 50vh; /* Adjust height for mobile devices */
+    height: 50vh;
   }
 }

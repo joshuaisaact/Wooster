@@ -28,7 +28,7 @@ function DestinationSummary() {
 
   if (!destination) {
     return (
-      <div className="min-h-[calc(100vh-4rem)] w-full bg-gradient-to-b from-green-50/50 via-white/50 to-green-50/50">
+      <div className="min-h-[calc(100vh-4rem)] w-full">
         <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
           <div className="flex flex-col items-center justify-center space-y-4 rounded-xl bg-white/70 p-8 shadow-lg backdrop-blur-sm">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-50">
@@ -52,7 +52,7 @@ function DestinationSummary() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] w-full bg-gradient-to-b from-green-50/50 via-white/50 to-green-50/50">
+    <div className="min-h-[calc(100vh-4rem)] w-full">
       <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
         {/* Header */}
         <div className="mb-6 md:mb-8">

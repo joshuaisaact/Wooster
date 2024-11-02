@@ -19,7 +19,7 @@ function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="flex h-[calc(100vh-4rem)] items-center justify-center bg-gradient-to-b from-green-50/50 to-white/50">
+      <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
         <div className="text-muted-foreground animate-pulse text-lg">
           Loading your adventures...
         </div>
@@ -28,14 +28,16 @@ function Dashboard() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] w-full bg-gradient-to-b from-green-50/50 via-white/50 to-green-50/50">
+    <div className="min-h-[calc(100vh-4rem)] w-full">
       <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
         {/* Welcome section with better spacing */}
         <div className="mb-6 md:mb-8 lg:mb-12">
-          <h1 className="text-2xl font-bold tracking-tight text-green-900 md:text-3xl lg:text-4xl">
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white/95 md:text-3xl lg:text-4xl">
             Welcome Back!
           </h1>
-          <p className="mt-2 text-base text-gray-600 md:text-lg">Let's plan your next adventure</p>
+          <p className="dark:text-green-100/80mt-2 text-base text-gray-600 md:text-lg">
+            Let's plan your next adventure
+          </p>
         </div>
 
         {/* Main grid with improved spacing */}
