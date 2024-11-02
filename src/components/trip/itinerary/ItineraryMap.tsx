@@ -9,13 +9,14 @@ interface ItineraryMapProps {
 
 export const ItineraryMap = forwardRef<MapRef, ItineraryMapProps>(
   ({ activities, selectedActivityId }, ref) => (
-    <div className="h-full w-full md:w-1/2">
+    <div className="h-full w-full">
       <Map
         activities={activities}
         selectedActivityId={selectedActivityId}
         ref={ref}
         isInteractive={true}
         showZoomControls={true}
+        className="h-full w-full"
       />
     </div>
   ),

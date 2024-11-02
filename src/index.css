@@ -110,3 +110,15 @@ body {
 .auth-anchor:hover {
   color: #3d8862 !important;
 }
+
+/* Adjust the Map container to be responsive */
+.map-container {
+  width: 100%;
+  height: 100%; /* Full height of its container */
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: 50vh; /* Adjust height for mobile devices */
+  }
+}

@@ -20,13 +20,16 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
 
   return (
     <div className="flex w-full flex-col gap-4 md:flex-row">
-      <div className="md:w-1/2">
+      {/* Map Section */}
+      <div className="h-80 md:h-[800px] md:w-1/2">
+        {' '}
+        {/* Ensure the height matches the itinerary map */}
         {/* Ensure Map always renders */}
         {destination.latitude && destination.longitude ? (
           <Map
             latitude={destination.latitude}
             longitude={destination.longitude}
-            className="h-full w-full"
+            className="h-full w-full" // Ensure map fills the container
           />
         ) : (
           <p>No map available for this destination.</p>

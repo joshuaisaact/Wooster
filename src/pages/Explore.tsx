@@ -28,23 +28,23 @@ function Explore() {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] w-full bg-gradient-to-b from-green-50/50 via-white/50 to-green-50/50">
-      <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
+      <div className="container mx-auto px-4 py-6 sm:py-8 md:py-8 lg:py-12">
         {/* Header Section */}
-        <div className="mb-6 md:mb-8 lg:mb-12">
-          <h1 className="text-2xl font-bold tracking-tight text-green-900 md:text-3xl lg:text-4xl">
+        <div className="mb-4 sm:mb-6 md:mb-8 lg:mb-12">
+          <h1 className="text-xl font-bold tracking-tight text-green-900 sm:text-2xl md:text-3xl lg:text-4xl">
             Explore the World
           </h1>
-          <p className="mt-2 text-base text-gray-600 md:text-lg">
+          <p className="mt-1 text-sm text-gray-600 sm:text-base md:text-lg">
             Discover amazing destinations and plan your next adventure
           </p>
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-3 lg:gap-8">
           {/* Left Column - Globe and Exploration */}
-          <div className="space-y-6 md:space-y-8 lg:col-span-2">
+          <div className="space-y-4 sm:space-y-6 md:space-y-8 lg:col-span-2">
             {/* Globe Section */}
-            <div className="overflow-hidden rounded-xl bg-white/70 shadow-lg backdrop-blur-sm">
+            <div className="overflow-hidden rounded-lg bg-white/70 shadow-md backdrop-blur-sm">
               <div className="aspect-[16/9] w-full">
                 <GlobeSection
                   destinations={destinations}
@@ -55,11 +55,15 @@ function Explore() {
             </div>
 
             {/* Exploration Section */}
-            <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm">
-              <div className="p-6 md:p-8">
-                <div className="mb-4">
-                  <h2 className="text-xl font-semibold text-green-900">Popular Destinations</h2>
-                  <p className="mt-1 text-sm text-gray-600">Click on a destination to learn more</p>
+            <div className="rounded-lg bg-white/70 shadow-md backdrop-blur-sm">
+              <div className="p-4 sm:p-6 md:p-8">
+                <div className="mb-2 sm:mb-4">
+                  <h2 className="text-lg font-semibold text-green-900 sm:text-xl">
+                    Popular Destinations
+                  </h2>
+                  <p className="mt-1 text-xs text-gray-600 sm:text-sm">
+                    Click on a destination to learn more
+                  </p>
                 </div>
                 <ExplorationSection
                   onDestinationClick={handleDestinationClick}
@@ -71,9 +75,9 @@ function Explore() {
 
           {/* Right Column - Destination Details */}
           <div className="w-full lg:col-span-1">
-            <div className="sticky top-8 space-y-6">
-              <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm">
-                <div className="p-6 md:p-8">
+            <div className="space-y-4 sm:space-y-6 lg:sticky lg:top-8">
+              <div className="rounded-lg bg-white/70 shadow-md backdrop-blur-sm">
+                <div className="p-4 sm:p-6 md:p-8">
                   <DestinationPanel focusedDestination={focusedDestination} />
                 </div>
               </div>
@@ -84,7 +88,7 @@ function Explore() {
                   <img
                     src="/wooster-on-maps-no-bg.png"
                     alt="Wooster"
-                    className="mx-auto w-48 opacity-80 transition-opacity duration-200 hover:opacity-100"
+                    className="mx-auto w-24 opacity-80 transition-opacity duration-200 hover:opacity-100 sm:w-32 lg:w-48"
                   />
                 </div>
               )}
@@ -95,4 +99,5 @@ function Explore() {
     </div>
   );
 }
+
 export default Explore;

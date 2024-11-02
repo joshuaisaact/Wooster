@@ -16,14 +16,18 @@ export function ItineraryView({ currentDay }: ItineraryViewProps) {
   );
 
   return (
-    <div className="flex h-[800px] w-full flex-col items-center justify-center gap-4 md:flex-row">
-      <ItineraryMap
-        activities={currentDay.activities}
-        selectedActivityId={selectedActivityId}
-        ref={mapRef}
-      />
+    <div className="flex h-full w-full flex-col md:flex-row">
+      {/* Map Section */}
+      <div className="relative h-80 w-full md:h-[800px] md:w-1/2">
+        <ItineraryMap
+          activities={currentDay.activities}
+          selectedActivityId={selectedActivityId}
+          ref={mapRef}
+        />
+      </div>
 
-      <div className="h-full w-full md:w-1/2">
+      {/* List Section */}
+      <div className="h-full w-full overflow-auto md:w-1/2">
         <ItineraryList
           day={currentDay.day}
           activities={currentDay.activities}

@@ -4,6 +4,7 @@ import { TripCard } from '@/components/trip/trip-card';
 import { useAppContext } from '@/hooks/useAppContext';
 import { Search } from 'lucide-react';
 import { sortTripsByDate, filterTripsByStatus, searchTrips } from '@/utils/trips';
+import ScrollLink from '@/components/shared/ScrollLink';
 
 function Trips() {
   const { state } = useAppContext();
@@ -118,7 +119,9 @@ function Trips() {
 
                     return (
                       <li key={trip.tripId} className="p-4 transition-colors hover:bg-white/50">
-                        <TripCard trip={trip} destination={destination} />
+                        <ScrollLink to={`/trips/${trip.tripId}`}>
+                          <TripCard trip={trip} destination={destination} />
+                        </ScrollLink>
                       </li>
                     );
                   })}
