@@ -9,7 +9,9 @@ export function TripPreviewMap({ destination }: TripPreviewMapProps) {
   if (!destination.latitude || !destination.longitude) return null;
 
   return (
-    <div className="hidden h-48 w-80 lg:block">
+    <div className="h-48 w-full md:w-64">
+      {' '}
+      {/* Adjust width as needed */}
       <Map
         latitude={destination.latitude}
         longitude={destination.longitude}
