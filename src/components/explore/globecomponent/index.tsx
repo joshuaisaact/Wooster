@@ -52,10 +52,12 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
 
     const globe = Globe() as GlobeInstance;
 
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
     globe
       .globeImageUrl('/earth-texture.png')
       .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-      .backgroundColor('#F0F7F4')
+      .backgroundColor(isDarkMode ? '#1c3027' : '#F0F7F4') // Use dark gray in dark mode
       .width(typeof width === 'string' ? currentGlobeEl.clientWidth : width)
       .height(height)
       .htmlElementsData(points)
@@ -100,7 +102,7 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
     <div
       ref={globeEl}
       style={containerStyles}
-      className="flex items-center justify-center overflow-hidden rounded-lg bg-white"
+      className="flex items-center justify-center overflow-hidden rounded-lg bg-white dark:bg-gray-900"
     />
   );
 };

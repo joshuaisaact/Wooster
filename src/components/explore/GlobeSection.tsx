@@ -25,11 +25,11 @@ function GlobeSection({ destinations, focusedDestination, isLoading }: GlobeSect
   }, []);
 
   if (isLoading) {
-    return <p>Loading globe...</p>;
+    return <p className="p-4 text-gray-600 dark:text-green-100/70">Loading globe...</p>;
   }
 
   return (
-    <div className="min-h-[600px] rounded-lg bg-background">
+    <div className="min-h-[600px] rounded-lg bg-white/70 transition-colors dark:bg-green-950/50">
       <GlobeComponent
         destinations={destinations}
         focusedDestination={focusedDestination}

@@ -36,16 +36,16 @@ export function DestinationListView({ destinations, isLoading }: DestinationList
     <div className="space-y-6 md:space-y-8">
       {/* Header Section */}
       <div className="max-w-2xl">
-        <h1 className="text-2xl font-bold tracking-tight text-green-900 md:text-3xl lg:text-4xl">
+        <h1 className="text-2xl font-bold tracking-tight text-green-900 dark:text-white/95 md:text-3xl lg:text-4xl">
           Explore Destinations
         </h1>
-        <p className="mt-2 text-base text-gray-600 md:text-lg">
+        <p className="mt-2 text-base text-gray-600 dark:text-green-100/70 md:text-lg">
           Discover amazing places around the world and start planning your next adventure
         </p>
       </div>
 
       {/* Search and Filters Section */}
-      <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm">
+      <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
         <div className="p-6 md:p-8">
           <DestinationSearchBar
             searchQuery={searchQuery}
@@ -56,7 +56,7 @@ export function DestinationListView({ destinations, isLoading }: DestinationList
           />
 
           {showFilters && (
-            <div className="mt-6 border-t border-gray-100 pt-6">
+            <div className="mt-6 border-t border-gray-100/30 pt-6 dark:border-white/10">
               <DestinationFilters
                 destinations={destinations}
                 selectedCostLevel={selectedCostLevel}
@@ -72,11 +72,11 @@ export function DestinationListView({ destinations, isLoading }: DestinationList
       </div>
 
       {/* Results Section */}
-      <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm">
-        <div className="divide-y divide-gray-100">
+      <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
+        <div className="divide-y divide-gray-100/30 dark:divide-white/10">
           <div className="p-6 md:p-8">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-green-900">
+              <h2 className="text-lg font-semibold text-green-900 dark:text-white/95">
                 {filteredDestinations.length} Destinations
               </h2>
               {(searchQuery ||
@@ -85,7 +85,7 @@ export function DestinationListView({ destinations, isLoading }: DestinationList
                 selectedCountry !== 'all') && (
                 <Button
                   variant="ghost"
-                  className="text-sm text-gray-600 hover:text-green-700"
+                  className="text-sm text-gray-600 hover:text-green-700 dark:text-green-100/70 dark:hover:text-white"
                   onClick={resetFilters}
                 >
                   Clear Filters

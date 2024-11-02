@@ -9,7 +9,7 @@ interface NextTripSectionProps {
 function NextTripSection({ trip, destination }: NextTripSectionProps) {
   return (
     <>
-      <h2>
+      <h2 className="text-gray-900 dark:text-white/95">
         <strong>Next trip:</strong>
       </h2>
       {trip ? (

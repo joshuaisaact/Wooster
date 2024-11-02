@@ -33,13 +33,13 @@ export function DestinationFilters({
   );
 
   return (
-    <div className="grid gap-6 text-gray-800 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-6 text-gray-800 dark:text-green-100 sm:grid-cols-2 lg:grid-cols-3">
       <div>
         <Select value={selectedCountry || 'all'} onValueChange={onCountryChange}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[180px] bg-white/50 dark:border-white/10 dark:bg-green-800/30">
             <SelectValue placeholder="Select Country" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="dark:border-white/10 dark:bg-green-900">
             <SelectItem value="all">All Countries</SelectItem>
             {uniqueCountries.map((country) => (
               <SelectItem key={country} value={country}>
@@ -52,10 +52,10 @@ export function DestinationFilters({
 
       <div>
         <Select value={selectedCostLevel || 'all'} onValueChange={onCostLevelChange}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[180px] bg-white/50 dark:border-white/10 dark:bg-green-800/30">
             <SelectValue placeholder="Cost Level" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="dark:border-white/10 dark:bg-green-900">
             <SelectItem value="all">All Cost Levels</SelectItem>
             {uniqueCostLevels.map((cost) => (
               <SelectItem key={cost} value={cost}>
@@ -68,10 +68,10 @@ export function DestinationFilters({
 
       <div>
         <Select value={selectedSafetyRating || 'all'} onValueChange={onSafetyRatingChange}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[180px] bg-white/50 dark:border-white/10 dark:bg-green-800/30">
             <SelectValue placeholder="Safety Rating" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="dark:border-white/10 dark:bg-green-900">
             <SelectItem value="all">All Safety Ratings</SelectItem>
             {uniqueSafetyRatings.map((safety) => (
               <SelectItem key={safety} value={safety}>

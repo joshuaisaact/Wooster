@@ -17,10 +17,12 @@ export function ItineraryList({
   onActivitySelect,
 }: ItineraryListProps) {
   return (
-    <Card className="flex h-full flex-col">
-      <CardHeader className="border-b bg-white/50 pb-4">
-        <CardTitle className="text-xl font-semibold text-green-900">Day {day}</CardTitle>
-        <p className="text-sm text-gray-600">
+    <Card className="group h-full overflow-hidden border-none bg-white/70 shadow-lg transition-all duration-200 hover:bg-white/80 hover:shadow-xl dark:bg-green-800/30 dark:shadow-green-900/20 dark:hover:bg-green-800/40">
+      <CardHeader className="border-b border-gray-100 bg-white/50 p-6 dark:border-white/10 dark:bg-green-800/20">
+        <CardTitle className="text-xl font-bold text-green-900 group-hover:text-green-800 dark:text-white/95 dark:group-hover:text-white">
+          Day {day}
+        </CardTitle>
+        <p className="text-sm text-gray-600 dark:text-green-100/70">
           {activities.length} {activities.length === 1 ? 'activity' : 'activities'} planned
         </p>
       </CardHeader>

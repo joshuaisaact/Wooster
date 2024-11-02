@@ -15,21 +15,21 @@ export function TripDetails({ trip, destination }: TripDetailsProps) {
   return (
     <div className="space-y-2">
       <div>
-        <h3 className="text-lg font-semibold text-gray-900 sm:text-xl">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white/95 sm:text-xl">
           {destination.destinationName}
         </h3>
-        <p className="text-sm text-gray-600">{destination.country}</p>
+        <p className="text-sm text-gray-600 dark:text-green-100/70">{destination.country}</p>
       </div>
-
-      <div className="flex items-center gap-2 text-sm text-gray-600">
+      <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-green-100/70">
         <span>{formatDateRange(startDate, endDate)}</span>
-        <span className="text-gray-400">•</span>
+        <span className="text-gray-400 dark:text-green-100/40">•</span>
         <span>
           {trip.numDays} {trip.numDays === 1 ? 'day' : 'days'}
         </span>
       </div>
-
-      {description && <p className="line-clamp-2 text-sm text-gray-600">{description}</p>}
+      {description && (
+        <p className="line-clamp-2 text-sm text-gray-600 dark:text-green-100/70">{description}</p>
+      )}
     </div>
   );
 }

@@ -11,7 +11,7 @@ import DestinationSummary from './DestinationSummary';
 
 function AppLayout() {
   return (
-    <div className="min-h-screen bg-background antialiased">
+    <div className="min-h-screen bg-gradient-to-b from-green-50/50 via-white/50 to-green-50/50 antialiased dark:from-green-900/20 dark:via-gray-950 dark:to-green-900/10">
       {/* Desktop Sidebar (md and up) */}
       <div className="fixed left-0 top-0 z-50 hidden md:block">
         <Sidebar />
