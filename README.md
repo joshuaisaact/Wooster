@@ -8,7 +8,7 @@
 Leverage AI-generated trip recommendations, explore the world with an interactive 3D globe, and build detailed, personalized itineraries.
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Test Workflow Status](https://img.shields.io/github/actions/workflow/status/joshuaisaact/Wooster/test.yml?branch=main)
+![Tests: Passing](https://img.shields.io/github/actions/workflow/status/joshuaisaact/Wooster/test.yml?branch=main&label=tests&style=flat-square&logo=github)
 ![Deploy Workflow Status](https://img.shields.io/github/actions/workflow/status/joshuaisaact/Wooster/deploy.yml?branch=main)
 ![Deployed on Digital Ocean](https://img.shields.io/badge/Deployed%20on-Digital%20Ocean-0070B8?style=flat&logo=digitalocean)
 
