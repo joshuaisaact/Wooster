@@ -44,8 +44,9 @@ function Explore() {
           {/* Left Column - Globe and Exploration */}
           <div className="space-y-4 sm:space-y-6 md:space-y-8 lg:col-span-2">
             {/* Globe Section */}
+            {/* Globe Section */}
             <div className="overflow-hidden rounded-lg bg-white/70 shadow-md backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
-              <div className="aspect-[16/9] w-full">
+              <div className="h-[300px] w-full lg:aspect-[16/9] lg:h-auto">
                 <GlobeSection
                   destinations={destinations}
                   focusedDestination={focusedDestination}
@@ -65,16 +66,18 @@ function Explore() {
                     Click on a destination to learn more
                   </p>
                 </div>
-                <ExplorationSection
-                  onDestinationClick={handleDestinationClick}
-                  focusedDestinationId={focusedDestination?.destinationId || null}
-                />
+                <div className="rounded-lg bg-white/70 shadow-md backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
+                  <ExplorationSection
+                    onDestinationClick={handleDestinationClick}
+                    focusedDestinationId={focusedDestination?.destinationId || null}
+                  />
+                </div>
               </div>
             </div>
           </div>
 
           {/* Right Column - Destination Details */}
-          <div className="w-full lg:col-span-1">
+          <div className="w-full">
             <div className="space-y-4 sm:space-y-6 lg:sticky lg:top-8">
               <div className="rounded-lg bg-white/70 shadow-md backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
                 <div className="p-4 sm:p-6 md:p-8">

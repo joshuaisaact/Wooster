@@ -22,17 +22,14 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
     <div className="flex w-full flex-col gap-4 md:flex-row">
       {/* Map Section */}
       <div className="h-80 md:h-[800px] md:w-1/2">
-        {' '}
-        {/* Ensure the height matches the itinerary map */}
-        {/* Ensure Map always renders */}
         {destination.latitude && destination.longitude ? (
           <Map
             latitude={destination.latitude}
             longitude={destination.longitude}
-            className="h-full w-full" // Ensure map fills the container
+            className="h-full w-full"
           />
         ) : (
-          <p className="text-gray-700 dark:text-green-100">
+          <p className="text-gray-700 dark:text-green-100/70">
             No map available for this destination.
           </p>
         )}
@@ -45,11 +42,11 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
         <Card className="h-full overflow-auto border-none bg-white shadow-lg dark:bg-green-800/30 dark:shadow-green-900/20">
           <CardHeader>
             <div className="flex justify-between">
-              <CardTitle className="text-2xl text-gray-900 dark:text-white">
+              <CardTitle className="text-2xl text-gray-900 dark:text-white/95">
                 {destination.destinationName}
               </CardTitle>
               <button
-                className="rounded bg-green-500 px-4 py-2 text-white transition hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-600"
+                className="rounded bg-green-500 px-4 py-2 text-white transition hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700"
                 onClick={() => setTripCreationOpen(!tripCreationOpen)}
               >
                 {tripCreationOpen ? 'Cancel' : 'Plan Trip'}
@@ -60,28 +57,28 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
             <div className="mt-2 flex flex-wrap gap-2">
               <Badge
                 variant="secondary"
-                className="flex items-center gap-1 dark:bg-green-900 dark:text-green-100"
+                className="flex items-center gap-1 dark:bg-green-900/60 dark:text-green-100"
               >
                 <MapPinIcon className="h-3 w-3" />
                 <span>{destination.country}</span>
               </Badge>
               <Badge
                 variant="secondary"
-                className="flex items-center gap-1 dark:bg-green-900 dark:text-green-100"
+                className="flex items-center gap-1 dark:bg-green-900/60 dark:text-green-100"
               >
                 💰 {destination.costLevel}
               </Badge>
               <Badge
                 variant="secondary"
-                className="flex items-center gap-1 dark:bg-green-900 dark:text-green-100"
+                className="flex items-center gap-1 dark:bg-green-900/60 dark:text-green-100"
               >
                 🛡️ {destination.safetyRating}
               </Badge>
             </div>
           </CardHeader>
 
-          <CardContent className="space-y-4 text-gray-700 dark:text-green-100">
-            <p className="text-muted-foreground">{destination.description}</p>
+          <CardContent className="space-y-4">
+            <p className="text-gray-600 dark:text-green-100/70">{destination.description}</p>
 
             {/* Information Items */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -109,20 +106,32 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
 
             {/* Other Information Sections */}
             <div>
-              <h3 className="mb-2 font-semibold">Popular Activities</h3>
-              <p className="text-muted-foreground text-sm">{destination.popularActivities}</p>
+              <h3 className="mb-2 font-semibold text-gray-900 dark:text-white/95">
+                Popular Activities
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-green-100/70">
+                {destination.popularActivities}
+              </p>
             </div>
             <div>
-              <h3 className="mb-2 font-semibold">Travel Tips</h3>
-              <p className="text-muted-foreground text-sm">{destination.travelTips}</p>
+              <h3 className="mb-2 font-semibold text-gray-900 dark:text-white/95">Travel Tips</h3>
+              <p className="text-sm text-gray-600 dark:text-green-100/70">
+                {destination.travelTips}
+              </p>
             </div>
             <div>
-              <h3 className="mb-2 font-semibold">Local Cuisine</h3>
-              <p className="text-muted-foreground text-sm">{destination.localCuisine}</p>
+              <h3 className="mb-2 font-semibold text-gray-900 dark:text-white/95">Local Cuisine</h3>
+              <p className="text-sm text-gray-600 dark:text-green-100/70">
+                {destination.localCuisine}
+              </p>
             </div>
             <div>
-              <h3 className="mb-2 font-semibold">Cultural Significance</h3>
-              <p className="text-muted-foreground text-sm">{destination.culturalSignificance}</p>
+              <h3 className="mb-2 font-semibold text-gray-900 dark:text-white/95">
+                Cultural Significance
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-green-100/70">
+                {destination.culturalSignificance}
+              </p>
             </div>
 
             {/* Buttons */}
@@ -144,7 +153,7 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
           <CreateTrip location={destination} />
           <img
             src="/Wooster-map-planning.png"
-            className="mt-4 h-auto opacity-80 dark:opacity-70"
+            className="mt-4 h-auto opacity-80 dark:opacity-60 dark:hover:opacity-80"
             alt="Map Planning"
           />
         </div>
@@ -155,11 +164,11 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
 
 function InfoItem({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="flex items-center space-x-2 text-gray-700 dark:text-green-100">
-      {icon}
+    <div className="flex items-center space-x-2">
+      <div className="text-gray-600 dark:text-green-100/70">{icon}</div>
       <div>
-        <p className="text-sm font-medium">{label}</p>
-        <p className="text-muted-foreground text-sm">{value}</p>
+        <p className="text-sm font-medium text-gray-900 dark:text-white/95">{label}</p>
+        <p className="text-sm text-gray-600 dark:text-green-100/70">{value}</p>
       </div>
     </div>
   );

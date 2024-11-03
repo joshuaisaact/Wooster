@@ -58,7 +58,7 @@ export default function TripPage() {
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
-              className="text-gray-600 hover:text-blue-700"
+              className="text-gray-600 hover:text-green-700 dark:text-green-100/70 dark:hover:text-green-400"
               onClick={() => navigate('/trips')}
             >
               ← Back to Trips
@@ -72,20 +72,6 @@ export default function TripPage() {
             <TripView trip={trip} destination={destination} />
           </div>
         </div>
-
-        {/* Optional: Bottom Action */}
-        {/* <div className="mt-6 text-center">
-          <Button
-            className="bg-blue-700 text-white hover:bg-blue-800"
-            onClick={() =>
-              navigate('/plan-trip', {
-                state: { selectedTrip: trip },
-              })
-            }
-          >
-            Plan Another Trip Like This
-          </Button>
-        </div> */}
       </div>
     </div>
   );

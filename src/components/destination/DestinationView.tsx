@@ -1,7 +1,5 @@
 import { Destination } from '@/types/types';
 import { Map } from '../shared/map';
-import DestinationHeader from './DestinationHeader';
-import DestinationDetails from './DestinationDetails';
 import DeleteDestinationButton from './DeleteDestinationButton';
 import { useState } from 'react';
 import { MapPinIcon, X } from 'lucide-react';
@@ -19,10 +17,38 @@ function DestinationView({ destination }: DestinationViewProps) {
   const hasMapCoordinates = destination.latitude && destination.longitude;
 
   return (
-    <div className={cn('grid gap-8 transition-all duration-300', tripCreationOpen ? 'mr-96' : '')}>
+    <div className={cn('space-y-8 transition-all duration-300', tripCreationOpen ? 'mr-96' : '')}>
+      {/* Hero Section */}
+      <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
+        <div className="p-6 md:p-8">
+          <div className="mb-6 space-y-4">
+            <div className="space-y-2">
+              <h1 className="text-2xl font-bold text-green-900 dark:text-white/95">
+                {destination.destinationName}
+              </h1>
+              <div className="flex items-center text-gray-600 dark:text-green-100/70">
+                <MapPinIcon className="mr-1 h-4 w-4" />
+                <span>{destination.country}</span>
+              </div>
+            </div>
+            <p className="max-w-3xl text-gray-600 dark:text-green-100/70">
+              {destination.description}
+            </p>
+            <div className="pt-4">
+              <Button
+                className="bg-green-700 text-white hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700"
+                onClick={() => setTripCreationOpen(true)}
+              >
+                Plan a Trip
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="grid gap-8 md:grid-cols-2">
         {/* Map Section */}
-        <div className="overflow-hidden rounded-xl bg-white/70 shadow-lg backdrop-blur-sm">
+        <div className="overflow-hidden rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
           {hasMapCoordinates ? (
             <Map
               latitude={destination.latitude}
@@ -32,13 +58,15 @@ function DestinationView({ destination }: DestinationViewProps) {
               showZoomControls={true}
             />
           ) : (
-            <div className="flex h-[400px] w-full flex-col items-center justify-center space-y-3 bg-white/50 px-4 text-center">
-              <div className="rounded-full bg-gray-100 p-3">
-                <MapPinIcon className="h-6 w-6 text-gray-400" />
+            <div className="flex h-[400px] w-full flex-col items-center justify-center space-y-3 bg-white/50 px-4 text-center dark:bg-green-800/20">
+              <div className="rounded-full bg-gray-100 p-3 dark:bg-green-900/50">
+                <MapPinIcon className="h-6 w-6 text-gray-400 dark:text-green-100/50" />
               </div>
               <div>
-                <p className="text-gray-600">No map available for this destination.</p>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="text-gray-600 dark:text-green-100/70">
+                  No map available for this destination.
+                </p>
+                <p className="mt-1 text-sm text-gray-500 dark:text-green-100/50">
                   Coordinates haven't been set for this location.
                 </p>
               </div>
@@ -47,19 +75,33 @@ function DestinationView({ destination }: DestinationViewProps) {
         </div>
 
         {/* Details Section */}
-        <div className="divide-y divide-gray-100 rounded-xl bg-white/70 shadow-lg backdrop-blur-sm">
-          <div className="p-6 md:p-8">
-            <DestinationHeader
-              destination={destination}
-              onTripCreationChange={setTripCreationOpen}
-            />
+        <div className="divide-y divide-gray-100 rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:divide-white/10 dark:bg-green-800/30 dark:shadow-green-900/20">
+          <div className="space-y-6 p-6 md:p-8">
+            <section className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {Object.entries({
+                'Best Time to Visit': destination.bestTimeToVisit,
+                'Temperature Range': `${destination.averageTemperatureLow}°F - ${destination.averageTemperatureHigh}°F`,
+                Language: destination.officialLanguage,
+                Currency: destination.currency,
+              }).map(([label, value]) => (
+                <InfoItem key={label} label={label} value={value} />
+              ))}
+            </section>
+
+            {Object.entries({
+              'Popular Activities': destination.popularActivities,
+              'Travel Tips': destination.travelTips,
+              'Local Cuisine': destination.localCuisine,
+              'Cultural Significance': destination.culturalSignificance,
+            }).map(([title, content]) => (
+              <section key={title}>
+                <h3 className="mb-2 font-semibold text-gray-900 dark:text-white/95">{title}</h3>
+                <p className="text-sm text-gray-600 dark:text-green-100/70">{content}</p>
+              </section>
+            ))}
           </div>
 
-          <div className="p-6 md:p-8">
-            <DestinationDetails destination={destination} />
-          </div>
-
-          <div className="bg-gray-50/50 p-6 md:p-8">
+          <div className="bg-gray-50/50 p-6 dark:bg-green-800/40 md:p-8">
             <div className="flex justify-end">
               <DeleteDestinationButton destinationId={destination.destinationId} />
             </div>
@@ -67,27 +109,18 @@ function DestinationView({ destination }: DestinationViewProps) {
         </div>
       </div>
 
-      {/* Optional: Additional content section */}
-      <div className="rounded-xl bg-white/70 p-6 shadow-lg backdrop-blur-sm md:p-8">
-        <div className="space-y-4">
-          <h2 className="text-lg font-semibold text-green-900">
-            About {destination.destinationName}
-          </h2>
-          <p className="leading-relaxed text-gray-600">{destination.description}</p>
-          {/* Add more destination details here */}
-        </div>
-      </div>
-
       {tripCreationOpen && (
-        <div className="fixed right-0 top-0 h-full w-96 overflow-y-auto border-l border-gray-100 bg-white/80 p-6 shadow-xl backdrop-blur-sm">
+        <div className="fixed right-0 top-0 h-full w-96 overflow-y-auto border-l border-gray-100 bg-white/80 p-6 shadow-xl backdrop-blur-sm dark:border-white/10 dark:bg-green-800/80">
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-green-900">Plan Your Trip</h2>
+              <h2 className="text-lg font-semibold text-green-900 dark:text-white/95">
+                Plan Your Trip
+              </h2>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setTripCreationOpen(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 hover:text-gray-700 dark:text-green-100/70 dark:hover:text-green-100"
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -97,12 +130,21 @@ function DestinationView({ destination }: DestinationViewProps) {
               <img
                 src="/wooster-on-maps-no-bg.png"
                 alt="Wooster"
-                className="mx-auto w-32 opacity-80"
+                className="mx-auto w-32 opacity-80 dark:opacity-60 dark:hover:opacity-80"
               />
             </div>
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function InfoItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="text-gray-700 dark:text-green-100">
+      <p className="text-sm font-medium">{label}</p>
+      <p className="text-sm text-gray-600 dark:text-green-100/70">{value}</p>
     </div>
   );
 }
