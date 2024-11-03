@@ -13,7 +13,7 @@ export function Logo({
   height,
   width,
   link,
-  image = '/wooster-face-front-no-bg.png',
+  image = '/wooster-face-front-no-bg-alt.png',
   className,
 }: LogoProps) {
   const img = <img src={image} alt="Wooster logo" className={cn(className, height, width)} />;
