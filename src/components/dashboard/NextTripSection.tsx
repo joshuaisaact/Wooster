@@ -17,7 +17,7 @@ function NextTripSection({ trip, destination }: NextTripSectionProps) {
           <TripCard trip={trip} destination={destination} />
         </div>
       ) : (
-        <p>No upcoming trips found.</p>
+        <p className="text-gray-900 dark:text-white/95">No upcoming trips found.</p>
       )}
     </>
   );
