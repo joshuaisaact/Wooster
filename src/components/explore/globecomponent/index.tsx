@@ -1,27 +1,26 @@
-import React, { useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import Globe from 'globe.gl';
-import { GlobeInstance, GlobePoint } from './types';
+import { GlobeInstance } from './types';
 
 interface Destination {
   latitude: number;
   longitude: number;
   destinationName: string;
+  destinationId: number;
 }
 
 interface GlobeComponentProps {
-  height?: number;
-  width?: number | string;
   destinations?: Destination[];
   focusedDestination?: Destination | null;
   className?: string;
+  initialAltitude?: number;
 }
 
 const GlobeComponent: React.FC<GlobeComponentProps> = ({
-  height = 300,
-  width = '100%',
   destinations = [],
   focusedDestination = null,
   className = '',
+  initialAltitude = 1.5,
 }) => {
   const globeEl = useRef<HTMLDivElement>(null);
   const globeInstanceRef = useRef<GlobeInstance | null>(null);
@@ -36,58 +35,43 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
     [destinations],
   );
 
-  const focusOnCoordinates = useCallback((lat: number, lng: number) => {
-    if (globeInstanceRef.current) {
-      globeInstanceRef.current.pointOfView({ lat, lng, altitude: 0.2 }, 1000);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (focusedDestination) {
-      focusOnCoordinates(focusedDestination.latitude, focusedDestination.longitude);
-    }
-  }, [focusedDestination, focusOnCoordinates]);
-
+  // Initialize Globe only once
   useEffect(() => {
     const currentGlobeEl = globeEl.current;
     if (!currentGlobeEl) return;
 
     const globe = Globe() as GlobeInstance;
-
     const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     globe
       .globeImageUrl('/earth-texture.png')
       .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
       .backgroundColor(isDarkMode ? '#1c3027' : '#F0F7F4')
-      .width(typeof width === 'string' ? currentGlobeEl.clientWidth : width)
-      .height(height)
+      .width(currentGlobeEl.clientWidth)
+      .height(currentGlobeEl.clientHeight)
       .htmlElementsData(points)
-      .htmlElement((d: GlobePoint) => {
+      .htmlElement((d) => {
         const el = document.createElement('div');
         el.innerHTML = `
-          <div class="flex flex-col items-center">
-            <div class="text-yellow-400">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
-                <path d="M5 3v4"/>
-                <path d="M19 17v4"/>
-                <path d="M3 5h4"/>
-                <path d="M17 19h4"/>
-              </svg>
-            </div>
-            <div class="text-xs font-bold text-white bg-black bg-opacity-50 px-2 py-1 rounded-full mt-1">
-              ${d.name}
+        <div class="flex flex-col items-center">
+          <div class="relative">
+            <div class="h-1.5 w-1.5 rounded-full bg-yellow-400 shadow-[0_0_8px_rgba(250,204,21,0.5)]"></div>
+            <div class="absolute -inset-0.5 animate-[ping_2s_ease-in-out_infinite] opacity-40">
+              <div class="h-full w-full rounded-full bg-yellow-400"></div>
             </div>
           </div>
-        `;
+          <div class="text-[0.65rem] text-white font-medium whitespace-nowrap px-1.5 py-0.5 mt-1 rounded-full"
+               style="background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); text-shadow: 0 1px 2px rgba(0,0,0,0.5);">
+            ${d.name}
+          </div>
+        </div>
+      `;
         return el;
       });
 
     globe(currentGlobeEl);
     globeInstanceRef.current = globe;
 
-    // Handle resize
     const handleResize = () => {
       if (globeInstanceRef.current) {
         globeInstanceRef.current
@@ -105,15 +89,34 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
       }
       globeInstanceRef.current = null;
     };
-  }, [height, width, points]);
+  }, []); // Empty dependency array - only run once
 
-  return (
-    <div
-      ref={globeEl}
-      className={`flex items-center justify-center overflow-hidden rounded-lg bg-white dark:bg-gray-900 ${className}`}
-      style={{ width: '100%', height: '100%' }}
-    />
-  );
+  // Handle focused destination changes with closer zoom
+  useEffect(() => {
+    if (!globeInstanceRef.current) return;
+
+    if (focusedDestination) {
+      globeInstanceRef.current.pointOfView(
+        {
+          lat: focusedDestination.latitude,
+          lng: focusedDestination.longitude,
+          altitude: 0.1, // Zoom in closer when focused
+        },
+        1000,
+      );
+    } else {
+      globeInstanceRef.current.pointOfView(
+        {
+          lat: 0,
+          lng: 0,
+          altitude: initialAltitude,
+        },
+        1000,
+      );
+    }
+  }, [focusedDestination, initialAltitude]);
+
+  return <div ref={globeEl} className={`h-full w-full ${className}`} />;
 };
 
 export default GlobeComponent;

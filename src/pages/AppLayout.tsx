@@ -5,7 +5,7 @@ import TripPage from './Trip';
 import Trips from './TripsList';
 import Profile from './Profile';
 import Dashboard from './Dashboard';
-import Explore from './Explore';
+import { Explore } from './Explore';
 import DestinationListPage from './DestinationList';
 import DestinationSummary from './DestinationSummary';
 

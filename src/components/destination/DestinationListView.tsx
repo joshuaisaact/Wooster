@@ -5,6 +5,7 @@ import { DestinationResults } from './DestinationResults';
 import { useDestinationFilters } from '@/hooks/destination/useDestinationFilters';
 import { Destination, SortOption } from '@/types/types';
 import { Button } from '../ui/button';
+import { usePageAnimation } from '@/hooks/usePageAnimation';
 
 interface DestinationListViewProps {
   destinations: Destination[];
@@ -27,6 +28,7 @@ export function DestinationListView({ destinations, isLoading }: DestinationList
     setSelectedCountry,
     resetFilters,
   } = useDestinationFilters(destinations);
+  const shouldAnimate = usePageAnimation('destinations');
 
   const handleSortChange = (value: SortOption) => {
     setSortBy(value);
@@ -36,16 +38,28 @@ export function DestinationListView({ destinations, isLoading }: DestinationList
     <div className="space-y-6 md:space-y-8">
       {/* Header Section */}
       <div className="max-w-2xl">
-        <h1 className="text-2xl font-bold tracking-tight text-green-900 dark:text-white/95 md:text-3xl lg:text-4xl">
+        <h1
+          className={`text-2xl font-bold tracking-tight text-gray-900 dark:text-white/95 md:text-3xl lg:text-4xl ${
+            shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:200ms]' : ''
+          }`}
+        >
           Explore Destinations
         </h1>
-        <p className="mt-2 text-base text-gray-600 dark:text-green-100/70 md:text-lg">
+        <p
+          className={`mt-2 text-base text-gray-600 dark:text-green-100/80 md:text-lg ${
+            shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:400ms]' : ''
+          }`}
+        >
           Discover amazing places around the world and start planning your next adventure
         </p>
       </div>
 
       {/* Search and Filters Section */}
-      <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
+      <div
+        className={`rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20 ${
+          shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:500ms]' : ''
+        }`}
+      >
         <div className="p-6 md:p-8">
           <DestinationSearchBar
             searchQuery={searchQuery}
@@ -72,7 +86,11 @@ export function DestinationListView({ destinations, isLoading }: DestinationList
       </div>
 
       {/* Results Section */}
-      <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
+      <div
+        className={`rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20 ${
+          shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''
+        }`}
+      >
         <div className="divide-y divide-gray-100/30 dark:divide-white/10">
           <div className="p-6 md:p-8">
             <div className="mb-4 flex items-center justify-between">

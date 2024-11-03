@@ -5,10 +5,9 @@ import { Action, State } from '@/types/types';
 import { supabase } from '@/lib/supabase';
 
 interface AppProviderProps {
-  children: ReactNode; // Explicitly typing children as ReactNode
+  children: ReactNode;
 }
 
-// Creating a context with the correct types for state and dispatch
 export const AppContext = createContext<
   | {
       state: State;
@@ -17,9 +16,17 @@ export const AppContext = createContext<
   | undefined
 >(undefined);
 
-// Creating the provider component
 export function AppProvider({ children }: AppProviderProps) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  // Explicitly type the reducer to match State
+  const [state, dispatch] = useReducer<React.Reducer<State, Action>>(reducer, {
+    ...initialState,
+    pageAnimationStates: {
+      dashboard: false,
+      trips: false,
+      destinations: false,
+      explore: false,
+    },
+  });
 
   async function loadTripsAndDestinationsData() {
     try {
@@ -39,7 +46,6 @@ export function AppProvider({ children }: AppProviderProps) {
     }
   }
 
-  // useEffect to fetch the data once on application mount.
   useEffect(function () {
     loadTripsAndDestinationsData();
   }, []);
