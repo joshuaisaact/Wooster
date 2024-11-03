@@ -5,12 +5,14 @@ import { useAppContext } from '@/hooks/useAppContext';
 import { Search } from 'lucide-react';
 import { sortTripsByDate, filterTripsByStatus, searchTrips } from '@/utils/trips';
 import ScrollLink from '@/components/shared/ScrollLink';
+import { usePageAnimation } from '@/hooks/usePageAnimation';
 
 function Trips() {
   const { state } = useAppContext();
   const { trips, destinations } = state;
   const [searchQuery, setSearchQuery] = useState('');
   const [showPastTrips, setShowPastTrips] = useState(false);
+  const shouldAnimate = usePageAnimation('trips');
 
   // Create a map of destination countries for search
   const destinationCountries = destinations.reduce(
@@ -46,21 +48,37 @@ function Trips() {
   const filteredTrips = searchTrips(sortedTrips, searchQuery, destinationCountries);
 
   return (
-    <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center p-4">
+    <div
+      className={`min-h-[calc(100vh-4rem)] w-full ${
+        shouldAnimate ? 'animate-fade-in opacity-0' : ''
+      }`}
+    >
       <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
         {/* Header Section */}
         <div className="mb-6 md:mb-8 lg:mb-12">
           <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
             <div>
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-bold tracking-tight text-green-900 dark:text-white/95 md:text-3xl lg:text-4xl">
+                <h1
+                  className={`text-2xl font-bold tracking-tight text-gray-900 dark:text-white/95 md:text-3xl lg:text-4xl ${
+                    shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:200ms]' : ''
+                  }`}
+                >
                   Your Trips
                 </h1>
-                <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900/50 dark:text-green-100">
+                <span
+                  className={`rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900/50 dark:text-green-100 ${
+                    shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:200ms]' : ''
+                  }`}
+                >
                   {filteredTrips.length} {filteredTrips.length === 1 ? 'trip' : 'trips'}
                 </span>
               </div>
-              <p className="mt-2 text-base text-gray-600 dark:text-green-100/70 md:text-lg">
+              <p
+                className={`mt-2 text-base text-gray-600 dark:text-green-100/80 md:text-lg ${
+                  shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:400ms]' : ''
+                }`}
+              >
                 Manage and explore your planned adventures
               </p>
 
@@ -72,7 +90,7 @@ function Trips() {
                     !showPastTrips
                       ? 'text-green-800 underline decoration-2 underline-offset-4 dark:text-green-100'
                       : 'text-gray-600 hover:text-gray-900 dark:text-green-100/70 dark:hover:text-white'
-                  }`}
+                  } ${shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''}`}
                 >
                   Upcoming ({upcomingTrips.length})
                 </button>
@@ -82,7 +100,7 @@ function Trips() {
                     showPastTrips
                       ? 'text-green-800 underline decoration-2 underline-offset-4 dark:text-green-100'
                       : 'text-gray-600 hover:text-gray-900 dark:text-green-100/70 dark:hover:text-white'
-                  }`}
+                  } ${shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''}`}
                 >
                   Past ({pastTrips.length})
                 </button>
@@ -90,7 +108,11 @@ function Trips() {
             </div>
 
             {/* Search Bar */}
-            <div className="relative max-w-md flex-1 md:max-w-xs">
+            <div
+              className={`relative max-w-md flex-1 md:max-w-xs ${
+                shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''
+              }`}
+            >
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <Search className="h-5 w-5 text-gray-400 dark:text-green-100/50" />
               </div>
@@ -106,7 +128,11 @@ function Trips() {
         </div>
 
         {/* Main Content */}
-        <div className="grid gap-6 lg:grid-cols-3 lg:gap-8">
+        <div
+          className={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ${
+            shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''
+          }`}
+        >
           {/* Trip List */}
           <div className="lg:col-span-2">
             <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">

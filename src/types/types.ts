@@ -65,6 +65,12 @@ export interface State {
   trips: Trip[];
   destinations: Destination[];
   isLoading: boolean;
+  pageAnimationStates: {
+    dashboard: boolean;
+    trips: boolean;
+    destinations: boolean;
+    explore: boolean;
+  };
 }
 
 // Reducer Action types
@@ -75,6 +81,14 @@ export type Action =
   | { type: 'REMOVE_TRIP'; payload: string }
   | { type: 'ADD_DESTINATION'; payload: Destination }
   | { type: 'REMOVE_DESTINATION'; payload: number }
-  | { type: 'SET_LOADING'; payload: boolean };
+  | { type: 'SET_LOADING'; payload: boolean }
+  | {
+      type: 'SET_PAGE_ANIMATED';
+      payload: {
+        page: keyof State['pageAnimationStates'];
+        hasAnimated: boolean;
+      };
+    }
+  | { type: 'RESET_ANIMATIONS' };
 
 export type SortOption = 'name' | 'costLevel' | 'safetyRating';

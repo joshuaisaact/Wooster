@@ -153,3 +153,7 @@
     height: 50vh;
   }
 }
+
+.transition-opacity {
+  transition: opacity 300ms ease-in-out;
+}

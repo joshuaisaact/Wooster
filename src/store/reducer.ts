@@ -1,12 +1,18 @@
-import { Action, Destination, State, Trip as Triptype } from '@/types/types';
+import { Action, State, Trip as TripType } from '@/types/types';
 
 export const initialState: State = {
-  destinations: [] as Destination[],
-  trips: [] as Triptype[],
+  destinations: [],
+  trips: [],
   isLoading: false,
+  pageAnimationStates: {
+    dashboard: false,
+    trips: false,
+    destinations: false,
+    explore: false,
+  },
 };
 
-export function reducer(state: typeof initialState = initialState, action: Action) {
+export function reducer(state: State = initialState, action: Action): State {
   switch (action.type) {
     case 'SET_DESTINATIONS':
       return {
@@ -26,17 +32,30 @@ export function reducer(state: typeof initialState = initialState, action: Actio
     case 'REMOVE_TRIP':
       return {
         ...state,
-        trips: state.trips.filter((trip: Triptype) => trip.tripId !== action.payload),
+        trips: state.trips.filter((trip: TripType) => trip.tripId !== action.payload),
       };
     case 'SET_LOADING':
       return {
         ...state,
         isLoading: action.payload,
       };
-    case 'ADD_DESTINATION':
+    case 'SET_PAGE_ANIMATED':
       return {
         ...state,
-        destinations: [...state.destinations, action.payload],
+        pageAnimationStates: {
+          ...state.pageAnimationStates,
+          [action.payload.page]: action.payload.hasAnimated,
+        },
+      };
+    case 'RESET_ANIMATIONS':
+      return {
+        ...state,
+        pageAnimationStates: {
+          dashboard: false,
+          trips: false,
+          destinations: false,
+          explore: false,
+        },
       };
     default:
       return state;
