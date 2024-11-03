@@ -39,6 +39,11 @@ export function reducer(state: State = initialState, action: Action): State {
         ...state,
         isLoading: action.payload,
       };
+    case 'ADD_DESTINATION':
+      return {
+        ...state,
+        destinations: [...state.destinations, action.payload],
+      };
     case 'SET_PAGE_ANIMATED':
       return {
         ...state,
