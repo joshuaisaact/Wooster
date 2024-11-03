@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '@/hooks/useAppContext';
 import { createTrip } from '@/services/apiService';
 import { supabase } from '@/lib/supabase';
+import { Trip } from '@/types/types';
 
 interface CreateTripData {
   days: number;
@@ -21,20 +22,28 @@ export function useCreateTrip(onClose?: () => void) {
     dispatch({ type: 'SET_LOADING', payload: true });
 
     const formattedData = {
-      userId: 'e92ad976-973d-406d-92d4-34b6ef182e1a', // TODO: Replace with auth
       days: data.days,
       location: data.location,
       startDate: data.startDate ? data.startDate.toISOString() : null,
-      itinerary: [],
     };
 
     try {
       const result = await createTrip(supabase, formattedData);
-      dispatch({ type: 'ADD_TRIP', payload: result.trip });
 
-      if (result.trip?.tripId) {
+      // The trip data is in result.trip, not result.data
+      const newTrip: Trip = {
+        tripId: result.trip.trip_id, // Changed from result.data.id
+        destinationName: result.trip.destination_name, // Changed from location
+        numDays: result.trip.num_days, // Changed from days
+        startDate: result.trip.startDate,
+        itinerary: result.trip.itinerary || [],
+      };
+
+      dispatch({ type: 'ADD_TRIP', payload: newTrip });
+
+      if (newTrip.tripId) {
         onClose?.();
-        navigate(`/trips/${result.trip.tripId}`);
+        navigate(`/trips/${newTrip.tripId}`);
       }
     } catch (error) {
       console.error('Error creating trip:', error);

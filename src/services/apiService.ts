@@ -64,7 +64,7 @@ export const fetchTrips = async (supabase: SupabaseClient) => {
 export const createTrip = async (
   supabase: SupabaseClient,
   tripData: {
-    days: number; // removed userId since it comes from auth
+    days: number;
     location: string;
     startDate: string | null;
   },
@@ -83,6 +83,7 @@ export const createTrip = async (
   }
 
   const result = await response.json();
+  console.log('API Response:', result); // Log the API response
   return result;
 };
 
