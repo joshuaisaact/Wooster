@@ -13,9 +13,10 @@ function GlobeSection({ destinations, focusedDestination, isLoading }: GlobeSect
 
   useEffect(() => {
     function updateDimensions() {
+      const isMobile = window.innerWidth < 768;
       setDimensions({
-        height: window.innerHeight * 0.5,
-        width: window.innerWidth * 0.6,
+        height: isMobile ? window.innerHeight * 0.3 : window.innerHeight * 0.5,
+        width: isMobile ? window.innerWidth * 0.9 : window.innerWidth * 0.6,
       });
     }
 
@@ -29,7 +30,7 @@ function GlobeSection({ destinations, focusedDestination, isLoading }: GlobeSect
   }
 
   return (
-    <div className="min-h-[600px] rounded-lg bg-white/70 transition-colors dark:bg-green-950/50">
+    <div className="min-h-[300px] rounded-lg bg-white/70 transition-colors dark:bg-green-950/50 md:min-h-[600px]">
       <GlobeComponent
         destinations={destinations}
         focusedDestination={focusedDestination}
@@ -39,5 +40,4 @@ function GlobeSection({ destinations, focusedDestination, isLoading }: GlobeSect
     </div>
   );
 }
-
 export default GlobeSection;

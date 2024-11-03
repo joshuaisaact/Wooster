@@ -8,7 +8,7 @@ interface DestinationSummaryProps {
 
 function DestinationDetails({ destination }: DestinationSummaryProps) {
   return (
-    <Card>
+    <Card className="border-none bg-transparent shadow-none">
       <CardContent className="space-y-6">
         <section className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {Object.entries({
@@ -28,8 +28,8 @@ function DestinationDetails({ destination }: DestinationSummaryProps) {
           'Cultural Significance': destination.culturalSignificance,
         }).map(([title, content]) => (
           <section key={title}>
-            <h3 className="mb-2 font-semibold">{title}</h3>
-            <p className="text-muted-foreground text-sm">{content}</p>
+            <h3 className="mb-2 font-semibold text-gray-900 dark:text-white/95">{title}</h3>
+            <p className="text-muted-foreground text-sm dark:text-green-100/70">{content}</p>
           </section>
         ))}
       </CardContent>

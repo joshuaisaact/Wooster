@@ -1,4 +1,5 @@
-import { SavedDestinations } from '../destination/SavedDestinations';
+import { useAppContext } from '@/hooks/useAppContext';
+import { DestinationsList } from '../destination/DestinationsList';
 import { Destination } from '@/types/types';
 
 interface ExplorationSectionProps {
@@ -7,20 +8,15 @@ interface ExplorationSectionProps {
 }
 
 function ExplorationSection({ onDestinationClick, focusedDestinationId }: ExplorationSectionProps) {
+  const { state } = useAppContext();
+  const { destinations } = state;
+
   return (
-    <div className="flex flex-row">
-      <SavedDestinations
-        onDestinationSelect={onDestinationClick}
-        selectedDestinationId={focusedDestinationId}
-      />
-      <div className="mt-6 flex items-center justify-center">
-        <img
-          src="wooster-suitcase-yellow-no-bg.png"
-          alt="Wooster mascot"
-          className="h-72 max-w-max p-6"
-        />
-      </div>
-    </div>
+    <DestinationsList
+      destinations={destinations}
+      onDestinationSelect={onDestinationClick}
+      selectedDestinationId={focusedDestinationId ? focusedDestinationId : null}
+    />
   );
 }
 

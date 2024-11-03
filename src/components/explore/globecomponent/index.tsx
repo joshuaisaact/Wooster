@@ -10,16 +10,18 @@ interface Destination {
 
 interface GlobeComponentProps {
   height?: number;
-  width?: number | string; // Allow both number and string
+  width?: number | string;
   destinations?: Destination[];
   focusedDestination?: Destination | null;
+  className?: string;
 }
 
 const GlobeComponent: React.FC<GlobeComponentProps> = ({
-  height = 600,
-  width = 800,
+  height = 300,
+  width = '100%',
   destinations = [],
   focusedDestination = null,
+  className = '',
 }) => {
   const globeEl = useRef<HTMLDivElement>(null);
   const globeInstanceRef = useRef<GlobeInstance | null>(null);
@@ -57,7 +59,7 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
     globe
       .globeImageUrl('/earth-texture.png')
       .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-      .backgroundColor(isDarkMode ? '#1c3027' : '#F0F7F4') // Use dark gray in dark mode
+      .backgroundColor(isDarkMode ? '#1c3027' : '#F0F7F4')
       .width(typeof width === 'string' ? currentGlobeEl.clientWidth : width)
       .height(height)
       .htmlElementsData(points)
@@ -85,7 +87,19 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
     globe(currentGlobeEl);
     globeInstanceRef.current = globe;
 
+    // Handle resize
+    const handleResize = () => {
+      if (globeInstanceRef.current) {
+        globeInstanceRef.current
+          .width(currentGlobeEl.clientWidth)
+          .height(currentGlobeEl.clientHeight);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
     return () => {
+      window.removeEventListener('resize', handleResize);
       if (currentGlobeEl) {
         currentGlobeEl.innerHTML = '';
       }
@@ -93,16 +107,11 @@ const GlobeComponent: React.FC<GlobeComponentProps> = ({
     };
   }, [height, width, points]);
 
-  const containerStyles = {
-    width: typeof width === 'string' ? width : `${width}px`,
-    height: `${height}px`,
-  };
-
   return (
     <div
       ref={globeEl}
-      style={containerStyles}
-      className="flex items-center justify-center overflow-hidden rounded-lg bg-white dark:bg-gray-900"
+      className={`flex items-center justify-center overflow-hidden rounded-lg bg-white dark:bg-gray-900 ${className}`}
+      style={{ width: '100%', height: '100%' }}
     />
   );
 };
