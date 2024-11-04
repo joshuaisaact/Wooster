@@ -10,8 +10,6 @@ export function TripPreviewMap({ destination }: TripPreviewMapProps) {
 
   return (
     <div className="h-48 w-full md:w-64">
-      {' '}
-      {/* Adjust width as needed */}
       <Map
         latitude={destination.latitude}
         longitude={destination.longitude}

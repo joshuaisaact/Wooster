@@ -16,7 +16,9 @@ export default function TripPage() {
   if (globalLoading || isLoading) {
     return (
       <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
-        <div className="text-muted-foreground animate-pulse text-lg">Loading trip details...</div>
+        <div className="text-muted-foreground animate-pulse text-base sm:text-lg">
+          Loading trip details...
+        </div>
       </div>
     );
   }
@@ -25,21 +27,21 @@ export default function TripPage() {
   if (!trip) {
     return (
       <div className="min-h-[calc(100vh-4rem)] w-full">
-        <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
-          <div className="flex flex-col items-center justify-center space-y-4 rounded-xl bg-white/70 p-8 shadow-lg backdrop-blur-sm">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-50">
-              <MapPinIcon className="h-6 w-6 text-red-500" />
+        <div className="container mx-auto px-3 py-4 sm:px-4 sm:py-6 md:py-8">
+          <div className="flex flex-col items-center justify-center space-y-3 rounded-lg bg-white/70 p-4 shadow-lg backdrop-blur-sm sm:space-y-4 sm:rounded-xl sm:p-8">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-50 sm:h-12 sm:w-12">
+              <MapPinIcon className="h-5 w-5 text-red-500 sm:h-6 sm:w-6" />
             </div>
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white/95">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white/95 sm:text-xl">
               Trip Not Found
             </h2>
-            <p className="max-w-md text-center text-gray-600 dark:text-green-100/80">
+            <p className="max-w-md text-center text-sm text-gray-600 dark:text-green-100/80 sm:text-base">
               We couldn't find the trip you're looking for. It may have been removed or you may have
               used an invalid link.
             </p>
             <Button
               onClick={() => navigate('/trips')}
-              className="mt-4 bg-blue-700 text-white hover:bg-blue-800"
+              className="mt-2 bg-blue-700 text-white hover:bg-blue-800 sm:mt-4"
             >
               View All Trips
             </Button>
@@ -52,13 +54,13 @@ export default function TripPage() {
   // Main content for valid trip
   return (
     <div className="min-h-[calc(100vh-4rem)] w-full">
-      <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
+      <div className="container mx-auto px-3 py-3 sm:px-4 sm:py-6 md:py-8">
         {/* Header */}
-        <div className="mb-6 md:mb-8">
+        <div className="sm:mb-6 md:mb-8">
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
-              className="text-gray-600 hover:text-green-700 dark:text-green-100/70 dark:hover:text-green-400"
+              className="px-2 py-1 text-sm text-gray-600 hover:text-green-700 dark:text-green-100/70 dark:hover:text-green-400 sm:px-4 sm:py-2 sm:text-base"
               onClick={() => navigate('/trips')}
             >
               ← Back to Trips
@@ -67,8 +69,8 @@ export default function TripPage() {
         </div>
 
         {/* Trip Content */}
-        <div className="rounded-xl shadow-lg backdrop-blur-sm">
-          <div className="p-6 md:p-8">
+        <div className="rounded-lg shadow-lg backdrop-blur-sm sm:rounded-xl">
+          <div className="sm:p-6 md:p-8">
             <TripView trip={trip} destination={trip.destination} />
           </div>
         </div>
