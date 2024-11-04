@@ -1,27 +1,73 @@
+import { useEffect, useState } from 'react';
 import { Trip } from '@/types/types';
+import { supabase } from '@/lib/supabase';
+import { fetchTrip } from '@/services/apiService';
+import { useAppContext } from '../useAppContext';
 
 export function useTripData(tripId: string | undefined, trips: Trip[]) {
-  const trip = trips.find((t) => t.tripId === tripId);
-  const destination = trip ? trip.destination : null;
-  return { trip, destination };
-}
+  const { dispatch } = useAppContext();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-export function useShare() {
-  const shareTrip = async (destinationName: string, url: string) => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: `Check out my trip to ${destinationName}!`,
-          url,
-        });
-      } catch (error) {
-        console.error('Error sharing:', error);
+  // First try to find the trip in the existing trips array
+  const tripFromState = tripId ? trips.find((t) => t.tripId === tripId) : undefined;
+
+  console.log('useTripData state:', {
+    tripId,
+    tripFromState,
+    isLoading,
+    tripsLength: trips.length,
+  });
+
+  useEffect(() => {
+    async function loadTrip() {
+      if (!tripId || tripFromState?.destination) {
+        console.log('Skipping fetch:', { tripId, hasDestination: !!tripFromState?.destination });
+        return;
       }
-    } else {
-      await navigator.clipboard.writeText(url);
-      alert('Link copied to clipboard');
-    }
-  };
 
-  return { shareTrip };
+      console.log('Starting fetch for tripId:', tripId);
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const tripData = await fetchTrip(supabase, tripId);
+        console.log('Fetched trip data:', tripData);
+
+        dispatch({ type: 'ADD_TRIP', payload: tripData });
+        setIsLoading(false);
+      } catch (err) {
+        console.error('Error fetching trip:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load trip');
+        setIsLoading(false);
+      }
+    }
+
+    loadTrip();
+  }, [tripId, tripFromState, dispatch]);
+
+  // Add some defensive checks
+  if (!tripId) {
+    console.log('No tripId provided');
+    return { trip: undefined, destination: null, isLoading, error };
+  }
+
+  if (isLoading) {
+    console.log('Currently loading trip data');
+    return { trip: undefined, destination: null, isLoading, error };
+  }
+
+  if (error) {
+    console.log('Error in trip data:', error);
+    return { trip: undefined, destination: null, isLoading, error };
+  }
+
+  console.log('Returning trip data:', tripFromState);
+
+  return {
+    trip: tripFromState,
+    destination: tripFromState?.destination ?? null,
+    isLoading,
+    error,
+  };
 }

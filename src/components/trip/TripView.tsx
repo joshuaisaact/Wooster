@@ -3,7 +3,7 @@ import { Trip, Destination } from '@/types/types';
 import { TripHeader } from './TripHeader';
 import { TripNavigation } from './TripNavigation';
 import { TripContent } from './TripContext';
-import { useShare } from '@/hooks/trip/useTripData';
+import { useShare } from '@/hooks/trip/useShare';
 import { TripTab } from '@/types/types';
 
 interface TripViewProps {
@@ -14,6 +14,19 @@ interface TripViewProps {
 export function TripView({ trip, destination }: TripViewProps) {
   const [activeTab, setActiveTab] = useState<TripTab>('summary');
   const { shareTrip } = useShare();
+
+  console.log('TripView render:', { trip, destination });
+
+  // Ensure we have the required data
+  if (!trip || !trip.destination?.destinationName) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <div className="text-muted-foreground">
+          {!trip ? 'Loading trip...' : 'Loading trip details...'}
+        </div>
+      </div>
+    );
+  }
 
   const handleShare = () => shareTrip(trip.destination.destinationName, window.location.href);
 
@@ -30,7 +43,7 @@ export function TripView({ trip, destination }: TripViewProps) {
       <div className="border-b bg-white dark:border-green-700 dark:bg-green-800/30">
         <div className="mx-auto max-w-7xl px-4 text-gray-700 dark:text-green-100 sm:px-6 lg:px-8">
           <TripNavigation
-            daysCount={trip.itinerary.length}
+            daysCount={trip.itinerary?.length ?? 0}
             activeTab={activeTab}
             onTabChange={setActiveTab}
           />

@@ -76,7 +76,7 @@ export const createTrip = async (
   const headers = await getAuthHeader(supabase);
   console.log('Sending trip data:', tripData);
 
-  const response = await fetch(`${BASE_URL}/trip`, {
+  const response = await fetch(`${BASE_URL}/trips`, {
     method: 'POST',
     headers,
     body: JSON.stringify(tripData),
@@ -101,4 +101,19 @@ export const deleteTrip = async (supabase: SupabaseClient, tripId: string) => {
   if (!response.ok) {
     throw new Error(`Failed to delete trip: ${response.statusText}`);
   }
+};
+
+export const fetchTrip = async (supabase: SupabaseClient, tripId: string) => {
+  const headers = await getAuthHeader(supabase);
+  const response = await fetch(`${BASE_URL}/trips/${tripId}`, {
+    method: 'GET',
+    headers,
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch trip details');
+  }
+
+  const result = await response.json();
+  return result.trip;
 };

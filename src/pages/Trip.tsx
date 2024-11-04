@@ -8,12 +8,12 @@ import { MapPinIcon } from 'lucide-react';
 export default function TripPage() {
   const { tripId } = useParams<{ tripId: string }>();
   const { state } = useAppContext();
-  const { isLoading, trips } = state;
-  const { trip } = useTripData(tripId, trips);
+  const { trips, isLoading: globalLoading } = state;
+  const { trip, isLoading } = useTripData(tripId, trips);
   const navigate = useNavigate();
 
   // Loading state
-  if (isLoading) {
+  if (globalLoading || isLoading) {
     return (
       <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
         <div className="text-muted-foreground animate-pulse text-lg">Loading trip details...</div>

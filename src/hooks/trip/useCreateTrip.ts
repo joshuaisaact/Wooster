@@ -43,7 +43,7 @@ export function useCreateTrip(onClose?: () => void) {
 
       if (newTrip.tripId) {
         onClose?.();
-        navigate(`/trips/${newTrip.tripId}`);
+        navigate(`/trips/${newTrip.tripId}`, { replace: true });
       }
     } catch (error) {
       console.error('Error creating trip:', error);
