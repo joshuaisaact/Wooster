@@ -2,7 +2,6 @@ import { describe, expect, vi, beforeEach } from 'vitest';
 import {
   BASE_URL,
   fetchTrips,
-  fetchDestinations,
   createDestination,
   deleteTrip,
   deleteDestination,
