@@ -10,17 +10,13 @@ import CreateDestination from '@/components/shared/CreateDestination';
 
 function Dashboard() {
   const { state } = useAppContext();
-  const { isLoading, trips, destinations } = state;
+  const { isLoading, trips } = state;
   const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null);
   const [activeTab, setActiveTab] = useState<'dashboard' | 'create' | 'destination'>('dashboard');
   const shouldAnimate = usePageAnimation('dashboard');
 
   const soonestTrip = !isLoading ? getSoonestTrip(trips) : null;
-  const soonestTripDestination = soonestTrip
-    ? (destinations.find(
-        (destination) => destination.destinationName === soonestTrip.destinationName,
-      ) ?? null)
-    : null;
+  const soonestTripDestination = soonestTrip ? soonestTrip.destination : null;
 
   if (isLoading) {
     return (

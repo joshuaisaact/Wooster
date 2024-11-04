@@ -9,19 +9,19 @@ import { usePageAnimation } from '@/hooks/usePageAnimation';
 
 function Trips() {
   const { state } = useAppContext();
-  const { trips, destinations } = state;
+  const { trips } = state;
   const [searchQuery, setSearchQuery] = useState('');
   const [showPastTrips, setShowPastTrips] = useState(false);
   const shouldAnimate = usePageAnimation('trips');
 
-  // Create a map of destination countries for search
-  const destinationCountries = destinations.reduce(
-    (acc, dest) => ({
-      ...acc,
-      [dest.destinationName]: dest.country,
-    }),
-    {} as Record<string, string>,
-  );
+  // // Create a map of destination countries for search
+  // const destinationCountries = destinations.reduce(
+  //   (acc, dest) => ({
+  //     ...acc,
+  //     [dest.destinationName]: dest.country,
+  //   }),
+  //   {} as Record<string, string>,
+  // );
 
   if (!trips || trips.length === 0) {
     return (
@@ -45,7 +45,8 @@ function Trips() {
 
   const { upcomingTrips, pastTrips } = filterTripsByStatus(trips);
   const sortedTrips = sortTripsByDate(showPastTrips ? pastTrips : upcomingTrips);
-  const filteredTrips = searchTrips(sortedTrips, searchQuery, destinationCountries);
+
+  const filteredTrips = searchTrips(sortedTrips, searchQuery);
 
   return (
     <div
@@ -138,22 +139,16 @@ function Trips() {
             <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
               {filteredTrips.length > 0 ? (
                 <ul className="divide-y divide-gray-100/30 dark:divide-white/10">
-                  {filteredTrips.map((trip) => {
-                    const destination = destinations.find(
-                      (dest) => dest.destinationName === trip.destinationName,
-                    );
-
-                    return (
-                      <li
-                        key={trip.tripId}
-                        className="p-4 transition-colors hover:bg-white/50 dark:hover:bg-green-800/40"
-                      >
-                        <ScrollLink to={`/trips/${trip.tripId}`}>
-                          <TripCard trip={trip} destination={destination} />
-                        </ScrollLink>
-                      </li>
-                    );
-                  })}
+                  {filteredTrips.map((trip) => (
+                    <li
+                      key={trip.tripId}
+                      className="p-4 transition-colors hover:bg-white/50 dark:hover:bg-green-800/40"
+                    >
+                      <ScrollLink to={`/trips/${trip.tripId}`}>
+                        <TripCard trip={trip} destination={trip.destination} />
+                      </ScrollLink>
+                    </li>
+                  ))}
                 </ul>
               ) : (
                 <div className="p-8 text-center">

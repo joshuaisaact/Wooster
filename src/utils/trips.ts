@@ -29,11 +29,7 @@ export function filterTripsByStatus(trips: Trip[]): {
   };
 }
 
-export function searchTrips(
-  trips: Trip[],
-  searchQuery: string,
-  destinationCountries: Record<string, string>,
-): Trip[] {
+export function searchTrips(trips: Trip[], searchQuery: string): Trip[] {
   if (!searchQuery.trim()) return trips;
 
   const searchLower = searchQuery.toLowerCase();
@@ -41,8 +37,9 @@ export function searchTrips(
   return trips.filter((trip) => {
     if (!trip) return false;
 
-    const destinationName = trip.destinationName || '';
-    const country = destinationCountries[destinationName] || '';
+    const destination = trip.destination || {};
+    const destinationName = destination.destinationName || '';
+    const country = destination.country || '';
     const startDate = trip.startDate ? new Date(trip.startDate).toLocaleDateString() : '';
 
     return (

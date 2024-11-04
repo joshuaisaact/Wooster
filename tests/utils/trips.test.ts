@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { getSoonestTrip } from '../../src/utils/trips';
 import { mockTrips } from '../__mocks__/mockTrips';
+import { mockTokyoObj } from '../__mocks__/mockDestinations';
 
 describe('getSoonestTrip', () => {
   const mockToday = new Date(2024, 4, 30); // Fixed date for testing (May 30, 2024)
@@ -19,7 +20,7 @@ describe('getSoonestTrip', () => {
     const soonestTrip = getSoonestTrip(mockTrips);
     expect(soonestTrip).toEqual({
       tripId: 'trip_1',
-      destinationName: 'Paris, France',
+      destination: mockTokyoObj,
       numDays: 5,
       startDate: '2025-05-01',
       itinerary: [
@@ -39,7 +40,7 @@ describe('getSoonestTrip', () => {
     const trips = [
       {
         tripId: 'trip_3',
-        destinationName: 'Old Town',
+        destination: mockTokyoObj,
         numDays: 2,
         startDate: '2024-01-01',
         itinerary: [],

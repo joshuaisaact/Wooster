@@ -1,7 +1,7 @@
 import { describe, test, expect } from 'vitest';
 import { reducer, initialState } from '../../src/store/reducer';
 import { State, Action, Destination, Trip as Triptype } from '@/types/types';
-import { mockDestinations, mockTokyo } from '../__mocks__/mockDestinations';
+import { mockDestinations, mockTokyo, mockTokyoObj } from '../__mocks__/mockDestinations';
 import { mockTrips, mockItineraryNYC } from '../__mocks__/mockTrips';
 
 describe('reducer', () => {
@@ -33,7 +33,7 @@ describe('reducer', () => {
   test('should handle ADD_TRIP', () => {
     const newTrip: Triptype = {
       tripId: '3',
-      destinationName: 'Tokyo, Japan',
+      destination: mockTokyoObj,
       numDays: 7,
       startDate: '2024-08-10',
       itinerary: mockItineraryNYC, // Itinerary for the trip
