@@ -1,9 +1,14 @@
 // import { EmailUpdateForm } from '@/components/profile/EmailUpdateForm';
 // import { PasswordUpdateForm } from '@/components/profile/PasswordUpdateForm';
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { LogoutSection } from '@/components/profile/LogoutSection';
 import { Separator } from '@/components/ui/separator';
+import { useTheme } from '@/hooks/useTheme';
 
 function Profile() {
+  const { isDark } = useTheme();
+  const themeText = isDark ? 'Dark Mode' : 'Light Mode';
+
   return (
     <div className="min-h-[calc(100vh-4rem)] w-full">
       <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
@@ -27,6 +32,16 @@ function Profile() {
                   {/* <EmailUpdateForm />
                   <Separator />
                   <PasswordUpdateForm /> */}
+                  <h2 className="font-semibold tracking-tight text-gray-900 dark:text-white/90">
+                    Select theme
+                  </h2>
+                  <div className={`flex items-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                    <ThemeToggle />
+                    <span className="ml-2 text-sm font-semibold">
+                      {isDark ? 'Dark Mode' : 'Light Mode'}
+                    </span>
+                  </div>
+
                   <Separator />
                   <LogoutSection />
                 </div>

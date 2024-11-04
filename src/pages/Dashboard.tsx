@@ -22,7 +22,9 @@ function Dashboard() {
     return (
       <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
         <div className="text-muted-foreground animate-pulse text-lg">
-          Loading your adventures...
+          <span className="dark:text-muted-foreground bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">
+            Loading your adventures...
+          </span>
         </div>
       </div>
     );
@@ -32,6 +34,8 @@ function Dashboard() {
     <div
       className={`min-h-[calc(100vh-4rem)] w-full ${shouldAnimate ? 'animate-fade-in opacity-0' : ''}`}
     >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgb(20_184_166_/_0.05)_1px,transparent_0)] [background-size:24px_24px] dark:bg-none" />
+
       <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
         {/* Welcome section */}
         <div className="mb-6 md:mb-8 lg:mb-12">

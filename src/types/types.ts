@@ -89,6 +89,7 @@ export type Action =
         hasAnimated: boolean;
       };
     }
-  | { type: 'RESET_ANIMATIONS' };
+  | { type: 'RESET_ANIMATIONS' }
+  | { type: 'RESET_STATE' };
 
 export type SortOption = 'name' | 'costLevel' | 'safetyRating';
