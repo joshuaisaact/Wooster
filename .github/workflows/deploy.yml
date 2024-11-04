@@ -24,7 +24,7 @@ jobs:
 
       - name: Build
         env:
-          VITE_BASE_URL: 'http://46.101.72.66:4000/api'
+          VITE_BASE_URL: 'https://trywooster.live/api'
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: npm run build
