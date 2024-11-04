@@ -3,22 +3,46 @@ import { LogOut } from 'lucide-react';
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useNavigate } from 'react-router-dom';
+import { useAppContext } from '@/hooks/useAppContext';
+import { toast } from 'sonner';
 
 export function LogoutSection() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const { dispatch } = useAppContext();
+
+  const forceLogout = () => {
+    // Clear all Supabase storage
+    window.localStorage.removeItem('sb-gjylcnjrzwtxtawyqyif-auth-token');
+
+    // Clear any other app storage you might have
+    // window.localStorage.clear(); // Use this if you want to clear everything
+
+    // Reset app state
+    dispatch({ type: 'RESET_STATE' });
+
+    // Navigate to login
+    navigate('/', { replace: true });
+  };
 
   const handleLogout = async () => {
     try {
       setIsLoading(true);
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        throw error;
+
+      try {
+        // Try normal signout first
+        await supabase.auth.signOut();
+      } catch (error) {
+        console.warn('Normal signout failed, forcing logout:', error);
       }
-      navigate('/', { replace: true });
+
+      // Regardless of whether signOut succeeded, force a logout
+      forceLogout();
     } catch (error) {
-      console.error('Error signing out:', error);
-      alert('Error signing out. Please try again.');
+      console.error('Error during sign out:', error);
+      toast.error('There was an issue signing out');
+      // Still force logout even if there's an error
+      forceLogout();
     } finally {
       setIsLoading(false);
     }

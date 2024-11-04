@@ -1,20 +1,48 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, ReactNode } from 'react';
-import { AuthContext } from '@/context/AuthContext';
+import { supabase } from '@/lib/supabase';
+import { useAppContext } from '@/hooks/useAppContext';
 
-export default function ProtectedRoute({ children }: { children: ReactNode }) {
-  const { session } = useContext(AuthContext);
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
+  const { dispatch } = useAppContext();
 
   useEffect(() => {
-    if (!session) {
-      navigate('/');
-    }
-  }, [session, navigate]);
+    const checkAuth = async () => {
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-  if (!session) {
-    return null;
-  }
+        if (!session) {
+          dispatch({ type: 'RESET_STATE' });
+          navigate('/', { replace: true });
+        }
+      } catch (error) {
+        // If we can't check the session, assume we're logged out
+        console.error('Error checking auth:', error);
+        dispatch({ type: 'RESET_STATE' });
+        navigate('/', { replace: true });
+      }
+    };
 
-  return <>{children}</>;
+    checkAuth();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT' || !session) {
+        dispatch({ type: 'RESET_STATE' });
+        navigate('/', { replace: true });
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [navigate, dispatch]);
+
+  return children;
 }
+
+export default ProtectedRoute;

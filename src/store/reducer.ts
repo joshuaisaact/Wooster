@@ -62,6 +62,11 @@ export function reducer(state: State = initialState, action: Action): State {
           explore: false,
         },
       };
+    case 'RESET_STATE':
+      return {
+        ...initialState,
+        isLoading: false,
+      };
     default:
       return state;
   }
