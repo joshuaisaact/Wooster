@@ -37,7 +37,8 @@ export function AppProvider({ children }: AppProviderProps) {
       dispatch({ type: 'SET_TRIPS', payload: tripsData });
 
       // Fetch destinations and dispatch the data
-      const destinationsData = await fetchDestinations();
+      const destinationsData = await fetchDestinations(supabase);
+      console.log('Fetched destinations:', destinationsData);
       dispatch({ type: 'SET_DESTINATIONS', payload: destinationsData });
     } catch (error) {
       console.error('Error loading trips or destinations:', error);

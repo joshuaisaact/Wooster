@@ -15,8 +15,12 @@ const getAuthHeader = async (supabase: SupabaseClient) => {
 };
 
 // Fetch destinations data
-export const fetchDestinations = async () => {
-  const res = await fetch(`${BASE_URL}/destinations`);
+export const fetchDestinations = async (supabase: SupabaseClient) => {
+  const headers = await getAuthHeader(supabase);
+  const res = await fetch(`${BASE_URL}/saved-destinations`, {
+    method: 'GET',
+    headers,
+  });
   if (!res.ok) throw new Error('Failed to fetch destinations');
   return res.json();
 };
@@ -24,7 +28,7 @@ export const fetchDestinations = async () => {
 // Create a new destination (protected route)
 export const createDestination = async (supabase: SupabaseClient, destinationName: string) => {
   const headers = await getAuthHeader(supabase);
-  const response = await fetch(`${BASE_URL}/destination`, {
+  const response = await fetch(`${BASE_URL}/destinations`, {
     method: 'POST',
     headers,
     body: JSON.stringify({ destination: destinationName }),
