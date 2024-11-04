@@ -8,8 +8,8 @@ import { MapPinIcon } from 'lucide-react';
 export default function TripPage() {
   const { tripId } = useParams<{ tripId: string }>();
   const { state } = useAppContext();
-  const { isLoading, trips, destinations } = state;
-  const { trip, destination } = useTripData(tripId, trips, destinations);
+  const { isLoading, trips } = state;
+  const { trip } = useTripData(tripId, trips);
   const navigate = useNavigate();
 
   // Loading state
@@ -69,7 +69,7 @@ export default function TripPage() {
         {/* Trip Content */}
         <div className="rounded-xl shadow-lg backdrop-blur-sm">
           <div className="p-6 md:p-8">
-            <TripView trip={trip} destination={destination} />
+            <TripView trip={trip} destination={trip.destination} />
           </div>
         </div>
       </div>
