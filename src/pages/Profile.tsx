@@ -7,7 +7,6 @@ import { useTheme } from '@/hooks/useTheme';
 
 function Profile() {
   const { isDark } = useTheme();
-  const themeText = isDark ? 'Dark Mode' : 'Light Mode';
 
   return (
     <div className="min-h-[calc(100vh-4rem)] w-full">
