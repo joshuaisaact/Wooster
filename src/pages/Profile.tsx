@@ -13,10 +13,10 @@ function Profile() {
       <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
         {/* Header Section */}
         <div className="mb-6 md:mb-8 lg:mb-12">
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white/95 md:text-3xl lg:text-4xl">
+          <h1 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white/95 sm:text-2xl md:text-3xl lg:text-4xl">
             Account Settings
           </h1>
-          <p className="mt-2 text-base text-gray-600 dark:text-green-100/80 md:text-lg">
+          <p className="mt-1 text-sm text-gray-600 dark:text-green-100/80 sm:mt-2 sm:text-base md:text-lg">
             Manage your account preferences and security settings
           </p>
         </div>
