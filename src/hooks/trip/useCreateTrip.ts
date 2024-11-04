@@ -32,9 +32,9 @@ export function useCreateTrip(onClose?: () => void) {
 
       // The trip data is in result.trip, not result.data
       const newTrip: Trip = {
-        tripId: result.trip.trip_id, // Changed from result.data.id
+        tripId: result.trip.tripId, // Changed from result.data.id
         destination: result.trip.destination, // Changed from location
-        numDays: result.trip.num_days, // Changed from days
+        numDays: result.trip.numDays, // Changed from days
         startDate: result.trip.startDate,
         itinerary: result.trip.itinerary || [],
       };

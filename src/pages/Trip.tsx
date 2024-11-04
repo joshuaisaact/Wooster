@@ -38,7 +38,7 @@ export default function TripPage() {
               used an invalid link.
             </p>
             <Button
-              onClick={() => navigate('/trip-list')}
+              onClick={() => navigate('/trips')}
               className="mt-4 bg-blue-700 text-white hover:bg-blue-800"
             >
               View All Trips
