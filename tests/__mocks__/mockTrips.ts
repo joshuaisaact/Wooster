@@ -1,4 +1,5 @@
 import { Trip, ItineraryItem, Activity } from '@/types/types';
+import { mockTokyoObj } from './mockDestinations';
 
 // Mock activities for a day in the itinerary
 const mockActivitiesParisDay1: Activity[] = [
@@ -125,14 +126,14 @@ export const mockItineraryNYC: ItineraryItem[] = [
 export const mockTrips: Trip[] = [
   {
     tripId: 'trip_1',
-    destinationName: 'Paris, France',
+    destination: mockTokyoObj,
     numDays: 5,
     startDate: '2025-05-01',
     itinerary: mockItineraryParis,
   },
   {
     tripId: 'trip_2',
-    destinationName: 'New York, USA',
+    destination: mockTokyoObj,
     numDays: 3,
     startDate: '2025-07-15',
     itinerary: mockItineraryNYC,

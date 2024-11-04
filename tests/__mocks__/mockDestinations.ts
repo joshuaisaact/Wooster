@@ -76,3 +76,28 @@ export const mockTokyo: Destination[] = [
     culturalSignificance: 'Tokyo is a blend of traditional and modern Japanese culture.',
   },
 ];
+
+export const mockTokyoObj: Destination = {
+  destinationId: 3,
+  destinationName: 'Tokyo, Japan',
+  latitude: 35.6762,
+  longitude: 139.6503,
+  description:
+    'Tokyo is the capital of Japan, known for its modern architecture, shopping, and food scene.',
+  country: 'Japan',
+  created_at: '2024-01-01',
+  bestTimeToVisit: 'Spring (March to May) and Autumn (September to November)',
+  averageTemperatureLow: '5°C',
+  averageTemperatureHigh: '15°C',
+  popularActivities: 'Visit Tokyo Tower, Explore Shibuya, Enjoy sushi',
+  travelTips: 'Purchase a rail pass for convenient travel.',
+  nearbyAttractions: 'Mount Fuji, Hakone, Nikko',
+  transportationOptions: 'Subway, Bullet trains, Buses',
+  accessibilityInfo: 'Most public transport and tourist attractions are wheelchair accessible.',
+  officialLanguage: 'Japanese',
+  currency: 'Japanese Yen (¥)',
+  localCuisine: 'Sushi, Ramen, Tempura',
+  costLevel: 'Moderate',
+  safetyRating: 'Very High',
+  culturalSignificance: 'Tokyo is a blend of traditional and modern Japanese culture.',
+};

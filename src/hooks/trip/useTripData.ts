@@ -1,12 +1,8 @@
-import { Trip, Destination } from '@/types/types';
+import { Trip } from '@/types/types';
 
-export function useTripData(
-  tripId: string | undefined,
-  trips: Trip[],
-  destinations: Destination[],
-) {
+export function useTripData(tripId: string | undefined, trips: Trip[]) {
   const trip = trips.find((t) => t.tripId === tripId);
-  const destination = destinations.find((d) => d.destinationName === trip?.destinationName);
+  const destination = trip ? trip.destination : null;
   return { trip, destination };
 }
 

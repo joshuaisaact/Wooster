@@ -11,7 +11,7 @@ function DayNav({ trip, currentDay, setCurrentDay }: DayNavProps) {
   return (
     <nav className="mb-4 text-text">
       <ul className="flex gap-4">
-        <Link to={`/trips/${trip.tripId}/summary/${trip.destinationName}`}>
+        <Link to={`/trips/${trip.tripId}/summary/${trip.destination.destinationName}`}>
           <button
             className={`px-4 py-2 ${currentDay === 0 ? 'bg-gray-700 text-white' : 'text-text hover:bg-gray-700 hover:text-white'}`}
             onClick={() => {

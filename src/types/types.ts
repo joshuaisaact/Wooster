@@ -1,6 +1,6 @@
 export interface Trip {
   tripId: string;
-  destinationName: string;
+  destination: Destination;
   numDays: number;
   startDate: string;
   itinerary: ItineraryItem[];
