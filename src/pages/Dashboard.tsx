@@ -55,76 +55,82 @@ function Dashboard() {
           </p>
         </div>
 
-        {/* Mobile Tabs */}
-        <div className="mb-6 flex lg:hidden">
-          <div className="flex w-full justify-between rounded-lg bg-white/70 p-1 dark:bg-green-800/30">
-            <button
-              onClick={() => setActiveTab('dashboard')}
-              className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                activeTab === 'dashboard'
-                  ? 'bg-green-800 text-white dark:bg-green-700'
-                  : 'text-green-900 hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40'
-              }`}
-            >
-              Home
-            </button>
-            <button
-              onClick={() => setActiveTab('create')}
-              className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                activeTab === 'create'
-                  ? 'bg-green-800 text-white dark:bg-green-700'
-                  : 'text-green-900 hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40'
-              }`}
-            >
-              New Trip
-            </button>
-            <button
-              onClick={() => setActiveTab('destination')}
-              className={`flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                activeTab === 'destination'
-                  ? 'bg-green-800 text-white dark:bg-green-700'
-                  : 'text-green-900 hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40'
-              }`}
-            >
-              Add Place
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Content */}
+        {/* Mobile Tabs & Content */}
         <div className="lg:hidden">
-          {activeTab === 'dashboard' && (
-            <MainContent
-              soonestTrip={soonestTrip}
-              soonestTripDestination={soonestTripDestination}
-              onDestinationClick={setSelectedDestination}
-              className={
-                shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''
-              }
-            />
-          )}
-          {activeTab === 'create' && (
-            <div
-              className={
-                shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''
-              }
-            >
-              <CreateTrip
-                location={null} // Add this
-                onClose={() => setActiveTab('dashboard')}
-                className="p-0" // Add some styling to fit mobile
+          {/* Tabs */}
+          <div className="relative z-10 mb-6">
+            <div className="flex w-full justify-between rounded-lg bg-white/70 p-1 dark:bg-green-800/30">
+              <button
+                type="button"
+                onClick={() => setActiveTab('dashboard')}
+                className={`relative z-20 flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                  activeTab === 'dashboard'
+                    ? 'bg-green-800 text-white dark:bg-green-700'
+                    : 'text-green-900 hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40'
+                }`}
+              >
+                Home
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('create')}
+                className={`relative z-20 flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                  activeTab === 'create'
+                    ? 'bg-green-800 text-white dark:bg-green-700'
+                    : 'text-green-900 hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40'
+                }`}
+              >
+                New Trip
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('destination')}
+                className={`relative z-20 flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                  activeTab === 'destination'
+                    ? 'bg-green-800 text-white dark:bg-green-700'
+                    : 'text-green-900 hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40'
+                }`}
+              >
+                Add Place
+              </button>
+            </div>
+          </div>
+
+          {/* Content with container */}
+          <div className="relative rounded-lg bg-white/70 p-4 dark:bg-transparent">
+            {activeTab === 'dashboard' && (
+              <MainContent
+                soonestTrip={soonestTrip}
+                soonestTripDestination={soonestTripDestination}
+                onDestinationClick={setSelectedDestination}
+                className={
+                  shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''
+                }
               />
-            </div>
-          )}
-          {activeTab === 'destination' && (
-            <div
-              className={
-                shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''
-              }
-            >
-              <CreateDestination onClose={() => setActiveTab('dashboard')} />
-            </div>
-          )}
+            )}
+            {activeTab === 'create' && (
+              <div
+                className={
+                  shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''
+                }
+              >
+                <CreateTrip
+                  location={null}
+                  onClose={() => setActiveTab('dashboard')}
+                  className="p-0"
+                />
+              </div>
+            )}
+            {activeTab === 'destination' && (
+              <div
+                className={
+                  shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''
+                }
+              >
+                <CreateDestination onClose={() => setActiveTab('dashboard')} />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Desktop Layout - Unchanged */}
