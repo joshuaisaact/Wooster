@@ -34,7 +34,7 @@ export function TripView({ trip, destination }: TripViewProps) {
     <div className="flex min-h-screen w-full flex-col bg-gray-50 dark:bg-green-900/30">
       {/* Header Section */}
       <div className="bg-white shadow dark:bg-green-800/30 dark:shadow-green-900/20">
-        <div className="mx-auto max-w-7xl px-4 py-6 text-green-700 dark:text-green-100 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-3 py-2 text-green-700 dark:text-green-100 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8">
           <TripHeader destinationName={trip.destination.destinationName} onShare={handleShare} />
         </div>
       </div>
