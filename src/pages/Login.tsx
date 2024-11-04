@@ -61,7 +61,7 @@ export default function Login() {
             <p className="text-sm text-green-100/90">Explore this open-source project</p>
             <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
               <a
-                href="https://github.com/yourusername/wooster-frontend"
+                href="https://github.com/joshuaisaact/wooster"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 rounded-lg bg-green-800/30 px-4 py-2 text-sm text-green-100 backdrop-blur-sm transition-all duration-300 hover:bg-green-800/40 hover:text-white"
@@ -70,7 +70,7 @@ export default function Login() {
                 Frontend Repository
               </a>
               <a
-                href="https://github.com/yourusername/wooster-backend"
+                href="https://github.com/joshuaisaact/wooster-server"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 rounded-lg bg-green-800/30 px-4 py-2 text-sm text-green-100 backdrop-blur-sm transition-all duration-300 hover:bg-green-800/40 hover:text-white"
