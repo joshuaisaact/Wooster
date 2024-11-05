@@ -9,7 +9,7 @@ Leverage AI-generated trip recommendations, explore the world with an interactiv
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Tests: Passing](https://img.shields.io/github/actions/workflow/status/joshuaisaact/Wooster/test.yml?branch=main&label=tests&style=flat-square&logo=github)
-![Deploy Workflow Status](https://img.shields.io/github/actions/workflow/status/joshuaisaact/Wooster/deploy.yml?branch=main&label=Deploy%20Workflow%20Status)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/joshuaisaact/wooster/deploy.yml?label=Build%20%26%20Deploy)
 ![Deployed on Digital Ocean](https://img.shields.io/badge/Deployed%20on-Digital%20Ocean-0070B8?style=flat&logo=digitalocean)
 
 ![Demo GIF](./docs/videos/wooster.gif)
