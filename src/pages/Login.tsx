@@ -1,21 +1,9 @@
 import { Logo } from '@/components/layout/Logo';
 import { LoginForm } from '@/components/auth/LoginForm';
 import SocialLinks from '@/components/ui/social/SocialLinks';
-import { Eye, Github } from 'lucide-react';
-import { useDemo } from '@/context/useDemoContext';
-import { useNavigate } from 'react-router-dom';
+import { IoLogoGithub } from 'react-icons/io5';
 
 export default function Login() {
-  const { isDemoMode, loginAsDemo, toggleDemoMode } = useDemo();
-
-  const navigate = useNavigate();
-
-  const handleDemoAccess = async () => {
-    toggleDemoMode();
-    await loginAsDemo();
-    navigate('/home');
-  };
-
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-green-900 via-green-900/95 to-green-950">
       <div className="mx-auto flex min-h-screen max-w-screen-xl flex-col items-center justify-between px-4 py-8 sm:py-12">
@@ -34,30 +22,8 @@ export default function Login() {
           </p>
 
           <div className="animate-fade-in-up mb-4 w-full max-w-md py-5 opacity-0 [animation-delay:600ms]">
-            {isDemoMode ? (
-              <div className="rounded-lg bg-green-800/30 p-4 text-center backdrop-blur-sm">
-                <p className="text-green-100">Viewing in demo mode</p>
-                <button
-                  onClick={toggleDemoMode}
-                  className="mt-2 text-sm text-green-300 hover:text-green-200"
-                >
-                  Return to login
-                </button>
-              </div>
-            ) : (
-              <LoginForm />
-            )}
+            <LoginForm />
           </div>
-
-          {!isDemoMode && (
-            <button
-              onClick={handleDemoAccess}
-              className="animate-fade-in-up flex items-center gap-2 rounded-lg bg-green-800/30 px-4 py-2 text-sm text-green-100 opacity-0 backdrop-blur-sm transition-all duration-300 [animation-delay:650ms] hover:bg-green-800/40 hover:text-white"
-            >
-              <Eye size={32} />
-              View read-only demo version
-            </button>
-          )}
 
           <p className="animate-fade-in-up mt-10 max-w-sm text-center text-sm text-green-100/80 opacity-0 [animation-delay:700ms]">
             A full-stack portfolio project showcasing modern web development
@@ -100,7 +66,7 @@ export default function Login() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 rounded-lg bg-green-800/30 px-4 py-2 text-sm text-green-100 backdrop-blur-sm transition-all duration-300 hover:bg-green-800/40 hover:text-white"
               >
-                <Github size={16} />
+                <IoLogoGithub size={16} />
                 Frontend Repository
               </a>
               <a
@@ -109,7 +75,7 @@ export default function Login() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 rounded-lg bg-green-800/30 px-4 py-2 text-sm text-green-100 backdrop-blur-sm transition-all duration-300 hover:bg-green-800/40 hover:text-white"
               >
-                <Github size={16} />
+                <IoLogoGithub size={16} />
                 Backend Repository
               </a>
             </div>

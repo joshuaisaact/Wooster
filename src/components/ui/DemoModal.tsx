@@ -1,12 +1,10 @@
-import { useState } from 'react';
 import { X } from 'lucide-react';
 import { useDemo } from '@/context/useDemoContext';
 
 export function DemoModal() {
-  const { isDemo } = useDemo();
-  const [isOpen, setIsOpen] = useState(true);
+  const { isDemo, isDemoModalOpen, closeDemoModal } = useDemo();
 
-  if (!isDemo || !isOpen) return null;
+  if (!isDemo || !isDemoModalOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
@@ -14,7 +12,7 @@ export function DemoModal() {
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold text-white">Welcome to Wooster Demo</h2>
           <button
-            onClick={() => setIsOpen(false)}
+            onClick={closeDemoModal}
             className="rounded-full p-1 text-green-100 hover:bg-green-800/50"
           >
             <X size={20} />
@@ -36,7 +34,7 @@ export function DemoModal() {
 
         <div className="mt-6 flex justify-end">
           <button
-            onClick={() => setIsOpen(false)}
+            onClick={closeDemoModal}
             className="rounded-lg bg-green-800/50 px-4 py-2 text-sm text-white hover:bg-green-800/70"
           >
             Got it
