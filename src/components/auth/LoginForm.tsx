@@ -1,6 +1,6 @@
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { supabase } from '@/lib/supabase';
 import { useContext, useEffect } from 'react';
 import { AuthContext } from '@/context/AuthContext';
@@ -68,12 +68,12 @@ export function LoginForm() {
       </div>
       <Card className="hidden w-full max-w-md border-white/20 bg-white/10 text-center backdrop-blur-sm md:block">
         <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-center text-2xl font-bold tracking-tight text-white">
+          {/* <CardTitle className="text-center text-2xl font-bold tracking-tight text-white">
             Welcome
           </CardTitle>
           <CardDescription className="text-center text-green-100/80">
             Plan and track your adventures
-          </CardDescription>
+          </CardDescription> */}
         </CardHeader>
         <CardContent>
           <Auth
