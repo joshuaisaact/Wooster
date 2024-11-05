@@ -30,11 +30,10 @@ export function useCreateTrip(onClose?: () => void) {
     try {
       const result = await createTrip(supabase, formattedData);
 
-      // The trip data is in result.trip, not result.data
       const newTrip: Trip = {
-        tripId: result.trip.tripId, // Changed from result.data.id
-        destination: result.trip.destination, // Changed from location
-        numDays: result.trip.numDays, // Changed from days
+        tripId: result.trip.tripId,
+        destination: result.trip.destination,
+        numDays: result.trip.numDays,
         startDate: result.trip.startDate,
         itinerary: result.trip.itinerary || [],
       };
