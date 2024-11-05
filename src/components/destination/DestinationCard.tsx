@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { MapPinIcon, Calendar, Thermometer, DollarSign, ShieldCheck } from 'lucide-react';
 import { Destination } from '@/types/types';
 import { cn } from '@/lib/utils';
+import { formatTemperature } from '@/utils/temperature';
 
 interface DestinationCardProps {
   destination: Destination;
@@ -83,7 +84,8 @@ export function DestinationCard({ destination }: DestinationCardProps) {
           <div className="flex items-center gap-2 text-gray-600 dark:text-green-100/70">
             <Thermometer className="h-4 w-4" />
             <span className="text-sm">
-              Temperature: {averageTemperatureLow}°-{averageTemperatureHigh}°F
+              Temperature:{' '}
+              {formatTemperature(Number(averageTemperatureLow), Number(averageTemperatureHigh))}
             </span>
           </div>
         </div>

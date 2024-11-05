@@ -8,6 +8,7 @@ import CreateTrip from './shared/CreateTrip';
 import { Trip as TripType } from '@/types/types';
 import DeleteTripButton from './trip/DeleteTripButton';
 import DeleteDestinationButton from './destination/DeleteDestinationButton';
+import { formatTemperature } from '@/utils/temperature';
 
 interface DestinationDetailProps {
   destination: Destination;
@@ -89,8 +90,11 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
               />
               <InfoItem
                 icon={<Thermometer className="h-4 w-4" />}
-                label="Avg. Temperature"
-                value={`${destination.averageTemperatureLow}°F - ${destination.averageTemperatureHigh}°F`}
+                label="Temperature Range"
+                value={formatTemperature(
+                  Number(destination.averageTemperatureLow),
+                  Number(destination.averageTemperatureHigh),
+                )}
               />
               <InfoItem
                 icon={<Globe className="h-4 w-4" />}
