@@ -29,7 +29,7 @@ export function SavedDestinationsList({
   }
 
   return (
-    <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
+    <div className="grid grid-cols-1 gap-2.5 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
       {destinations.map((destination) => {
         const isSelected = selectedDestinationId === destination.destinationId;
 
@@ -38,9 +38,12 @@ export function SavedDestinationsList({
           <Link
             key={destination.destinationId}
             to={`/destinations/${destination.destinationName}`}
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-green-700 px-4 py-2 text-base font-medium text-neutral-50 text-white/90 shadow-sm hover:bg-green-800 dark:bg-green-600 dark:text-neutral-900 dark:hover:bg-green-700"
+            onClick={() => window.scrollTo(0, 0)}
+            className="inline-flex max-w-full items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-green-700 px-4 py-2 text-base font-medium text-neutral-50 text-white/90 shadow-sm hover:bg-green-800 dark:bg-green-600 dark:text-neutral-900 dark:hover:bg-green-700 md:max-w-xs" // Set a max-width for mobile
           >
-            {destination.destinationName}
+            <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+              {destination.destinationName}
+            </span>
           </Link>
         ) : (
           <Button

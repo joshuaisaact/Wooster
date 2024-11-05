@@ -27,7 +27,7 @@ function MainContent({
           <div className="p-6 md:p-8">
             <NextTripSection trip={soonestTrip} destination={soonestTripDestination} />
           </div>
-          <div className="hidden p-6 md:block md:p-8">
+          <div className="p-6 md:block md:p-8">
             <SavedDestinations
               onDestinationSelect={onDestinationClick}
               selectedDestinationId={null}
