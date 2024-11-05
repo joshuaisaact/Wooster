@@ -17,8 +17,12 @@ export default function Login() {
             Wooster
           </h1>
 
+          <h2 className="animate-fade-in-up mt-2 text-lg font-semibold text-white/90 opacity-0 [animation-delay:450ms]">
+            Your AI-Driven Trip Planning Assistant
+          </h2>
+
           <p className="animate-fade-in-up mt-2 text-base text-green-100 opacity-0 [animation-delay:500ms] md:text-lg">
-            Your trip companion
+            Making trip planning easier with intelligent recommendations and insights.
           </p>
 
           <div className="animate-fade-in-up mb-4 w-full max-w-md py-5 opacity-0 [animation-delay:600ms]">
