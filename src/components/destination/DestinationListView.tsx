@@ -6,6 +6,7 @@ import { useDestinationFilters } from '@/hooks/destination/useDestinationFilters
 import { Destination, SortOption } from '@/types/types';
 import { Button } from '../ui/button';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
+import { PageHeader } from '../shared/PageHeader';
 
 interface DestinationListViewProps {
   destinations: Destination[];
@@ -37,22 +38,12 @@ export function DestinationListView({ destinations, isLoading }: DestinationList
   return (
     <div className="space-y-4 sm:space-y-6 md:space-y-8">
       {/* Header Section - Reduced spacing and text size on mobile */}
-      <div className="max-w-2xl px-1 sm:px-0">
-        <h1
-          className={`text-xl font-bold tracking-tight text-gray-900 dark:text-white/95 sm:text-2xl md:text-3xl lg:text-4xl ${
-            shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:200ms]' : ''
-          }`}
-        >
-          Explore Destinations
-        </h1>
-        <p
-          className={`mt-1 text-sm text-gray-600 dark:text-green-100/80 sm:mt-2 sm:text-base md:text-lg ${
-            shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:400ms]' : ''
-          }`}
-        >
-          Discover amazing places around the world and start planning your next adventure
-        </p>
-      </div>
+      <PageHeader
+        title="Explore Destinations"
+        description="Discover amazing places around the world and start planning your next adventure"
+        shouldAnimate={shouldAnimate}
+        className="max-w-2xl px-1 sm:px-0"
+      />
 
       {/* Search and Filters Section  */}
       <div

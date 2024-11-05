@@ -6,6 +6,7 @@ import { Search } from 'lucide-react';
 import { sortTripsByDate, filterTripsByStatus, searchTrips } from '@/utils/trips';
 import ScrollLink from '@/components/shared/ScrollLink';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
+import { PageHeader } from '@/components/shared/PageHeader';
 
 function Trips() {
   const { state } = useAppContext();
@@ -59,29 +60,15 @@ function Trips() {
         <div className="mb-4 sm:mb-6 md:mb-8 lg:mb-12">
           <div className="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-start md:justify-between">
             <div>
-              <div className="flex items-center gap-2 sm:gap-3">
-                <h1
-                  className={`text-xl font-bold tracking-tight text-gray-900 dark:text-white/95 sm:text-2xl md:text-3xl lg:text-4xl ${
-                    shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:200ms]' : ''
-                  }`}
-                >
-                  Your Trips
-                </h1>
-                <span
-                  className={`rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/50 dark:text-green-100 sm:px-3 sm:py-1 sm:text-sm ${
-                    shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:200ms]' : ''
-                  }`}
-                >
-                  {filteredTrips.length} {filteredTrips.length === 1 ? 'trip' : 'trips'}
-                </span>
-              </div>
-              <p
-                className={`mt-1 text-sm text-gray-600 dark:text-green-100/80 sm:mt-2 sm:text-base md:text-lg ${
-                  shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:400ms]' : ''
-                }`}
-              >
-                Manage and explore your planned adventures
-              </p>
+              <PageHeader
+                title="Your Trips"
+                description="Manage and explore your planned adventures"
+                badge={{
+                  text: 'trip',
+                  count: filteredTrips.length,
+                }}
+                shouldAnimate={shouldAnimate}
+              />
 
               {/* Trip type toggle - Reduced text size */}
               <div className="mt-3 flex gap-3 sm:mt-4 sm:gap-4">

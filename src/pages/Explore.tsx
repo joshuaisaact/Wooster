@@ -5,6 +5,7 @@ import GlobeSection from '@/components/explore/GlobeSection';
 import DestinationPanel from '@/components/explore/DestinationPanel';
 import ExplorationSection from '@/components/explore/ExplorationSection';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
+import { PageHeader } from '@/components/shared/PageHeader';
 
 export function Explore() {
   const { state } = useAppContext();
@@ -33,23 +34,11 @@ export function Explore() {
       className={`min-h-[calc(100vh-4rem)] w-full ${shouldAnimate ? 'animate-fade-in opacity-0' : ''}`}
     >
       <div className="container mx-auto px-4 py-6 sm:py-8 md:py-8 lg:py-12">
-        {/* Header Section */}
-        <div className="mb-4 sm:mb-6 md:mb-8 lg:mb-12">
-          <h1
-            className={`text-xl font-bold tracking-tight text-green-900 dark:text-white/95 sm:text-2xl md:text-3xl lg:text-4xl ${
-              shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:200ms]' : ''
-            }`}
-          >
-            Explore the World
-          </h1>
-          <p
-            className={`mt-1 text-sm text-gray-600 dark:text-green-100/70 sm:text-base md:text-lg ${
-              shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:400ms]' : ''
-            }`}
-          >
-            Discover amazing destinations and plan your next adventure
-          </p>
-        </div>
+        <PageHeader
+          title="Explore the World"
+          description="Discover amazing destinations and plan your next adventure"
+          shouldAnimate={shouldAnimate}
+        />
 
         {/* Mobile Experience */}
         <div className="lg:hidden">
