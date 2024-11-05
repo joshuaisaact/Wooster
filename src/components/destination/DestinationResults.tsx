@@ -26,8 +26,14 @@ export function DestinationResults({
   if (filteredDestinations.length === 0) {
     return (
       <div className="flex h-64 flex-col items-center justify-center space-y-4">
-        <p className="text-lg">No destinations found matching your criteria</p>
-        <Button variant="outline" onClick={onResetFilters}>
+        <p className="text-lg text-gray-600 dark:text-green-100/70">
+          No destinations found matching your criteria
+        </p>
+        <Button
+          variant="outline"
+          onClick={onResetFilters}
+          className="bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] dark:bg-green-600 dark:hover:bg-green-700"
+        >
           Clear Filters
         </Button>
       </div>

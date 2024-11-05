@@ -54,7 +54,7 @@ export function DestinationListView({ destinations, isLoading }: DestinationList
         </p>
       </div>
 
-      {/* Search and Filters Section - Reduced padding on mobile */}
+      {/* Search and Filters Section  */}
       <div
         className={`rounded-lg bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20 sm:rounded-xl ${
           shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:500ms]' : ''
@@ -85,7 +85,7 @@ export function DestinationListView({ destinations, isLoading }: DestinationList
         </div>
       </div>
 
-      {/* Results Section - Reduced padding and text size on mobile */}
+      {/* Results Section */}
       <div
         className={`rounded-lg bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20 sm:rounded-xl ${
           shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''
