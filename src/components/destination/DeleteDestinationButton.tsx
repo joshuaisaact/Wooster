@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import { supabase } from '@/lib/supabase';
 import { toast } from 'sonner';
 import ConfirmModal from '../ui/ConfirmModal';
+import withDemoDisabled from '../ui/WithDemoDisabled';
 
 interface DeleteDestinationButtonProps {
   destinationId: number;
@@ -15,6 +16,7 @@ function DeleteDestinationButton({ destinationId }: DeleteDestinationButtonProps
   const navigate = useNavigate();
   const { dispatch } = useAppContext();
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const DemoDisabledDeleteButton = withDemoDisabled(Button);
 
   const handleDeleteDestination = async () => {
     if (!destinationId) {
@@ -40,13 +42,13 @@ function DeleteDestinationButton({ destinationId }: DeleteDestinationButtonProps
 
   return (
     <>
-      <Button
+      <DemoDisabledDeleteButton
         onClick={() => setIsConfirmModalOpen(true)}
         variant="destructive"
         className="bg-red-500 text-white hover:bg-red-600"
       >
         Delete Destination
-      </Button>
+      </DemoDisabledDeleteButton>
 
       <ConfirmModal
         title="Confirm Destination Deletion"

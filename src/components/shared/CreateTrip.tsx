@@ -13,6 +13,7 @@ import { useAppContext } from '@/hooks/useAppContext';
 import { Destination } from '@/types/types';
 import { useCreateTrip } from '@/hooks/trip/useCreateTrip';
 import { toast } from 'sonner';
+import withDemoDisabled from '../ui/WithDemoDisabled';
 
 interface CreateTripProps {
   location: Destination | null;
@@ -30,6 +31,7 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
   const { state } = useAppContext();
   const { isLoading } = state;
   const { handleCreateTrip } = useCreateTrip(onClose);
+  const SubmitButton = withDemoDisabled(Button);
 
   const form = useForm<TripFormData>({
     defaultValues: {
@@ -190,13 +192,13 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
               />
             )}
 
-            <Button
+            <SubmitButton
               type="submit"
               disabled={form.formState.isSubmitting}
               className="w-full bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] disabled:opacity-50 dark:bg-green-600 dark:hover:bg-green-700"
             >
               {form.formState.isSubmitting ? 'Creating...' : "Let's Go!"}
-            </Button>
+            </SubmitButton>
           </form>
         </FormProvider>
       )}

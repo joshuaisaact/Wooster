@@ -4,19 +4,21 @@ import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '@/hooks/useAppContext';
+import { useDemo } from '@/context/useDemoContext';
 import { toast } from 'sonner';
 
 export function LogoutSection() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useAppContext();
+  const { resetDemoState } = useDemo();
 
   const forceLogout = () => {
     // Clear all Supabase storage
     window.localStorage.removeItem('sb-gjylcnjrzwtxtawyqyif-auth-token');
 
-    // Clear any other app storage you might have
-    // window.localStorage.clear(); // Use this if you want to clear everything
+    // Reset demo state completely
+    resetDemoState();
 
     // Reset app state
     dispatch({ type: 'RESET_STATE' });

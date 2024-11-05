@@ -1,8 +1,9 @@
-import { createContext, useEffect, useReducer, ReactNode, Dispatch } from 'react';
+import { createContext, useEffect, useReducer, ReactNode, Dispatch, useContext } from 'react';
 import { initialState, reducer } from '../store/reducer';
 import { fetchTrips, fetchDestinations } from '@/services/apiService';
 import { Action, State } from '@/types/types';
 import { supabase } from '@/lib/supabase';
+import { AuthContext } from './AuthContext'; // Import AuthContext
 
 interface AppProviderProps {
   children: ReactNode;
@@ -17,7 +18,7 @@ export const AppContext = createContext<
 >(undefined);
 
 export function AppProvider({ children }: AppProviderProps) {
-  // Explicitly type the reducer to match State
+  const auth = useContext(AuthContext); // Get auth context
   const [state, dispatch] = useReducer<React.Reducer<State, Action>>(reducer, {
     ...initialState,
     pageAnimationStates: {
@@ -46,9 +47,12 @@ export function AppProvider({ children }: AppProviderProps) {
     }
   }
 
-  useEffect(function () {
-    loadTripsAndDestinationsData();
-  }, []);
+  useEffect(() => {
+    // Only fetch data if user is authenticated
+    if (auth?.session) {
+      loadTripsAndDestinationsData();
+    }
+  }, [auth?.session]); // Add auth.session as dependency
 
   return <AppContext.Provider value={{ state, dispatch }}>{children}</AppContext.Provider>;
 }
