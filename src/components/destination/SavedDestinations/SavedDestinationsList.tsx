@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Destination } from '@/types/types';
 import { Link } from 'react-router-dom';
@@ -39,7 +39,13 @@ export function SavedDestinationsList({
             key={destination.destinationId}
             to={`/destinations/${destination.destinationName}`}
             onClick={() => window.scrollTo(0, 0)}
-            className="inline-flex max-w-full items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-green-700 px-4 py-2 text-base font-medium text-neutral-50 text-white/90 shadow-sm hover:bg-green-800 dark:bg-green-600 dark:text-neutral-900 dark:hover:bg-green-700 md:max-w-xs" // Set a max-width for mobile
+            className={cn(
+              buttonVariants({
+                variant: 'default',
+                size: 'default',
+              }),
+              'w-full bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] dark:bg-green-600 dark:hover:bg-green-700',
+            )}
           >
             <span className="overflow-hidden text-ellipsis whitespace-nowrap">
               {destination.destinationName}

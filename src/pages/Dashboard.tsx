@@ -7,6 +7,7 @@ import Sidebar from '@/components/dashboard/Sidebar';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
 import CreateTrip from '@/components/shared/CreateTrip';
 import CreateDestination from '@/components/shared/CreateDestination';
+import { PageHeader } from '@/components/shared/PageHeader';
 
 function Dashboard() {
   const { state } = useAppContext();
@@ -37,23 +38,11 @@ function Dashboard() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgb(20_184_166_/_0.05)_1px,transparent_0)] [background-size:24px_24px] dark:bg-none" />
 
       <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
-        {/* Welcome section */}
-        <div className="mb-6 md:mb-8 lg:mb-12">
-          <h1
-            className={`text-2xl font-bold tracking-tight text-gray-900 dark:text-white/95 md:text-3xl lg:text-4xl ${
-              shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:200ms]' : ''
-            }`}
-          >
-            Welcome Back!
-          </h1>
-          <p
-            className={`mt-2 text-base text-gray-600 dark:text-green-100/80 md:text-lg ${
-              shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:400ms]' : ''
-            }`}
-          >
-            Let's plan your next adventure
-          </p>
-        </div>
+        <PageHeader
+          title="Welcome to your Travel Hub"
+          description="Your gateway to memorable journeys. Explore destinations, plan trips, and keep track of your upcoming adventures all in one place."
+          shouldAnimate={shouldAnimate}
+        />
 
         {/* Mobile Tabs & Content */}
         <div className="lg:hidden">
