@@ -25,6 +25,7 @@ export function DestinationsList({
             destinations={destinations}
             selectedDestinationId={selectedDestinationId}
             onSelect={onDestinationSelect}
+            mode="explore"
           />
         </ScrollArea>
       </CardContent>

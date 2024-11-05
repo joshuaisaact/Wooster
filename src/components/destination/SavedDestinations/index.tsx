@@ -9,12 +9,14 @@ interface SavedDestinationsProps {
   onDestinationSelect: (destination: Destination) => void;
   selectedDestinationId?: number | null;
   className?: string;
+  mode: 'dashboard' | 'explore';
 }
 
 export function SavedDestinations({
   onDestinationSelect,
   selectedDestinationId,
   className,
+  mode,
 }: SavedDestinationsProps) {
   const {
     state: { destinations },
@@ -31,6 +33,7 @@ export function SavedDestinations({
             destinations={destinations}
             selectedDestinationId={selectedDestinationId}
             onSelect={onDestinationSelect}
+            mode={mode}
           />
         </ScrollArea>
       </CardContent>
