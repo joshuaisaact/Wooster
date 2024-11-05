@@ -6,6 +6,7 @@ import { MapPinIcon, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import CreateTrip from '../shared/CreateTrip';
+import { formatTemperature } from '@/utils/temperature';
 
 interface DestinationViewProps {
   destination: Destination;
@@ -80,7 +81,11 @@ function DestinationView({ destination }: DestinationViewProps) {
             <section className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {Object.entries({
                 'Best Time to Visit': destination.bestTimeToVisit,
-                'Temperature Range': `${destination.averageTemperatureLow}°F - ${destination.averageTemperatureHigh}°F`,
+                'Temperature Range': formatTemperature(
+                  Number(destination.averageTemperatureLow),
+                  Number(destination.averageTemperatureHigh),
+                ),
+
                 Language: destination.officialLanguage,
                 Currency: destination.currency,
               }).map(([label, value]) => (
