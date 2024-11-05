@@ -33,7 +33,8 @@ export function LoginForm() {
     >
       <div className="flex flex-col items-center justify-center gap-2">
         <Eye className="text-white" size={20} />
-        <span className="text-sm font-medium">Try Demo</span>
+        <span className="text-sm font-medium">Explore Demo</span>
+        <span className="text-xs text-gray-300">Limited access, no sign-in required</span>
       </div>
     </div>
   );
