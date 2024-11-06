@@ -14,6 +14,7 @@ import { Destination } from '@/types/types';
 import { useCreateTrip } from '@/hooks/trip/useCreateTrip';
 import { toast } from 'sonner';
 import withDemoDisabled from '../ui/WithDemoDisabled';
+import { useState } from 'react';
 
 interface CreateTripProps {
   location: Destination | null;
@@ -32,6 +33,7 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
   const { isLoading } = state;
   const { handleCreateTrip } = useCreateTrip(onClose);
   const SubmitButton = withDemoDisabled(Button);
+  const [open, setOpen] = useState(false);
 
   const form = useForm<TripFormData>({
     defaultValues: {
@@ -91,7 +93,7 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
                         <FormLabel className="font-medium text-gray-900 dark:text-white/90">
                           Start Date
                         </FormLabel>
-                        <Popover>
+                        <Popover open={open} onOpenChange={setOpen}>
                           <PopoverTrigger asChild>
                             <FormControl>
                               <Button
@@ -116,7 +118,10 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
                             <Calendar
                               mode="single"
                               selected={field.value}
-                              onSelect={field.onChange}
+                              onSelect={(date) => {
+                                field.onChange(date);
+                                setOpen(false); // Close the popover when a date is selected
+                              }}
                               initialFocus
                               className="rounded-md border bg-white p-3 dark:border-white/10 dark:bg-green-800/30"
                             />
