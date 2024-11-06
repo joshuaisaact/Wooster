@@ -38,7 +38,7 @@ export function SavedDestinationsList({
           <Link
             key={destination.destinationId}
             to={`/destinations/${destination.destinationName}`}
-            onClick={() => window.scrollTo(0, 0)}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className={cn(
               buttonVariants({
                 variant: 'default',
