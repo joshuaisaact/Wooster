@@ -6,7 +6,7 @@ import Trips from './TripsList';
 import Profile from './Profile';
 import Dashboard from './Dashboard';
 import { Explore } from './Explore';
-import DestinationListPage from './DestinationList';
+import DestinationListPage from './DestinationListPage';
 import DestinationSummary from './DestinationSummary';
 import DestinationActivitiesPage from './DestinationActivitiesPage';
 

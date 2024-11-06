@@ -15,6 +15,7 @@ import { useCreateTrip } from '@/hooks/trip/useCreateTrip';
 import { toast } from 'sonner';
 import withDemoDisabled from '../ui/WithDemoDisabled';
 import { useState } from 'react';
+import { Badge } from '../ui/badge';
 
 interface CreateTripProps {
   location: Destination | null;
@@ -26,7 +27,17 @@ interface TripFormData {
   days: number;
   startDate: Date | undefined;
   location?: string;
+  selectedCategories?: string[];
 }
+
+const categories = [
+  'Adventure',
+  'Cultural',
+  'Nature',
+  'Food & Drink',
+  'Shopping',
+  'Entertainment',
+] as const;
 
 function CreateTrip({ location, onClose, className }: CreateTripProps) {
   const { state } = useAppContext();
@@ -40,6 +51,7 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
       days: 2,
       startDate: undefined,
       location: location?.destinationName || '',
+      selectedCategories: [],
     },
   });
 
@@ -49,6 +61,7 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
         days: data.days,
         location: location?.destinationName || data.location || '',
         startDate: data.startDate,
+        selectedCategories: data.selectedCategories,
       }),
       {
         loading: 'Planning your adventure...',
@@ -156,6 +169,50 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
               )}
             />
 
+            <FormField
+              control={form.control}
+              name="selectedCategories"
+              render={({ field }) => (
+                <FormItem className="space-y-2">
+                  <FormLabel className="font-medium text-gray-900 dark:text-white/90">
+                    Activity Categories
+                  </FormLabel>
+                  <div className="flex flex-wrap gap-2">
+                    {categories.map((category) => {
+                      const isSelected = field.value?.includes(category);
+                      return (
+                        <Badge
+                          key={category}
+                          variant="outline"
+                          className={cn(
+                            'cursor-pointer select-none px-3 py-1 text-sm transition-all hover:scale-105 active:scale-[0.98]',
+                            isSelected
+                              ? 'border-transparent bg-green-700 text-white hover:bg-green-800 dark:bg-green-600 dark:text-white/90 dark:hover:bg-green-700'
+                              : 'border-gray-200/50 bg-white/50 text-gray-600 hover:bg-white/80 hover:text-gray-900 dark:border-white/10 dark:bg-green-800/30 dark:text-green-100/90 dark:hover:bg-green-800/40',
+                          )}
+                          onClick={() => {
+                            const updatedCategories = isSelected
+                              ? (field.value || []).filter((value) => value !== category)
+                              : [...(field.value || []), category];
+                            field.onChange(updatedCategories);
+                          }}
+                        >
+                          {category}
+                        </Badge>
+                      );
+                    })}
+                  </div>
+                  <FormDescription className="text-xs text-gray-600 dark:text-green-100/70">
+                    {field.value?.length === 0
+                      ? 'Select categories to filter your activities - choosing none will include all types'
+                      : field.value?.length === 1
+                        ? 'Your itinerary will only include this type of activity'
+                        : `Your itinerary will include activities from these ${field.value?.length} categories`}
+                  </FormDescription>
+                </FormItem>
+              )}
+            />
+
             {location ? (
               <FormItem className="space-y-2">
                 <FormLabel className="font-medium text-gray-900 dark:text-white/90">
@@ -200,7 +257,7 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
             <SubmitButton
               type="submit"
               disabled={form.formState.isSubmitting}
-              className="w-full bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] disabled:opacity-50 dark:bg-green-600 dark:hover:bg-green-700"
+              className="w-full bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] disabled:opacity-50 dark:bg-green-600 dark:text-white/90 dark:hover:bg-green-700"
             >
               {form.formState.isSubmitting ? 'Creating...' : "Let's Go!"}
             </SubmitButton>

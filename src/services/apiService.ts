@@ -111,6 +111,7 @@ export const createTrip = async (
     days: number;
     location: string;
     startDate: string | null;
+    selectedCategories?: string[];
   },
 ) => {
   const headers = await getAuthHeader(supabase);

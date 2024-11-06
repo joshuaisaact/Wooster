@@ -44,7 +44,7 @@ export function SavedDestinationsList({
                 variant: 'default',
                 size: 'default',
               }),
-              'w-full bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] dark:bg-green-600 dark:hover:bg-green-700',
+              'w-full bg-green-800 font-medium tracking-tight transition-all duration-200 hover:bg-green-700 active:scale-[0.98] dark:bg-green-700 dark:text-white dark:hover:bg-green-700 dark:hover:bg-green-800/40',
             )}
           >
             <span className="overflow-hidden text-ellipsis whitespace-nowrap">

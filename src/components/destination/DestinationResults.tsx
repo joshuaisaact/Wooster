@@ -2,23 +2,47 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import DestinationCard from './DestinationCard';
 import { Destination } from '@/types/types';
+import { useCreateDestination } from '@/hooks/destination/useCreateDestination';
+import { toast } from 'sonner';
 
 interface DestinationResultsProps {
   isLoading: boolean;
   filteredDestinations: Destination[];
-  onResetFilters: () => void;
+  searchQuery: string; // Add searchQuery to props
+  onResetFilters?: () => void;
 }
 
 export function DestinationResults({
   isLoading,
   filteredDestinations,
+  searchQuery,
   onResetFilters,
 }: DestinationResultsProps) {
   const navigate = useNavigate();
+  const { handleCreateDestination } = useCreateDestination();
 
   const handleDestinationClick = (destinationName: string) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     navigate(`/destinations/${encodeURIComponent(destinationName)}`);
+  };
+
+  const handleQuickCreateDestination = async () => {
+    if (!searchQuery) return; // Guard clause in case searchQuery is empty
+
+    try {
+      const newDestination: Destination = await toast.promise(
+        handleCreateDestination({ destinationName: searchQuery }),
+        {
+          loading: 'Creating your destination...',
+          success: '🎉 Destination created successfully!',
+          error: 'Failed to create destination. Please try again.',
+        },
+      );
+      // Navigate to the newly created destination’s detail page
+      navigate(`/destinations/${encodeURIComponent(newDestination.destinationName)}`);
+    } catch (error) {
+      console.error('Error creating destination:', error);
+    }
   };
 
   if (isLoading) {
@@ -41,6 +65,13 @@ export function DestinationResults({
           className="bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] dark:bg-green-600 dark:hover:bg-green-700"
         >
           Clear Filters
+        </Button>
+        <Button
+          variant="outline"
+          onClick={handleQuickCreateDestination}
+          className="bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] dark:bg-green-600 dark:hover:bg-green-700"
+        >
+          Create New Destination
         </Button>
       </div>
     );
