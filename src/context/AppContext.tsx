@@ -58,12 +58,12 @@ export function AppProvider({ children }: AppProviderProps) {
 
       dispatch({ type: 'SET_LOADING', payload: true });
 
-      const activitiesData = await fetchDestinationActivities(destinationName);
+      const activities = await fetchDestinationActivities(supabase, destinationName);
       dispatch({
         type: 'SET_ACTIVITIES',
         payload: {
           destinationName,
-          activities: activitiesData,
+          activities: activities,
         },
       });
     } catch (error) {

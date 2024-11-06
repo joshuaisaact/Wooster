@@ -1,46 +1,29 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppContext } from '@/hooks/useAppContext';
-import DestinationView from '@/components/destination/DestinationView';
-import DestinationInsights from '@/components/destination/DestinationInsights';
-import { MapPinIcon } from 'lucide-react';
+import DestinationActivities from '@/components/destination/DestinationActivities';
 import { Button } from '@/components/ui/button';
-import DestinationActivitiesPage from './DestinationActivitiesPage';
+import { MapPinIcon } from 'lucide-react';
+import { useEffect } from 'react';
 
-function DestinationSummary() {
+function DestinationActivitiesPage() {
   const { state, loadDestinationActivities } = useAppContext();
   const { destinationId: destinationName } = useParams<{ destinationId: string }>();
   const { isLoading, destinations, activities } = state;
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const initialTab = queryParams.get('tab') || 'details';
-  const [activeTab, setActiveTab] = useState(initialTab);
   const navigate = useNavigate();
 
-  // Load activities if needed when switching to activities or insights
+  const destination = destinations.find((dest) => dest.destinationName === destinationName);
+  const existingActivities = destinationName ? activities[destinationName] : null;
+
   useEffect(() => {
-    const loadActivitiesIfNeeded = async () => {
-      if (
-        (activeTab === 'activities' || activeTab === 'insights') &&
-        destinationName &&
-        !activities[destinationName]
-      ) {
+    const loadActivities = async () => {
+      if (destinationName && !existingActivities) {
         await loadDestinationActivities(destinationName);
       }
     };
 
-    loadActivitiesIfNeeded();
-  }, [activeTab, destinationName, activities, loadDestinationActivities]);
-
-  const destination = destinations.find((dest) => dest.destinationName === destinationName);
-  const destinationActivities = destinationName ? activities[destinationName] || [] : [];
-
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
-    // Update URL without navigation
-    const newUrl = `/destinations/${destinationName}${tab !== 'details' ? `?tab=${tab}` : ''}`;
-    window.history.pushState(null, '', newUrl);
-  };
+    loadActivities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (isLoading || destinations.length === 0) {
     return (
@@ -82,36 +65,28 @@ function DestinationSummary() {
   return (
     <div className="min-h-[calc(100vh-4rem)] w-full">
       <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
+        {/* Main Content */}
         <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
           {/* Tabs */}
           <div className="relative z-10 border-b border-gray-200 p-4 dark:border-green-700/30">
             <div className="flex w-full justify-between rounded-lg bg-white/70 p-1 dark:bg-green-800/30">
               <button
                 type="button"
-                onClick={() => handleTabClick('details')}
-                className={`relative z-20 flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                  activeTab === 'details'
-                    ? 'bg-green-800 text-white dark:bg-green-700'
-                    : 'text-green-900 hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40'
-                }`}
+                onClick={() => navigate(`/destinations/${destinationName}`)}
+                className="relative z-20 flex-1 rounded-md px-3 py-1.5 text-sm font-medium text-green-900 transition-colors hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40"
               >
                 Details
               </button>
               <button
                 type="button"
-                onClick={() => navigate(`/destinations/${destinationName}/activities`)}
-                className="relative z-20 flex-1 rounded-md px-3 py-1.5 text-sm font-medium text-green-900 transition-colors hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40"
+                className="relative z-20 flex-1 rounded-md bg-green-800 px-3 py-1.5 text-sm font-medium text-white dark:bg-green-700"
               >
                 Activities
               </button>
               <button
                 type="button"
-                onClick={() => handleTabClick('insights')}
-                className={`relative z-20 flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                  activeTab === 'insights'
-                    ? 'bg-green-800 text-white dark:bg-green-700'
-                    : 'text-green-900 hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40'
-                }`}
+                onClick={() => navigate(`/destinations/${destinationName}?tab=insights`)}
+                className="relative z-20 flex-1 rounded-md px-3 py-1.5 text-sm font-medium text-green-900 transition-colors hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40"
               >
                 Insights
               </button>
@@ -120,14 +95,10 @@ function DestinationSummary() {
 
           {/* Tab Content */}
           <div className="p-6 md:p-8">
-            {activeTab === 'details' && <DestinationView destination={destination} />}
-            {activeTab === 'activities' && <DestinationActivitiesPage />}
-            {activeTab === 'insights' && (
-              <DestinationInsights
-                destinationName={destination.destinationName}
-                activities={destinationActivities}
-              />
-            )}
+            <DestinationActivities
+              destinationName={destination.destinationName}
+              activities={existingActivities || []}
+            />
           </div>
         </div>
 
@@ -149,4 +120,4 @@ function DestinationSummary() {
   );
 }
 
-export default DestinationSummary;
+export default DestinationActivitiesPage;

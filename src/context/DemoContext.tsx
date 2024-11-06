@@ -20,21 +20,31 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const checkDemoStatus = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) {
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+
+        if (!user) {
+          setIsDemo(false);
+          setIsDemoMode(false);
+          return;
+        }
+
+        const { data } = await supabase
+          .from('profiles')
+          .select('is_demo')
+          .eq('id', user.id)
+          .maybeSingle();
+
+        setIsDemo(Boolean(data?.is_demo));
+        if (data?.is_demo) {
+          setIsDemoModalOpen(true);
+        }
+      } catch (error) {
+        console.error('Error checking demo status:', error);
         setIsDemo(false);
         setIsDemoMode(false);
-        return;
-      }
-
-      const { data } = await supabase.from('profiles').select('is_demo').eq('id', user.id).single();
-      setIsDemo(Boolean(data?.is_demo));
-
-      // Reset modal state when demo status changes
-      if (data?.is_demo) {
-        setIsDemoModalOpen(true);
       }
     };
 
@@ -56,6 +66,23 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  const loginAsDemo = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: 'demo@wooster.app',
+        password: 'demo-password',
+      });
+
+      if (error) {
+        console.error('Demo login failed:', error.message);
+      } else {
+        setIsDemoModalOpen(true);
+      }
+    } catch (error) {
+      console.error('Demo login failed:', error);
+    }
+  };
+
   const toggleDemoMode = () => {
     setIsDemoMode((prevState) => !prevState);
   };
@@ -68,27 +95,6 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
 
   const closeDemoModal = () => {
     setIsDemoModalOpen(false);
-  };
-
-  const loginAsDemo = async () => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: 'demo@wooster.app',
-      password: 'demo-password',
-    });
-
-    if (error) {
-      console.error('Demo login failed:', error.message);
-    } else {
-      const { error } = await supabase
-        .from('profiles')
-        .update({ is_demo: true })
-        .eq('email', 'demo@wooster.app');
-
-      if (error) {
-        console.error('Failed to update demo user profile:', error.message);
-      }
-      setIsDemoModalOpen(true);
-    }
   };
 
   return (

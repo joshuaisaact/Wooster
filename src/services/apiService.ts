@@ -25,22 +25,44 @@ export const fetchDestinations = async (supabase: SupabaseClient) => {
   return res.json();
 };
 
-export const fetchDestinationActivities = async (destinationName: string) => {
-  const response = await fetch(
-    `${BASE_URL}/destination/${encodeURIComponent(destinationName)}/activities`,
-    {
+export const fetchDestinationActivities = async (
+  supabase: SupabaseClient,
+  destinationName: string,
+) => {
+  console.log('Fetching activities for:', destinationName);
+  console.log('Using BASE_URL:', BASE_URL);
+
+  const headers = await getAuthHeader(supabase);
+  console.log('Auth headers:', headers);
+
+  const url = `${BASE_URL}/destination/${encodeURIComponent(destinationName)}/activities`;
+  console.log('Making request to:', url);
+
+  try {
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
+        ...headers,
         'Content-Type': 'application/json',
       },
-    },
-  );
+    });
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch destination activities');
+    console.log('Response status:', response.status);
+    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Error response body:', errorText);
+      throw new Error(`Failed to fetch destination activities: ${response.status} ${errorText}`);
+    }
+
+    const data = await response.json();
+    console.log('Received activities data:', data);
+    return data;
+  } catch (error) {
+    console.error('Error in fetchDestinationActivities:', error);
+    throw error;
   }
-
-  return response.json();
 };
 
 // Create a new destination (protected route)

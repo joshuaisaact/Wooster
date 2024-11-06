@@ -8,6 +8,7 @@ import Dashboard from './Dashboard';
 import { Explore } from './Explore';
 import DestinationListPage from './DestinationList';
 import DestinationSummary from './DestinationSummary';
+import DestinationActivitiesPage from './DestinationActivitiesPage';
 
 function AppLayout() {
   return (
@@ -34,6 +35,10 @@ function AppLayout() {
               </Route>
               <Route path="explore" element={<Explore />} />
               <Route path="destinations/:destinationId" element={<DestinationSummary />} />
+              <Route
+                path="destinations/:destinationId/activities"
+                element={<DestinationActivitiesPage />}
+              />
               <Route path="destination-list" element={<DestinationListPage />} />
               <Route path="settings" element={<Profile />} />
             </Routes>

@@ -49,6 +49,7 @@ describe('AppProvider', () => {
     expect(result.current.state).toEqual({
       trips: [],
       destinations: [],
+      activities: {},
       isLoading: false,
       pageAnimationStates: {
         dashboard: false,
