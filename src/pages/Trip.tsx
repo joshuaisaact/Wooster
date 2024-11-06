@@ -9,11 +9,11 @@ export default function TripPage() {
   const { tripId } = useParams<{ tripId: string }>();
   const { state } = useAppContext();
   const { trips, isLoading: globalLoading } = state;
-  const { trip, isLoading } = useTripData(tripId, trips);
+  const { trip, isLoading: tripLoading, error, notFound } = useTripData(tripId, trips);
   const navigate = useNavigate();
 
   // Loading state
-  if (globalLoading || isLoading) {
+  if (globalLoading || tripLoading) {
     return (
       <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
         <div className="text-muted-foreground animate-pulse text-base sm:text-lg">
@@ -23,25 +23,52 @@ export default function TripPage() {
     );
   }
 
-  // Trip not found state
-  if (!trip) {
+  // Error state
+  if (error) {
     return (
       <div className="min-h-[calc(100vh-4rem)] w-full">
         <div className="container mx-auto px-3 py-4 sm:px-4 sm:py-6 md:py-8">
-          <div className="flex flex-col items-center justify-center space-y-3 rounded-lg bg-white/70 p-4 shadow-lg backdrop-blur-sm sm:space-y-4 sm:rounded-xl sm:p-8">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-50 sm:h-12 sm:w-12">
+          <div className="flex flex-col items-center justify-center space-y-3 rounded-lg bg-white/70 p-4 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20 sm:space-y-4 sm:rounded-xl sm:p-8">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-50 dark:bg-red-900/50 sm:h-12 sm:w-12">
+              <MapPinIcon className="h-5 w-5 text-red-500 sm:h-6 sm:w-6" />
+            </div>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white/95 sm:text-xl">
+              Error Loading Trip
+            </h2>
+            <p className="max-w-md text-center text-sm text-gray-600 dark:text-green-100/70 sm:text-base">
+              {error}
+            </p>
+            <Button
+              onClick={() => navigate('/trips')}
+              className="mt-2 bg-green-700 text-white hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700 sm:mt-4"
+            >
+              View All Trips
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Trip not found state
+  if (!trip || notFound) {
+    return (
+      <div className="min-h-[calc(100vh-4rem)] w-full">
+        <div className="container mx-auto px-3 py-4 sm:px-4 sm:py-6 md:py-8">
+          <div className="flex flex-col items-center justify-center space-y-3 rounded-lg bg-white/70 p-4 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20 sm:space-y-4 sm:rounded-xl sm:p-8">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-50 dark:bg-red-900/50 sm:h-12 sm:w-12">
               <MapPinIcon className="h-5 w-5 text-red-500 sm:h-6 sm:w-6" />
             </div>
             <h2 className="text-lg font-semibold text-gray-900 dark:text-white/95 sm:text-xl">
               Trip Not Found
             </h2>
-            <p className="max-w-md text-center text-sm text-gray-600 dark:text-green-100/80 sm:text-base">
+            <p className="max-w-md text-center text-sm text-gray-600 dark:text-green-100/70 sm:text-base">
               We couldn't find the trip you're looking for. It may have been removed or you may have
               used an invalid link.
             </p>
             <Button
               onClick={() => navigate('/trips')}
-              className="mt-2 bg-blue-700 text-white hover:bg-blue-800 sm:mt-4"
+              className="mt-2 bg-green-700 text-white hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700 sm:mt-4"
             >
               View All Trips
             </Button>
