@@ -20,17 +20,14 @@ function DestinationSummary() {
   // Load activities if needed when switching to activities or insights
   useEffect(() => {
     const loadActivitiesIfNeeded = async () => {
-      if (
-        (activeTab === 'activities' || activeTab === 'insights') &&
-        destinationName &&
-        !activities[destinationName]
-      ) {
+      if (destinationName && !activities[destinationName]) {
         await loadDestinationActivities(destinationName);
       }
     };
 
     loadActivitiesIfNeeded();
-  }, [activeTab, destinationName, activities, loadDestinationActivities]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const destination = destinations.find((dest) => dest.destinationName === destinationName);
   const destinationActivities = destinationName ? activities[destinationName] || [] : [];
