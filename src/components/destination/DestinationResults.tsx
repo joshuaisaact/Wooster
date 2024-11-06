@@ -1,5 +1,4 @@
-// components/destination/DestinationResults.tsx
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import DestinationCard from './DestinationCard';
 import { Destination } from '@/types/types';
@@ -15,6 +14,13 @@ export function DestinationResults({
   filteredDestinations,
   onResetFilters,
 }: DestinationResultsProps) {
+  const navigate = useNavigate();
+
+  const handleDestinationClick = (destinationName: string) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate(`/destinations/${encodeURIComponent(destinationName)}`);
+  };
+
   if (isLoading) {
     return (
       <div className="flex h-64 items-center justify-center">
@@ -47,12 +53,12 @@ export function DestinationResults({
           key={destination.destinationId}
           className="transition-transform duration-200 hover:scale-[1.02]"
         >
-          <Link
-            to={`/destinations/${encodeURIComponent(destination.destinationName)}`}
-            className="block h-full"
+          <div
+            onClick={() => handleDestinationClick(destination.destinationName)}
+            className="block h-full cursor-pointer"
           >
             <DestinationCard destination={destination} />
-          </Link>
+          </div>
         </li>
       ))}
     </ul>
