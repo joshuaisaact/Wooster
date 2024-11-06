@@ -25,6 +25,24 @@ export const fetchDestinations = async (supabase: SupabaseClient) => {
   return res.json();
 };
 
+export const fetchDestinationActivities = async (destinationName: string) => {
+  const response = await fetch(
+    `${BASE_URL}/destination/${encodeURIComponent(destinationName)}/activities`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch destination activities');
+  }
+
+  return response.json();
+};
+
 // Create a new destination (protected route)
 export const createDestination = async (supabase: SupabaseClient, destinationName: string) => {
   const headers = await getAuthHeader(supabase);

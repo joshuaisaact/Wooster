@@ -1,20 +1,33 @@
-import { useParams } from 'react-router-dom';
-import DestinationView from '@/components/destination/DestinationView';
+import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppContext } from '@/hooks/useAppContext';
-import { Destination } from '@/types/types';
+import DestinationView from '@/components/destination/DestinationView';
+import DestinationActivities from '@/components/destination/DestinationActivities';
+import DestinationInsights from '@/components/destination/DestinationInsights';
 import { MapPinIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 
 function DestinationSummary() {
-  const { state } = useAppContext();
-  const { isLoading, destinations } = state;
+  const { state, loadDestinationActivities } = useAppContext();
   const { destinationId: destinationName } = useParams<{ destinationId: string }>();
+  const { isLoading, destinations, activities } = state;
+  const [activeTab, setActiveTab] = useState('details');
   const navigate = useNavigate();
 
-  const destination = destinations.find(
-    (dest: Destination) => dest.destinationName === destinationName,
-  );
+  const destination = destinations.find((dest) => dest.destinationName === destinationName);
+
+  const handleTabClick = async (tab: string) => {
+    if (
+      (tab === 'activities' || tab === 'insights') &&
+      destinationName &&
+      !activities[destinationName]
+    ) {
+      await loadDestinationActivities(destinationName);
+    }
+    setActiveTab(tab);
+  };
+
+  const destinationActivities = destinationName ? activities[destinationName] || [] : [];
 
   if (isLoading) {
     return (
@@ -56,27 +69,67 @@ function DestinationSummary() {
   return (
     <div className="min-h-[calc(100vh-4rem)] w-full">
       <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
-        {/* Header */}
-        <div className="mb-6 md:mb-8">
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              className="text-gray-600 hover:text-green-700 dark:text-green-100/70 dark:hover:text-green-400"
-              onClick={() => navigate('/destination-list')}
-            >
-              ← Back to Destinations
-            </Button>
-          </div>
-        </div>
+        {/* Header with back button ... */}
 
         {/* Main Content */}
         <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
+          {/* Tabs */}
+          <div className="relative z-10 border-b border-gray-200 p-4 dark:border-green-700/30">
+            <div className="flex w-full justify-between rounded-lg bg-white/70 p-1 dark:bg-green-800/30">
+              <button
+                type="button"
+                onClick={() => handleTabClick('details')}
+                className={`relative z-20 flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                  activeTab === 'details'
+                    ? 'bg-green-800 text-white dark:bg-green-700'
+                    : 'text-green-900 hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40'
+                }`}
+              >
+                Details
+              </button>
+              <button
+                type="button"
+                onClick={() => handleTabClick('activities')}
+                className={`relative z-20 flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                  activeTab === 'activities'
+                    ? 'bg-green-800 text-white dark:bg-green-700'
+                    : 'text-green-900 hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40'
+                }`}
+              >
+                Activities
+              </button>
+              <button
+                type="button"
+                onClick={() => handleTabClick('insights')}
+                className={`relative z-20 flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                  activeTab === 'insights'
+                    ? 'bg-green-800 text-white dark:bg-green-700'
+                    : 'text-green-900 hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40'
+                }`}
+              >
+                Insights
+              </button>
+            </div>
+          </div>
+
+          {/* Tab Content */}
           <div className="p-6 md:p-8">
-            <DestinationView destination={destination} />
+            {activeTab === 'details' && <DestinationView destination={destination} />}
+            {activeTab === 'activities' && (
+              <DestinationActivities
+                destinationName={destination.destinationName}
+                activities={destinationActivities}
+              />
+            )}
+            {activeTab === 'insights' && (
+              <DestinationInsights
+                destinationName={destination.destinationName}
+                activities={destinationActivities}
+              />
+            )}
           </div>
         </div>
-
-        {/* Optional: Bottom Action */}
+        {/* Bottom Action */}
         <div className="mt-6 text-center">
           <Button
             className="bg-green-700 text-white hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700"
@@ -93,5 +146,4 @@ function DestinationSummary() {
     </div>
   );
 }
-
 export default DestinationSummary;

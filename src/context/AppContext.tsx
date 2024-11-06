@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer, ReactNode, Dispatch, useContext } from 'react';
 import { initialState, reducer } from '../store/reducer';
-import { fetchTrips, fetchDestinations } from '@/services/apiService';
+import { fetchTrips, fetchDestinations, fetchDestinationActivities } from '@/services/apiService';
 import { Action, State } from '@/types/types';
 import { supabase } from '@/lib/supabase';
 import { AuthContext } from './AuthContext'; // Import AuthContext
@@ -13,6 +13,7 @@ export const AppContext = createContext<
   | {
       state: State;
       dispatch: Dispatch<Action>;
+      loadDestinationActivities: (destinationName: string) => Promise<void>;
     }
   | undefined
 >(undefined);
@@ -47,6 +48,31 @@ export function AppProvider({ children }: AppProviderProps) {
     }
   }
 
+  // Add the new function to load activities
+  const loadDestinationActivities = async (destinationName: string) => {
+    try {
+      // Check if we already have the activities for this destination
+      if (state.activities?.[destinationName]) {
+        return;
+      }
+
+      dispatch({ type: 'SET_LOADING', payload: true });
+
+      const activitiesData = await fetchDestinationActivities(destinationName);
+      dispatch({
+        type: 'SET_ACTIVITIES',
+        payload: {
+          destinationName,
+          activities: activitiesData,
+        },
+      });
+    } catch (error) {
+      console.error(`Error loading activities for ${destinationName}:`, error);
+    } finally {
+      dispatch({ type: 'SET_LOADING', payload: false });
+    }
+  };
+
   useEffect(() => {
     // Only fetch data if user is authenticated
     if (auth?.session) {
@@ -54,5 +80,9 @@ export function AppProvider({ children }: AppProviderProps) {
     }
   }, [auth?.session]); // Add auth.session as dependency
 
-  return <AppContext.Provider value={{ state, dispatch }}>{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider value={{ state, dispatch, loadDestinationActivities }}>
+      {children}
+    </AppContext.Provider>
+  );
 }
