@@ -9,6 +9,7 @@ import { Trip as TripType } from '@/types/types';
 import DeleteTripButton from './trip/DeleteTripButton';
 import DeleteDestinationButton from './destination/DeleteDestinationButton';
 import { formatTemperature } from '@/utils/temperature';
+import { Link } from 'react-router-dom';
 
 interface DestinationDetailProps {
   destination: Destination;
@@ -17,7 +18,7 @@ interface DestinationDetailProps {
 }
 
 function DestinationDetail({ destination, trip }: DestinationDetailProps) {
-  const [tripCreationOpen, setTripCreationOpen] = useState(false);
+  const [tripCreationOpen] = useState(false);
 
   return (
     <div className="flex w-full flex-col gap-4 md:flex-row">
@@ -42,16 +43,22 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
       >
         <Card className="h-full overflow-auto border-none bg-white shadow-lg dark:bg-green-800/30 dark:shadow-green-900/20">
           <CardHeader>
-            <div className="flex justify-between">
-              <CardTitle className="text-2xl text-gray-900 dark:text-white/95">
-                {destination.destinationName}
-              </CardTitle>
-              <button
-                className="rounded bg-green-500 px-4 py-2 text-white transition hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700"
-                onClick={() => setTripCreationOpen(!tripCreationOpen)}
+            <div className="flex items-center justify-between">
+              <Link
+                to={`/destinations/${destination.destinationName}`}
+                className="transition-colors hover:text-green-600 dark:hover:text-green-400"
               >
-                {tripCreationOpen ? 'Cancel' : 'Plan Trip'}
-              </button>
+                <CardTitle className="text-2xl text-gray-900 dark:text-white/95">
+                  {destination.destinationName}
+                </CardTitle>
+              </Link>
+
+              <Link
+                to={`/destinations/${destination.destinationName}/activities`}
+                className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium text-green-900 transition-colors hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40"
+              >
+                View Activities
+              </Link>
             </div>
 
             {/* Badges */}

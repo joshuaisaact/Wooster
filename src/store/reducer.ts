@@ -3,6 +3,7 @@ import { Action, State, Trip as TripType } from '@/types/types';
 export const initialState: State = {
   destinations: [],
   trips: [],
+  activities: {},
   isLoading: false,
   pageAnimationStates: {
     dashboard: false,
@@ -23,6 +24,19 @@ export function reducer(state: State = initialState, action: Action): State {
       return {
         ...state,
         trips: action.payload,
+      };
+    case 'SET_ACTIVITIES':
+      return {
+        ...state,
+        activities: {
+          ...state.activities,
+          [action.payload.destinationName]: action.payload.activities,
+        },
+      };
+    case 'CLEAR_ACTIVITIES':
+      return {
+        ...state,
+        activities: {},
       };
     case 'ADD_TRIP':
       return {

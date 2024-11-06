@@ -51,7 +51,7 @@ export function ActivityCard({ activity, isSelected, onSelect }: ActivityCardPro
           {activity.description}
         </p>
 
-        <div className="xs:grid-cols-4 grid grid-cols-2 gap-2 text-xs sm:text-sm">
+        <div className="grid grid-cols-4 gap-2 text-xs sm:text-sm md:grid-cols-2">
           <div className="flex items-center text-gray-600 dark:text-green-100/70">
             <DollarSignIcon className="mr-1.5 h-3.5 w-3.5 shrink-0 text-gray-400 dark:text-green-100/50 sm:h-4 sm:w-4" />
             <span className="truncate">{activity.price}</span>
@@ -75,7 +75,7 @@ export function ActivityCard({ activity, isSelected, onSelect }: ActivityCardPro
         <div className="flex w-full items-center justify-between text-xs text-gray-600 dark:text-green-100/70 sm:text-sm">
           <div className="flex items-center">
             <MapPinIcon className="mr-1.5 h-3.5 w-3.5 shrink-0 text-gray-400 dark:text-green-100/50 sm:h-4 sm:w-4" />
-            <span className="max-w-[200px] truncate sm:max-w-[300px]">{activity.location}</span>
+            <span className="max-w-[150px] truncate sm:max-w-[200px]">{activity.location}</span>
           </div>
           <a
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(activity.location)}`}

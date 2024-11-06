@@ -64,6 +64,9 @@ export interface Activity {
 export interface State {
   trips: Trip[];
   destinations: Destination[];
+  activities: {
+    [destinationName: string]: Activity[];
+  };
   isLoading: boolean;
   pageAnimationStates: {
     dashboard: boolean;
@@ -81,6 +84,8 @@ export type Action =
   | { type: 'REMOVE_TRIP'; payload: string }
   | { type: 'ADD_DESTINATION'; payload: Destination }
   | { type: 'REMOVE_DESTINATION'; payload: number }
+  | { type: 'SET_ACTIVITIES'; payload: { destinationName: string; activities: Activity[] } }
+  | { type: 'CLEAR_ACTIVITIES' }
   | { type: 'SET_LOADING'; payload: boolean }
   | {
       type: 'SET_PAGE_ANIMATED';
