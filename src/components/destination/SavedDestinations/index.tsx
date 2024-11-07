@@ -25,10 +25,10 @@ export function SavedDestinations({
   return (
     <Card className={cn('bg-white/70 dark:bg-green-800/30 md:min-w-[300px]', className)}>
       <CardHeader className="border-b border-gray-200/70 pb-3 dark:border-gray-100/30">
-        <CardTitle className="text-gray-900 dark:text-white/95">My Saved Destinations</CardTitle>
+        <CardTitle className="text-gray-900 dark:text-white/95">Saved Destinations</CardTitle>
       </CardHeader>
       <CardContent className="pt-4">
-        <ScrollArea className="h-[300px] w-full pr-4">
+        <ScrollArea type="auto" className="h-[300px] w-full overflow-y-auto pr-4 md:h-[400px]">
           <SavedDestinationsList
             destinations={savedDestinations}
             selectedDestinationId={selectedDestinationId}
