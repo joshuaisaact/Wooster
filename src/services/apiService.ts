@@ -138,7 +138,6 @@ export const createTrip = async (
   },
 ) => {
   const headers = await getAuthHeader(supabase);
-  console.log('Sending trip data:', tripData);
 
   const response = await fetch(`${BASE_URL}/trips`, {
     method: 'POST',
@@ -151,7 +150,7 @@ export const createTrip = async (
   }
 
   const result = await response.json();
-  console.log('API Response:', result); // Log the API response
+
   return result;
 };
 

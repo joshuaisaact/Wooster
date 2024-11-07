@@ -10,8 +10,6 @@ export function useCreateDestination(onClose?: () => void) {
   const { dispatch } = useAppContext();
 
   const handleCreateDestination = async (params: CreateDestinationParams) => {
-    console.log('Creating destination:', params); // Debug log
-
     dispatch({ type: 'SET_LOADING', payload: true });
 
     try {
