@@ -13,9 +13,13 @@ const activeStyles = 'bg-green-800 shadow-md';
 const hoverStyles = 'hover:bg-green-600 hover:text-yellow-400 hover:shadow-lg';
 
 export function SidebarNavLink({ to, children }: SidebarNavLinkProps) {
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   return (
     <NavLink
       to={to}
+      onClick={handleClick}
       className={({ isActive }) => cn(baseStyles, isActive ? activeStyles : hoverStyles)}
     >
       {children}
