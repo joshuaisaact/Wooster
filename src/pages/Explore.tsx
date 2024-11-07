@@ -9,7 +9,7 @@ import { PageHeader } from '@/components/shared/PageHeader';
 
 export function Explore() {
   const { state } = useAppContext();
-  const { destinations, isLoading } = state;
+  const { savedDestinations, isLoading } = state;
   const [focusedDestination, setFocusedDestination] = useState<Destination | null>(null);
   const shouldAnimate = usePageAnimation('explore');
 
@@ -48,7 +48,7 @@ export function Explore() {
           >
             <div className="relative aspect-[21/9] overflow-hidden rounded-lg bg-white/70 shadow-md backdrop-blur-sm dark:bg-green-800/30">
               <GlobeSection
-                destinations={destinations}
+                destinations={savedDestinations}
                 focusedDestination={focusedDestination}
                 isLoading={isLoading}
               />
@@ -99,7 +99,7 @@ export function Explore() {
               }`}
             >
               <GlobeSection
-                destinations={destinations}
+                destinations={savedDestinations}
                 focusedDestination={focusedDestination}
                 isLoading={isLoading}
               />

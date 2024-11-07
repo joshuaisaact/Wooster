@@ -10,14 +10,16 @@ import DestinationActivitiesPage from './DestinationActivitiesPage';
 function DestinationSummary() {
   const { state, loadDestinationActivities } = useAppContext();
   const { destinationId: destinationName } = useParams<{ destinationId: string }>();
-  const { isLoading, destinations, activities } = state;
+  const { isLoading, allDestinations, activities } = state;
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const initialTab = queryParams.get('tab') || 'details';
   const [activeTab, setActiveTab] = useState(initialTab);
   const navigate = useNavigate();
 
-  // Load activities if needed when switching to activities or insights
+  const destination = allDestinations.find((dest) => dest.destinationName === destinationName);
+  const destinationActivities = destinationName ? activities[destinationName] || [] : [];
+
   useEffect(() => {
     const loadActivitiesIfNeeded = async () => {
       if (destinationName && !activities[destinationName]) {
@@ -29,17 +31,14 @@ function DestinationSummary() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const destination = destinations.find((dest) => dest.destinationName === destinationName);
-  const destinationActivities = destinationName ? activities[destinationName] || [] : [];
-
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
-    // Update URL without navigation
+
     const newUrl = `/destinations/${destinationName}${tab !== 'details' ? `?tab=${tab}` : ''}`;
     window.history.pushState(null, '', newUrl);
   };
 
-  if (isLoading || destinations.length === 0) {
+  if (isLoading || allDestinations.length === 0) {
     return (
       <div className="flex h-[calc(100vh-4rem)] items-center justify-center bg-gradient-to-b from-green-50/50 to-white/50 dark:from-green-950/50 dark:to-green-900/50">
         <div className="text-muted-foreground animate-pulse text-lg dark:text-green-100/70">
@@ -78,6 +77,18 @@ function DestinationSummary() {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] w-full">
+      <div className="container mx-auto px-3 py-3 sm:px-4 sm:py-6 md:py-8">
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            className="px-2 py-1 text-sm text-gray-600 hover:text-green-700 dark:text-green-100/70 dark:hover:text-green-400 sm:px-4 sm:py-2 sm:text-base"
+            onClick={() => navigate('/destination-list')}
+          >
+            ← Back to Destinations
+          </Button>
+        </div>
+      </div>
+
       <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
         <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
           {/* Tabs */}
@@ -128,7 +139,7 @@ function DestinationSummary() {
           </div>
         </div>
 
-        {/* Bottom Action */}
+        {/* Bottom Action
         <div className="mt-6 text-center">
           <Button
             className="bg-green-700 text-white hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700"
@@ -140,7 +151,7 @@ function DestinationSummary() {
           >
             Plan a Trip to {destination.destinationName}
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
 import { Action, State, Trip as TripType } from '@/types/types';
 
 export const initialState: State = {
-  destinations: [],
-  trips: [],
-  activities: {},
   isLoading: false,
+  trips: [],
+  savedDestinations: [],
+  allDestinations: [],
+  activities: {},
   pageAnimationStates: {
     dashboard: false,
     trips: false,
@@ -15,11 +16,10 @@ export const initialState: State = {
 
 export function reducer(state: State = initialState, action: Action): State {
   switch (action.type) {
-    case 'SET_DESTINATIONS':
-      return {
-        ...state,
-        destinations: action.payload,
-      };
+    case 'SET_SAVED_DESTINATIONS':
+      return { ...state, savedDestinations: action.payload };
+    case 'SET_ALL_DESTINATIONS':
+      return { ...state, allDestinations: action.payload };
     case 'SET_TRIPS':
       return {
         ...state,
@@ -53,10 +53,22 @@ export function reducer(state: State = initialState, action: Action): State {
         ...state,
         isLoading: action.payload,
       };
-    case 'ADD_DESTINATION':
+    case 'ADD_SAVED_DESTINATION':
       return {
         ...state,
-        destinations: [...state.destinations, action.payload],
+        savedDestinations: [...state.savedDestinations, action.payload],
+      };
+    case 'REMOVE_SAVED_DESTINATION':
+      return {
+        ...state,
+        savedDestinations: state.savedDestinations.filter(
+          (destination) => destination.destinationId !== action.payload,
+        ),
+      };
+    case 'ADD_NEW_DESTINATION':
+      return {
+        ...state,
+        allDestinations: [...state.allDestinations, action.payload],
       };
     case 'SET_PAGE_ANIMATED':
       return {

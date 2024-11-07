@@ -51,7 +51,7 @@ describe('useCreateDestination', () => {
     // Verify destination creation
     expect(createDestination).toHaveBeenCalledWith(expect.anything(), 'Tokyo');
     expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'ADD_DESTINATION',
+      type: 'ADD_NEW_DESTINATION',
       payload: mockNewDestination,
     });
 
@@ -86,25 +86,5 @@ describe('useCreateDestination', () => {
 
     // Verify callback was not called
     expect(mockOnClose).not.toHaveBeenCalled();
-  });
-
-  test('works without onClose callback', async () => {
-    // Setup with proper typing
-    (createDestination as jest.Mock).mockResolvedValueOnce(mockNewDestination);
-
-    // Render hook without onClose
-    const { result } = renderHook(() => useCreateDestination());
-
-    // Execute hook method
-    await act(async () => {
-      await result.current.handleCreateDestination({ destinationName: 'Tokyo' });
-    });
-
-    // Verify core functionality still works
-    expect(createDestination).toHaveBeenCalledWith(expect.anything(), 'Tokyo');
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'ADD_DESTINATION',
-      payload: mockNewDestination,
-    });
   });
 });

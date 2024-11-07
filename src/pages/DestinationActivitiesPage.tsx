@@ -8,10 +8,10 @@ import { useEffect } from 'react';
 function DestinationActivitiesPage() {
   const { state, loadDestinationActivities } = useAppContext();
   const { destinationId: destinationName } = useParams<{ destinationId: string }>();
-  const { isLoading, destinations, activities } = state;
+  const { isLoading, allDestinations, activities } = state;
   const navigate = useNavigate();
 
-  const destination = destinations.find((dest) => dest.destinationName === destinationName);
+  const destination = allDestinations.find((dest) => dest.destinationName === destinationName);
   const existingActivities = destinationName ? activities[destinationName] : null;
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function DestinationActivitiesPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (isLoading || destinations.length === 0) {
+  if (isLoading || allDestinations.length === 0) {
     return (
       <div className="flex h-[calc(100vh-4rem)] items-center justify-center bg-gradient-to-b from-green-50/50 to-white/50 dark:from-green-950/50 dark:to-green-900/50">
         <div className="text-muted-foreground animate-pulse text-lg dark:text-green-100/70">
@@ -64,8 +64,18 @@ function DestinationActivitiesPage() {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] w-full">
+      <div className="container mx-auto px-3 py-3 sm:px-4 sm:py-6 md:py-8">
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            className="px-2 py-1 text-sm text-gray-600 hover:text-green-700 dark:text-green-100/70 dark:hover:text-green-400 sm:px-4 sm:py-2 sm:text-base"
+            onClick={() => navigate('/destination-list')}
+          >
+            ← Back to Destinations
+          </Button>
+        </div>
+      </div>
       <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">
-        {/* Main Content */}
         <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
           {/* Tabs */}
           <div className="relative z-10 border-b border-gray-200 p-4 dark:border-green-700/30">

@@ -25,18 +25,24 @@ export const fetchDestinations = async (supabase: SupabaseClient) => {
   return res.json();
 };
 
+// Fetch ALL destinations data
+export const fetchAllDestinations = async (supabase: SupabaseClient) => {
+  const headers = await getAuthHeader(supabase);
+  const res = await fetch(`${BASE_URL}/destinations`, {
+    method: 'GET',
+    headers,
+  });
+  if (!res.ok) throw new Error('Failed to fetch destinations');
+  return res.json();
+};
+
 export const fetchDestinationActivities = async (
   supabase: SupabaseClient,
   destinationName: string,
 ) => {
-  console.log('Fetching activities for:', destinationName);
-  console.log('Using BASE_URL:', BASE_URL);
-
   const headers = await getAuthHeader(supabase);
-  console.log('Auth headers:', headers);
 
   const url = `${BASE_URL}/destination/${encodeURIComponent(destinationName)}/activities`;
-  console.log('Making request to:', url);
 
   try {
     const response = await fetch(url, {
@@ -47,9 +53,6 @@ export const fetchDestinationActivities = async (
       },
     });
 
-    console.log('Response status:', response.status);
-    console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Error response body:', errorText);
@@ -57,12 +60,32 @@ export const fetchDestinationActivities = async (
     }
 
     const data = await response.json();
-    console.log('Received activities data:', data);
+
     return data;
   } catch (error) {
     console.error('Error in fetchDestinationActivities:', error);
     throw error;
   }
+};
+
+export const saveDestination = async (supabase: SupabaseClient, destinationId: number) => {
+  const headers = await getAuthHeader(supabase);
+  const res = await fetch(`${BASE_URL}/saved-destinations/${destinationId}`, {
+    method: 'POST',
+    headers,
+  });
+  if (!res.ok) throw new Error('Failed to save destination');
+  return res.json();
+};
+
+export const unsaveDestination = async (supabase: SupabaseClient, destinationId: number) => {
+  const headers = await getAuthHeader(supabase);
+  const res = await fetch(`${BASE_URL}/saved-destinations/${destinationId}`, {
+    method: 'DELETE',
+    headers,
+  });
+  if (!res.ok) throw new Error('Failed to unsave destination');
+  return res.json();
 };
 
 // Create a new destination (protected route)

@@ -95,7 +95,6 @@ function Trips() {
               </div>
             </div>
 
-            {/* Search Bar - Adjusted padding */}
             <div
               className={`relative max-w-md flex-1 md:max-w-xs ${
                 shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''

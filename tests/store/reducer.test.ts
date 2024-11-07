@@ -12,16 +12,16 @@ describe('reducer', () => {
   });
 
   // Test SET_DESTINATIONS action
-  test('should handle SET_DESTINATIONS', () => {
-    const action: Action = { type: 'SET_DESTINATIONS', payload: mockDestinations };
-    const expectedState: State = { ...initialState, destinations: mockDestinations };
+  test('should handle getting saved destinations from the DB', () => {
+    const action: Action = { type: 'SET_SAVED_DESTINATIONS', payload: mockDestinations };
+    const expectedState: State = { ...initialState, savedDestinations: mockDestinations };
 
     const newState = reducer(initialState, action);
     expect(newState).toEqual(expectedState);
   });
 
   // Test SET_TRIPS action
-  test('should handle SET_TRIPS', () => {
+  test('should handle getting trips from the DB', () => {
     const action: Action = { type: 'SET_TRIPS', payload: mockTrips };
     const expectedState: State = { ...initialState, trips: mockTrips };
 
@@ -30,7 +30,7 @@ describe('reducer', () => {
   });
 
   // Test ADD_TRIP action
-  test('should handle ADD_TRIP', () => {
+  test('should handle adding a trip', () => {
     const newTrip: Triptype = {
       tripId: '3',
       destination: mockTokyoObj,
@@ -46,7 +46,7 @@ describe('reducer', () => {
   });
 
   // Test REMOVE_TRIP action
-  test('should handle REMOVE_TRIP', () => {
+  test('should handle removing a trip', () => {
     const currentState: State = { ...initialState, trips: mockTrips };
     const action: Action = { type: 'REMOVE_TRIP', payload: '1' };
     const expectedState: State = {
@@ -59,7 +59,7 @@ describe('reducer', () => {
   });
 
   // Test SET_LOADING action
-  test('should handle SET_LOADING', () => {
+  test('should handle loading states', () => {
     const action: Action = { type: 'SET_LOADING', payload: true };
     const expectedState: State = { ...initialState, isLoading: true };
 
@@ -68,12 +68,12 @@ describe('reducer', () => {
   });
 
   // Test ADD_DESTINATION action
-  test('should handle ADD_DESTINATION', () => {
+  test('should handle adding a saved destination', () => {
     const newDestination: Destination = mockTokyo[0];
-    const action: Action = { type: 'ADD_DESTINATION', payload: newDestination };
+    const action: Action = { type: 'ADD_SAVED_DESTINATION', payload: newDestination };
     const expectedState: State = {
       ...initialState,
-      destinations: [...initialState.destinations, newDestination],
+      savedDestinations: [...initialState.savedDestinations, newDestination],
     };
 
     const newState = reducer(initialState, action);

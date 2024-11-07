@@ -1,4 +1,4 @@
-import { DestinationListView } from './DestinationList';
+import { DestinationListView } from '../components/destination/DestinationList';
 
 export default function DestinationListPage() {
   return (
