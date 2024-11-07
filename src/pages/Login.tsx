@@ -21,7 +21,7 @@ export default function Login() {
             Your AI-Driven Trip Planning Assistant
           </h2>
 
-          <p className="animate-fade-in-up mt-2 text-base text-green-100 opacity-0 [animation-delay:500ms] md:text-lg">
+          <p className="animate-fade-in-up mt-2 text-center text-base text-green-100 opacity-0 [animation-delay:500ms] md:text-lg">
             Making trip planning easier with intelligent recommendations and insights.
           </p>
 
