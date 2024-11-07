@@ -3,7 +3,7 @@ import { DestinationSearchBar } from './DestinationSearchBar';
 import { DestinationFilters } from './DestinationFilters';
 import { DestinationResults } from './DestinationResults';
 import { useDestinationFilters } from '@/hooks/destination/useDestinationFilters';
-import { Destination, SortOption } from '@/types/types';
+import { Destination } from '@/types/types';
 import { Button } from '../ui/button';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
 import { PageHeader } from '../shared/PageHeader';
@@ -14,26 +14,21 @@ interface DestinationListViewProps {
 }
 
 export function DestinationListView({ destinations, isLoading }: DestinationListViewProps) {
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFilters] = useState(false);
   const {
     searchQuery,
-    sortBy,
+
     selectedCostLevel,
     selectedSafetyRating,
     selectedCountry,
     filteredDestinations,
     setSearchQuery,
-    setSortBy,
     setSelectedCostLevel,
     setSelectedSafetyRating,
     setSelectedCountry,
     resetFilters,
   } = useDestinationFilters(destinations);
   const shouldAnimate = usePageAnimation('destinations');
-
-  const handleSortChange = (value: SortOption) => {
-    setSortBy(value);
-  };
 
   return (
     <div className="space-y-4 sm:space-y-6 md:space-y-8">
@@ -52,13 +47,7 @@ export function DestinationListView({ destinations, isLoading }: DestinationList
         }`}
       >
         <div className="p-4 sm:p-6 md:p-8">
-          <DestinationSearchBar
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            sortBy={sortBy}
-            onSortChange={handleSortChange}
-            onToggleFilters={() => setShowFilters(!showFilters)}
-          />
+          <DestinationSearchBar searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
           {showFilters && (
             <div className="mt-4 border-t border-gray-100/30 pt-4 dark:border-white/10 sm:mt-6 sm:pt-6">
@@ -106,6 +95,7 @@ export function DestinationListView({ destinations, isLoading }: DestinationList
               isLoading={isLoading}
               filteredDestinations={filteredDestinations}
               onResetFilters={resetFilters}
+              searchQuery={searchQuery}
             />
           </div>
         </div>

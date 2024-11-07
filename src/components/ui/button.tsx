@@ -18,7 +18,7 @@ const buttonVariants = cva(
         secondary:
           'bg-neutral-100 text-neutral-900 hover:bg-neutral-100/80 dark:bg-neutral-800 dark:text-neutral-50 dark:hover:bg-neutral-800/80',
         ghost:
-          'hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-800 dark:hover:text-neutral-50',
+          'ring-0 ring-offset-0 !ring-offset-0 !ring-0 !outline-none hover:!ring-0 hover:!ring-offset-0 hover:bg-transparent focus:!ring-0 focus:!ring-offset-0 focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:outline-none active:!ring-0 active:!ring-offset-0',
         link: 'text-neutral-900 underline-offset-4 hover:underline dark:text-neutral-50',
       },
       size: {

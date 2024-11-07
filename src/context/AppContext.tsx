@@ -1,9 +1,14 @@
 import { createContext, useEffect, useReducer, ReactNode, Dispatch, useContext } from 'react';
 import { initialState, reducer } from '../store/reducer';
-import { fetchTrips, fetchDestinations, fetchDestinationActivities } from '@/services/apiService';
+import {
+  fetchTrips,
+  fetchDestinations,
+  fetchAllDestinations,
+  fetchDestinationActivities,
+} from '@/services/apiService';
 import { Action, State } from '@/types/types';
 import { supabase } from '@/lib/supabase';
-import { AuthContext } from './AuthContext'; // Import AuthContext
+import { AuthContext } from './AuthContext';
 
 interface AppProviderProps {
   children: ReactNode;
@@ -19,7 +24,7 @@ export const AppContext = createContext<
 >(undefined);
 
 export function AppProvider({ children }: AppProviderProps) {
-  const auth = useContext(AuthContext); // Get auth context
+  const auth = useContext(AuthContext);
   const [state, dispatch] = useReducer<React.Reducer<State, Action>>(reducer, {
     ...initialState,
     pageAnimationStates: {
@@ -30,25 +35,28 @@ export function AppProvider({ children }: AppProviderProps) {
     },
   });
 
-  async function loadTripsAndDestinationsData() {
+  async function loadInitialData() {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
 
-      // Fetch trips and dispatch the data
-      const tripsData = await fetchTrips(supabase);
-      dispatch({ type: 'SET_TRIPS', payload: tripsData });
+      // Fetch all data in parallel
+      const [tripsData, savedDestinationsData, allDestinationsData] = await Promise.all([
+        fetchTrips(supabase),
+        fetchDestinations(supabase),
+        fetchAllDestinations(supabase),
+      ]);
 
-      // Fetch destinations and dispatch the data
-      const destinationsData = await fetchDestinations(supabase);
-      dispatch({ type: 'SET_DESTINATIONS', payload: destinationsData });
+      // Dispatch all data
+      dispatch({ type: 'SET_TRIPS', payload: tripsData });
+      dispatch({ type: 'SET_SAVED_DESTINATIONS', payload: savedDestinationsData });
+      dispatch({ type: 'SET_ALL_DESTINATIONS', payload: allDestinationsData });
     } catch (error) {
-      console.error('Error loading trips or destinations:', error);
+      console.error('Error loading initial data:', error);
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false });
     }
   }
 
-  // Add the new function to load activities
   const loadDestinationActivities = async (destinationName: string) => {
     try {
       // Check if we already have the activities for this destination
@@ -73,12 +81,12 @@ export function AppProvider({ children }: AppProviderProps) {
     }
   };
 
+  // Load all data when user is authenticated
   useEffect(() => {
-    // Only fetch data if user is authenticated
     if (auth?.session) {
-      loadTripsAndDestinationsData();
+      loadInitialData();
     }
-  }, [auth?.session]); // Add auth.session as dependency
+  }, [auth?.session]);
 
   return (
     <AppContext.Provider value={{ state, dispatch, loadDestinationActivities }}>

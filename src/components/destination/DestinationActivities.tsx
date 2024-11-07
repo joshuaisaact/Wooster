@@ -89,10 +89,13 @@ const DestinationActivities = ({ destinationName, activities }: DestinationActiv
 
       {/* Empty state */}
       {paginatedActivities.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-12 text-center">
+        <div className="flex flex-col items-center justify-center gap-3 py-12 text-center">
           <p className="text-gray-600 dark:text-green-100/70">
             No activities found {selectedCategory ? `in category "${selectedCategory}"` : ''} for{' '}
             {destinationName}.
+          </p>
+          <p className="text-gray-600 dark:text-green-100/70">
+            Plan a trip to add more activities.
           </p>
           {selectedCategory && (
             <Button variant="outline" className="mt-4" onClick={() => setSelectedCategory(null)}>

@@ -19,7 +19,7 @@ export function SavedDestinations({
   mode,
 }: SavedDestinationsProps) {
   const {
-    state: { destinations },
+    state: { savedDestinations },
   } = useAppContext();
 
   return (
@@ -30,7 +30,7 @@ export function SavedDestinations({
       <CardContent className="pt-4">
         <ScrollArea className="h-[300px] w-full pr-4">
           <SavedDestinationsList
-            destinations={destinations}
+            destinations={savedDestinations}
             selectedDestinationId={selectedDestinationId}
             onSelect={onDestinationSelect}
             mode={mode}

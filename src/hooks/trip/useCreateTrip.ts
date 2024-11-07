@@ -8,6 +8,7 @@ interface CreateTripData {
   days: number;
   location: string;
   startDate: Date | undefined;
+  selectedCategories: string[] | undefined;
 }
 
 export function useCreateTrip(onClose?: () => void) {
@@ -25,6 +26,7 @@ export function useCreateTrip(onClose?: () => void) {
       days: data.days,
       location: data.location,
       startDate: data.startDate ? data.startDate.toISOString() : null,
+      selectedCategories: data.selectedCategories,
     };
 
     try {

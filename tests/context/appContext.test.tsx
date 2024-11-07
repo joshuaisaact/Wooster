@@ -48,7 +48,8 @@ describe('AppProvider', () => {
 
     expect(result.current.state).toEqual({
       trips: [],
-      destinations: [],
+      savedDestinations: [],
+      allDestinations: [],
       activities: {},
       isLoading: false,
       pageAnimationStates: {
@@ -71,7 +72,7 @@ describe('AppProvider', () => {
     });
 
     expect(result.current.state.trips).toEqual([]);
-    expect(result.current.state.destinations).toEqual([]);
+    expect(result.current.state.savedDestinations).toEqual([]);
     expect(fetchDestinations).not.toHaveBeenCalled(); // Because fetchTrips failed first
   });
 

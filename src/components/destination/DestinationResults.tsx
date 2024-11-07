@@ -2,23 +2,52 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import DestinationCard from './DestinationCard';
 import { Destination } from '@/types/types';
+import { useCreateDestination } from '@/hooks/destination/useCreateDestination';
+import { toast } from 'sonner';
 
 interface DestinationResultsProps {
   isLoading: boolean;
   filteredDestinations: Destination[];
-  onResetFilters: () => void;
+  searchQuery: string;
+  onResetFilters?: () => void;
 }
 
 export function DestinationResults({
   isLoading,
   filteredDestinations,
+  searchQuery,
   onResetFilters,
 }: DestinationResultsProps) {
   const navigate = useNavigate();
+  const { handleCreateDestination } = useCreateDestination();
 
   const handleDestinationClick = (destinationName: string) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     navigate(`/destinations/${encodeURIComponent(destinationName)}`);
+  };
+
+  const handleQuickCreateDestination = async () => {
+    if (!searchQuery) return;
+
+    const toastId = toast.loading(`Creating new destination: ${searchQuery}...`);
+
+    try {
+      const newDestination = await handleCreateDestination({
+        destinationName: searchQuery,
+      });
+
+      toast.dismiss(toastId);
+
+      toast.success('🎉 Destination created successfully!');
+
+      setTimeout(() => {
+        navigate(`/destinations/${encodeURIComponent(newDestination.destinationName)}`);
+      }, 1000);
+    } catch (error) {
+      console.error('Error creating destination:', error);
+      toast.dismiss(toastId);
+      toast.error('Failed to create destination. Please try again.');
+    }
   };
 
   if (isLoading) {
@@ -30,18 +59,33 @@ export function DestinationResults({
   }
 
   if (filteredDestinations.length === 0) {
+    const trimmedQuery = searchQuery.trim();
+    const canCreate = trimmedQuery.length >= 3;
+
     return (
       <div className="flex h-64 flex-col items-center justify-center space-y-4">
-        <p className="text-lg text-gray-600 dark:text-green-100/70">
-          No destinations found matching your criteria
+        <p className="px-5 text-center text-gray-600 dark:text-green-100/70 md:text-lg">
+          No destinations found matching "{searchQuery}"
         </p>
-        <Button
-          variant="outline"
-          onClick={onResetFilters}
-          className="bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] dark:bg-green-600 dark:hover:bg-green-700"
-        >
-          Clear Filters
-        </Button>
+        <div className="flex flex-col gap-5 md:flex-row">
+          <Button
+            variant="outline"
+            onClick={onResetFilters}
+            className="bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] dark:bg-green-600 dark:hover:bg-green-700"
+          >
+            Clear Filters
+          </Button>
+          <Button
+            variant="outline"
+            onClick={handleQuickCreateDestination}
+            disabled={!canCreate}
+            className="bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] dark:bg-green-600 dark:hover:bg-green-700"
+          >
+            {canCreate
+              ? `Create "${trimmedQuery}" as New Destination`
+              : 'Enter at least 3 characters'}
+          </Button>
+        </div>
       </div>
     );
   }

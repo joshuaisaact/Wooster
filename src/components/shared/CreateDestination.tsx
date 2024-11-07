@@ -88,7 +88,7 @@ function CreateDestination({ onClose, className }: CreateDestinationProps) {
             />
             <Button
               type="submit"
-              className="w-full bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] dark:bg-green-600 dark:hover:bg-green-700"
+              className="w-full bg-green-800 font-medium tracking-tight transition-all duration-200 hover:bg-green-700 active:scale-[0.98] dark:bg-green-600 dark:text-white/90 dark:hover:bg-green-700"
             >
               Add Destination
             </Button>

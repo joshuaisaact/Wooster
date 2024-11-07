@@ -14,8 +14,9 @@ export function useCreateDestination(onClose?: () => void) {
 
     try {
       const newDestination = await createDestination(supabase, params.destinationName);
-      dispatch({ type: 'ADD_DESTINATION', payload: newDestination });
+      dispatch({ type: 'ADD_NEW_DESTINATION', payload: newDestination });
       onClose?.();
+      return newDestination;
     } catch (error) {
       console.error('Error creating destination:', error);
       throw error;

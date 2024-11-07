@@ -9,11 +9,11 @@ interface ExplorationSectionProps {
 
 function ExplorationSection({ onDestinationClick, focusedDestinationId }: ExplorationSectionProps) {
   const { state } = useAppContext();
-  const { destinations } = state;
+  const { savedDestinations } = state;
 
   return (
     <DestinationsList
-      destinations={destinations}
+      destinations={savedDestinations}
       onDestinationSelect={onDestinationClick}
       selectedDestinationId={focusedDestinationId ? focusedDestinationId : null}
     />

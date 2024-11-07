@@ -15,8 +15,6 @@ export function TripView({ trip, destination }: TripViewProps) {
   const [activeTab, setActiveTab] = useState<TripTab>('summary');
   const { shareTrip } = useShare();
 
-  console.log('TripView render:', { trip, destination });
-
   // Ensure we have the required data
   if (!trip || !trip.destination?.destinationName) {
     return (
