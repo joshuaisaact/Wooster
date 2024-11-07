@@ -133,7 +133,7 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
                               selected={field.value}
                               onSelect={(date) => {
                                 field.onChange(date);
-                                setOpen(false); // Close the popover when a date is selected
+                                setOpen(false);
                               }}
                               initialFocus
                               className="rounded-md border bg-white p-3 dark:border-white/10 dark:bg-green-800/30"
@@ -204,10 +204,10 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
                   </div>
                   <FormDescription className="text-xs text-gray-600 dark:text-green-100/70">
                     {field.value?.length === 0
-                      ? 'Select categories to filter your activities - choosing none will include all types'
+                      ? 'Choose categories to personalize your activity feed. If no categories are selected, all types will be included.'
                       : field.value?.length === 1
-                        ? 'Your itinerary will only include this type of activity'
-                        : `Your itinerary will include activities from these ${field.value?.length} categories`}
+                        ? 'Your itinerary will only include activities from this category.'
+                        : `Your itinerary will include activities from ${field.value?.length} selected categories.`}
                   </FormDescription>
                 </FormItem>
               )}
