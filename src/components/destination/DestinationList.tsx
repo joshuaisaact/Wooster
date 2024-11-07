@@ -14,7 +14,7 @@ import { usePageAnimation } from '@/hooks/usePageAnimation';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 9;
 
 export function DestinationListView() {
   const { state } = useAppContext();
@@ -176,21 +176,21 @@ export function DestinationListView() {
                   searchQuery={searchQuery}
                 />
                 {totalPages > 1 && (
-                  <div className="mt-6 flex justify-center gap-2">
+                  <div className="mt-6 flex flex-nowrap justify-center gap-2">
                     <button
                       disabled={currentPage === 1}
                       onClick={() => setCurrentPage((p) => p - 1)}
-                      className="px-3 py-1 text-sm disabled:opacity-50"
+                      className="px-2 py-1 text-sm text-green-900 disabled:opacity-50 dark:text-white/95"
                     >
                       Previous
                     </button>
-                    <span className="px-3 py-1 text-sm">
+                    <span className="px-2 py-1 text-sm text-green-900 dark:text-white/95">
                       Page {currentPage} of {totalPages}
                     </span>
                     <button
                       disabled={currentPage === totalPages}
                       onClick={() => setCurrentPage((p) => p + 1)}
-                      className="px-3 py-1 text-sm disabled:opacity-50"
+                      className="px-2 py-1 text-sm text-green-900 disabled:opacity-50 dark:text-white/95"
                     >
                       Next
                     </button>
