@@ -1,43 +1,21 @@
 import { useState } from 'react';
-import { useAppContext } from '@/hooks/useAppContext';
-import { deleteDestination } from '@/services/apiService';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { supabase } from '@/lib/supabase';
-import { toast } from 'sonner';
 import ConfirmModal from '../ui/ConfirmModal';
 import withDemoDisabled from '../ui/WithDemoDisabled';
+import { useDeleteDestination } from '@/hooks/destination/useDeleteDestination';
 
 interface DeleteDestinationButtonProps {
   destinationId: number;
 }
 
 function DeleteDestinationButton({ destinationId }: DeleteDestinationButtonProps) {
-  const navigate = useNavigate();
-  const { dispatch } = useAppContext();
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const { deleteDestination, isLoading } = useDeleteDestination();
   const DemoDisabledDeleteButton = withDemoDisabled(Button);
 
-  const handleDeleteDestination = async () => {
-    if (!destinationId) {
-      console.error('No destination ID found');
-      toast.error('Invalid destination ID');
-      return;
-    }
-
-    dispatch({ type: 'SET_LOADING', payload: true });
-
-    try {
-      await deleteDestination(supabase, destinationId);
-      dispatch({ type: 'REMOVE_DESTINATION', payload: destinationId });
-      navigate('/destination-list');
-      toast.success('Destination deleted successfully');
-    } catch (error) {
-      console.error('Error deleting destination:', error instanceof Error ? error.message : error);
-      toast.error('Failed to delete destination');
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false });
-    }
+  const handleConfirm = async () => {
+    setIsConfirmModalOpen(false);
+    await deleteDestination(destinationId);
   };
 
   return (
@@ -46,6 +24,7 @@ function DeleteDestinationButton({ destinationId }: DeleteDestinationButtonProps
         onClick={() => setIsConfirmModalOpen(true)}
         variant="destructive"
         className="bg-red-500 text-white hover:bg-red-600"
+        disabled={isLoading}
       >
         Delete Destination
       </DemoDisabledDeleteButton>
@@ -56,10 +35,7 @@ function DeleteDestinationButton({ destinationId }: DeleteDestinationButtonProps
         confirmLabel="Delete"
         cancelLabel="Cancel"
         isOpen={isConfirmModalOpen}
-        onConfirm={() => {
-          setIsConfirmModalOpen(false);
-          handleDeleteDestination();
-        }}
+        onConfirm={handleConfirm}
         onCancel={() => setIsConfirmModalOpen(false)}
       />
     </>

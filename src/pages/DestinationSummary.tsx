@@ -1,49 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { useAppContext } from '@/hooks/useAppContext';
 import DestinationView from '@/components/destination/DestinationView';
 import DestinationInsights from '@/components/destination/DestinationInsights';
 import { MapPinIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import DestinationActivitiesPage from './DestinationActivitiesPage';
+import { useDestinationDetails } from '@/hooks/destination/useDestinationDetails';
 
 function DestinationSummary() {
-  const { state, loadDestinationActivities } = useAppContext();
   const { destinationId: destinationName } = useParams<{ destinationId: string }>();
-  const { isLoading, allDestinations, activities } = state;
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const initialTab = queryParams.get('tab') || 'details';
   const [activeTab, setActiveTab] = useState(initialTab);
-  const navigate = useNavigate();
 
-  const destination = allDestinations.find((dest) => dest.destinationName === destinationName);
-  const destinationActivities = destinationName ? activities[destinationName] || [] : [];
-
-  useEffect(() => {
-    const loadActivitiesIfNeeded = async () => {
-      if (destinationName && !activities[destinationName]) {
-        await loadDestinationActivities(destinationName);
-      }
-    };
-
-    loadActivitiesIfNeeded();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { destination, destinationActivities, isLoadingActivities } =
+    useDestinationDetails(destinationName);
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
-
     const newUrl = `/destinations/${destinationName}${tab !== 'details' ? `?tab=${tab}` : ''}`;
     window.history.pushState(null, '', newUrl);
   };
 
-  if (isLoading || allDestinations.length === 0) {
+  // Only show loading when we don't have the destination at all
+  if (!destination) {
     return (
-      <div className="flex h-[calc(100vh-4rem)] items-center justify-center bg-gradient-to-b from-green-50/50 to-white/50 dark:from-green-950/50 dark:to-green-900/50">
-        <div className="text-muted-foreground animate-pulse text-lg dark:text-green-100/70">
-          Loading destination details...
-        </div>
+      <div className="min-h-[calc(100vh-4rem)] w-full">
+        {/* Your existing "Destination Not Found" UI */}
       </div>
     );
   }
@@ -129,7 +114,14 @@ function DestinationSummary() {
           {/* Tab Content */}
           <div className="p-6 md:p-8">
             {activeTab === 'details' && <DestinationView destination={destination} />}
-            {activeTab === 'activities' && <DestinationActivitiesPage />}
+            {activeTab === 'activities' &&
+              (isLoadingActivities ? (
+                <div className="flex justify-center py-8">
+                  <div className="animate-pulse">Loading activities...</div>
+                </div>
+              ) : (
+                <DestinationActivitiesPage />
+              ))}
             {activeTab === 'insights' && (
               <DestinationInsights
                 destinationName={destination.destinationName}

@@ -1,40 +1,22 @@
 // DeleteTripButton.tsx
 import { useState } from 'react';
-import { useAppContext } from '@/hooks/useAppContext';
-import { deleteTrip } from '@/services/apiService';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
-import { supabase } from '@/lib/supabase';
-import { toast } from 'sonner';
 import ConfirmModal from '../ui/ConfirmModal';
 import withDemoDisabled from '../ui/WithDemoDisabled';
+import { useDeleteTrip } from '@/hooks/trip/useDeleteTrip';
 
 interface DeleteTripButtonProps {
   tripId: string;
 }
 
 function DeleteTripButton({ tripId }: DeleteTripButtonProps) {
-  const navigate = useNavigate();
-  const { dispatch } = useAppContext();
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const { deleteTrip, isLoading } = useDeleteTrip();
   const DemoDisabledDeleteButton = withDemoDisabled(Button);
 
-  const handleDeleteTrip = async () => {
-    if (!tripId) return;
-
-    dispatch({ type: 'SET_LOADING', payload: true });
-
-    try {
-      await deleteTrip(supabase, tripId);
-      dispatch({ type: 'REMOVE_TRIP', payload: tripId });
-      navigate('/trips');
-      toast.success('Trip deleted successfully');
-    } catch (error) {
-      console.error('Error deleting trip:', error instanceof Error ? error.message : error);
-      toast.error('Failed to delete trip');
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false });
-    }
+  const handleConfirm = async () => {
+    setIsConfirmModalOpen(false);
+    await deleteTrip(tripId);
   };
 
   return (
@@ -43,6 +25,7 @@ function DeleteTripButton({ tripId }: DeleteTripButtonProps) {
         onClick={() => setIsConfirmModalOpen(true)}
         variant="destructive"
         className="bg-red-500 text-white hover:bg-red-600"
+        disabled={isLoading}
       >
         Delete Trip
       </DemoDisabledDeleteButton>
@@ -53,10 +36,7 @@ function DeleteTripButton({ tripId }: DeleteTripButtonProps) {
         confirmLabel="Delete"
         cancelLabel="Cancel"
         isOpen={isConfirmModalOpen}
-        onConfirm={() => {
-          setIsConfirmModalOpen(false);
-          handleDeleteTrip();
-        }}
+        onConfirm={handleConfirm}
         onCancel={() => setIsConfirmModalOpen(false)}
       />
     </>

@@ -1,6 +1,5 @@
 import { useAppContext } from '@/hooks/useAppContext';
 import { createDestination } from '@/services/apiService';
-import { supabase } from '@/lib/supabase';
 
 interface CreateDestinationParams {
   destinationName: string;
@@ -13,7 +12,8 @@ export function useCreateDestination(onClose?: () => void) {
     dispatch({ type: 'SET_LOADING', payload: true });
 
     try {
-      const newDestination = await createDestination(supabase, params.destinationName);
+      const response = await createDestination(params.destinationName);
+      const newDestination = response.data;
       dispatch({ type: 'ADD_NEW_DESTINATION', payload: newDestination });
       onClose?.();
       return newDestination;

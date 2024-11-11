@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Trip } from '@/types/types';
-import { supabase } from '@/lib/supabase';
 import { fetchTrip } from '@/services/apiService';
 import { useAppContext } from '../useAppContext';
 
@@ -21,8 +20,9 @@ export function useTripData(tripId: string | undefined, trips: Trip[]) {
   // If we don't have the trip in state and aren't already loading AND haven't marked it as not found
   if (!tripFromState?.destination && !isLoading && !notFound && !error) {
     setIsLoading(true);
-    fetchTrip(supabase, tripId)
-      .then((tripData) => {
+    fetchTrip(tripId)
+      .then((response) => {
+        const tripData = response.data;
         if (!tripData) {
           setNotFound(true);
         } else {

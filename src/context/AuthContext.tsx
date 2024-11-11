@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, ReactNode } from 'react';
 import { Session } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
+import { setupAxiosAuth } from '@/lib/axios';
 
 interface AuthContextType {
   session: Session | null;
@@ -16,6 +17,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
     });
+
+    // Set up axios auth interceptor
+    setupAxiosAuth(supabase);
 
     // Listen for changes
     const {

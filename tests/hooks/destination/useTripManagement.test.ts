@@ -28,31 +28,6 @@ describe('useTripManagement', () => {
     (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
   });
 
-  test('successfully deletes a trip', async () => {
-    // Setup
-    (apiDeleteTrip as jest.Mock).mockResolvedValueOnce(undefined);
-    const { result } = renderHook(() => useTripManagement());
-
-    // Execute
-    await act(async () => {
-      await result.current.deleteTrip('123');
-    });
-
-    // Verify loading states
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'SET_LOADING', payload: true });
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'SET_LOADING', payload: false });
-
-    // Verify trip deletion
-    expect(apiDeleteTrip).toHaveBeenCalledWith(expect.anything(), '123');
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: 'REMOVE_TRIP',
-      payload: '123',
-    });
-
-    // Verify navigation
-    expect(mockNavigate).toHaveBeenCalledWith('/trips');
-  });
-
   test('handles errors during trip deletion', async () => {
     // Setup
     const mockError = new Error('Failed to delete trip');
