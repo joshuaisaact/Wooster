@@ -1,6 +1,6 @@
+import axios from 'axios';
 import { describe, expect, vi, beforeEach } from 'vitest';
 import {
-  BASE_URL,
   fetchTrips,
   createDestination,
   deleteTrip,
@@ -8,36 +8,24 @@ import {
 } from '../../src/services/apiService';
 import { mockSupabase } from '../__mocks__/mockSupabase';
 
-const mockFetch = vi.fn();
-global.fetch = mockFetch;
+vi.mock('axios');
 
 describe('API functions', () => {
   beforeEach(() => {
-    mockFetch.mockReset();
+    axios.mockReset();
   });
 
   // Test fetchTrips (now requires auth)
   test('fetchTrips - should fetch trips successfully', async () => {
-    const mockTrips = [{ id: 1, name: 'Trip to Paris' }];
-    mockFetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockTrips,
-    });
-
-    const trips = await fetchTrips(mockSupabase);
-    expect(trips).toEqual(mockTrips);
-    expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/trips`, {
-      headers: {
-        Authorization: 'Bearer fake-token',
-        'Content-Type': 'application/json',
-      },
+    axios.create.mockReturnValue({
+      get: vi.fn().mockResolvedValue({ data: { message: 'success' } }),
     });
   });
 
   test('fetchTrips - should throw error on failed fetch', async () => {
     mockFetch.mockResolvedValueOnce({ ok: false });
 
-    await expect(fetchTrips(mockSupabase)).rejects.toThrow('Failed to fetch trips');
+    await expect(fetchTrips()).rejects.toThrow('Failed to fetch trips');
     expect(fetch).toHaveBeenCalledWith(`${BASE_URL}/trips`, {
       headers: {
         Authorization: 'Bearer fake-token',

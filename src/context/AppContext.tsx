@@ -7,7 +7,6 @@ import {
   fetchDestinationActivities,
 } from '@/services/apiService';
 import { Action, State } from '@/types/types';
-import { supabase } from '@/lib/supabase';
 import { AuthContext } from './AuthContext';
 
 interface AppProviderProps {
@@ -39,17 +38,15 @@ export function AppProvider({ children }: AppProviderProps) {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
 
-      // Fetch all data in parallel
-      const [tripsData, savedDestinationsData, allDestinationsData] = await Promise.all([
-        fetchTrips(supabase),
-        fetchDestinations(supabase),
-        fetchAllDestinations(supabase),
-      ]);
+      // Fetch all data in parallel and extract the data property from Axios responses
+      const [tripsResponse, savedDestinationsResponse, allDestinationsResponse] = await Promise.all(
+        [fetchTrips(), fetchDestinations(), fetchAllDestinations()],
+      );
 
       // Dispatch all data
-      dispatch({ type: 'SET_TRIPS', payload: tripsData });
-      dispatch({ type: 'SET_SAVED_DESTINATIONS', payload: savedDestinationsData });
-      dispatch({ type: 'SET_ALL_DESTINATIONS', payload: allDestinationsData });
+      dispatch({ type: 'SET_TRIPS', payload: tripsResponse.data });
+      dispatch({ type: 'SET_SAVED_DESTINATIONS', payload: savedDestinationsResponse.data });
+      dispatch({ type: 'SET_ALL_DESTINATIONS', payload: allDestinationsResponse.data });
     } catch (error) {
       console.error('Error loading initial data:', error);
     } finally {
@@ -66,12 +63,12 @@ export function AppProvider({ children }: AppProviderProps) {
 
       dispatch({ type: 'SET_LOADING', payload: true });
 
-      const activities = await fetchDestinationActivities(supabase, destinationName);
+      const response = await fetchDestinationActivities(destinationName);
       dispatch({
         type: 'SET_ACTIVITIES',
         payload: {
           destinationName,
-          activities: activities,
+          activities: response.data,
         },
       });
     } catch (error) {

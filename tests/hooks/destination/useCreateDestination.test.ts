@@ -49,7 +49,7 @@ describe('useCreateDestination', () => {
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'SET_LOADING', payload: false });
 
     // Verify destination creation
-    expect(createDestination).toHaveBeenCalledWith(expect.anything(), 'Tokyo');
+    expect(createDestination).toHaveBeenCalledWith('Tokyo');
     expect(mockDispatch).toHaveBeenCalledWith({
       type: 'ADD_NEW_DESTINATION',
       payload: mockNewDestination,

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '@/hooks/useAppContext';
 import { createTrip } from '@/services/apiService';
-import { supabase } from '@/lib/supabase';
 import { Trip } from '@/types/types';
 
 interface CreateTripData {
@@ -30,7 +29,8 @@ export function useCreateTrip(onClose?: () => void) {
     };
 
     try {
-      const result = await createTrip(supabase, formattedData);
+      const response = await createTrip(formattedData);
+      const result = response.data;
 
       const newTrip: Trip = {
         tripId: result.trip.tripId,

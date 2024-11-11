@@ -1,6 +1,5 @@
 import { useAppContext } from '@/hooks/useAppContext';
 import { saveDestination, unsaveDestination } from '@/services/apiService';
-import { supabase } from '@/lib/supabase';
 import { toast } from 'sonner';
 import { Destination } from '@/types/types';
 
@@ -22,7 +21,7 @@ export function useSaveDestination() {
           payload: destination.destinationId,
         });
 
-        await unsaveDestination(supabase, destination.destinationId);
+        await unsaveDestination(destination.destinationId);
         toast.success('Removed from saved destinations');
       } else {
         dispatch({
@@ -30,7 +29,7 @@ export function useSaveDestination() {
           payload: destination,
         });
 
-        await saveDestination(supabase, destination.destinationId);
+        await saveDestination(destination.destinationId);
         toast.success('Added to saved destinations');
       }
     } catch (error) {
