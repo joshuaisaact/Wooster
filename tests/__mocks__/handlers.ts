@@ -1,3 +1,4 @@
+import { api } from '@/lib/axios';
 import { http, HttpResponse } from 'msw';
 
 interface CreateDestinationRequest {
@@ -30,16 +31,18 @@ interface TripResponse {
   };
 }
 
+const BASE_URL = api.defaults.baseURL;
+
 export const handlers = [
   // Destinations endpoints
-  http.get('http://localhost:4000/api/saved-destinations', () => {
+  http.get(`${BASE_URL}/saved-destinations`, () => {
     return HttpResponse.json([
       { id: 1, name: 'Destination 1' },
       { id: 2, name: 'Destination 2' },
     ]);
   }),
 
-  http.get('http://localhost:4000/api/destinations', () => {
+  http.get(`${BASE_URL}/destinations`, () => {
     return HttpResponse.json([
       { id: 1, name: 'Destination 1' },
       { id: 2, name: 'Destination 2' },
@@ -47,7 +50,7 @@ export const handlers = [
     ]);
   }),
 
-  http.get('http://localhost:4000/api/destination/:name/activities', ({ params }) => {
+  http.get(`${BASE_URL}/destination/:name/activities`, ({ params }) => {
     const { name } = params;
     return HttpResponse.json([
       { id: 1, name: `Activity 1 in ${name}` },
@@ -55,17 +58,17 @@ export const handlers = [
     ]);
   }),
 
-  http.post('http://localhost:4000/api/saved-destinations/:id', ({ params }) => {
+  http.post(`${BASE_URL}/saved-destinations/:id`, ({ params }) => {
     const { id } = params;
     return HttpResponse.json({ message: `Destination ${id} saved` });
   }),
 
-  http.delete('http://localhost:4000/api/saved-destinations/:id', ({ params }) => {
+  http.delete(`${BASE_URL}/saved-destinations/:id`, ({ params }) => {
     const { id } = params;
     return HttpResponse.json({ message: `Destination ${id} unsaved` });
   }),
 
-  http.post('http://localhost:4000/api/destinations', async ({ request }) => {
+  http.post(`${BASE_URL}/destinations`, async ({ request }) => {
     const { destination } = (await request.json()) as CreateDestinationRequest;
     const response: CreateDestinationResponse = {
       id: 4,
@@ -74,20 +77,20 @@ export const handlers = [
     return HttpResponse.json(response);
   }),
 
-  http.delete('http://localhost:4000/api/destinations/:id', ({ params }) => {
+  http.delete(`${BASE_URL}/destinations/:id`, ({ params }) => {
     const { id } = params;
     return HttpResponse.json({ message: `Destination ${id} deleted` });
   }),
 
   // Trips endpoints
-  http.get('http://localhost:4000/api/trips', () => {
+  http.get(`${BASE_URL}/trips`, () => {
     return HttpResponse.json([
       { id: '1', location: 'Trip 1', days: 5, startDate: '2023-06-01' },
       { id: '2', location: 'Trip 2', days: 7, startDate: '2023-07-15' },
     ]);
   }),
 
-  http.get('http://localhost:4000/api/trips/:id', ({ params }) => {
+  http.get(`${BASE_URL}/trips/:id`, ({ params }) => {
     const { id } = params;
     return HttpResponse.json({
       id,
@@ -97,7 +100,7 @@ export const handlers = [
     });
   }),
 
-  http.post('http://localhost:4000/api/trips', async ({ request }) => {
+  http.post(`${BASE_URL}/trips`, async ({ request }) => {
     const data = (await request.json()) as TripRequest;
     const response: TripResponse = {
       trip: {
@@ -115,7 +118,7 @@ export const handlers = [
     return HttpResponse.json(response);
   }),
 
-  http.delete('http://localhost:4000/api/trips/:id', ({ params }) => {
+  http.delete(`${BASE_URL}/trips/:id`, ({ params }) => {
     const { id } = params;
     return HttpResponse.json({ message: `Trip ${id} deleted` });
   }),
