@@ -52,6 +52,10 @@ export const handlers = [
 
   http.get(`${BASE_URL}/destination/:name/activities`, ({ params }) => {
     const { name } = params;
+    if (name === 'invalid') {
+      return new HttpResponse(null, { status: 404 });
+    }
+
     return HttpResponse.json([
       { id: 1, name: `Activity 1 in ${name}` },
       { id: 2, name: `Activity 2 in ${name}` },
@@ -92,6 +96,21 @@ export const handlers = [
 
   http.get(`${BASE_URL}/trips/:id`, ({ params }) => {
     const { id } = params;
+
+    // Network errors
+    if (id === '999') {
+      return new HttpResponse(null, { status: 404 });
+    }
+
+    if (id === '888') {
+      return new HttpResponse(JSON.stringify({ message: 'Server error' }), { status: 500 });
+    }
+
+    if (id === '777') {
+      return new HttpResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+    }
+
+    // Success case
     return HttpResponse.json({
       id,
       location: 'Trip 1',
@@ -102,6 +121,30 @@ export const handlers = [
 
   http.post(`${BASE_URL}/trips`, async ({ request }) => {
     const data = (await request.json()) as TripRequest;
+
+    // Invalid days error
+    if (data.days <= 0) {
+      return new HttpResponse(
+        JSON.stringify({
+          message: 'Validation failed',
+          errors: ['Days must be positive'],
+        }),
+        { status: 400 },
+      );
+    }
+
+    // Missing location error
+    if (!data.location) {
+      return new HttpResponse(
+        JSON.stringify({
+          message: 'Validation failed',
+          errors: ['Location is required'],
+        }),
+        { status: 400 },
+      );
+    }
+
+    // Success case
     const response: TripResponse = {
       trip: {
         tripId: '3',
@@ -121,5 +164,12 @@ export const handlers = [
   http.delete(`${BASE_URL}/trips/:id`, ({ params }) => {
     const { id } = params;
     return HttpResponse.json({ message: `Trip ${id} deleted` });
+  }),
+];
+
+export const errorHandlers = [
+  // Trip errors
+  http.get(`${BASE_URL}/trips/999`, () => {
+    return new HttpResponse(null, { status: 404 });
   }),
 ];

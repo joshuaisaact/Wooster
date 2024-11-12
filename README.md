@@ -41,6 +41,7 @@ The backend for this project powers AI recommendations, manages user data, and i
 
 - [Overview](#overview)
 - [Key Features](#key-features)
+- [Testing Architecture](#testing-architecture)
 - [Installation](#installation)
 - [Development](#development)
 - [Scripts](#scripts)
@@ -82,6 +83,38 @@ Wooster's frontend provides users with an interactive interface to explore desti
 7. **AI art**:
 
    - Dog art generated using Stable Diffusion.
+
+## Testing Architecture
+
+The project employs a comprehensive testing strategy using modern testing tools and practices:
+
+### Testing Stack
+
+- **Vitest**: Main testing framework, chosen for its excellent Vite integration and improved performance over Jest
+- **Testing Library**: For testing React components with a focus on user behavior
+- **Mock Service Worker (MSW)**: For intercepting and mocking API requests at the network level
+- **Jest DOM**: For extended DOM element matchers
+
+### Testing Approach
+
+1. **API Mocking**:
+
+- MSW intercepts HTTP requests during tests
+- Realistic API simulation with proper response structures
+- Error scenarios handled within route handlers
+- Network-level mocking instead of function mocks
+
+2. **Component Testing**:
+
+- Integration tests using Testing Library
+- Focus on user interactions and behavior
+- Accessibility testing built into component tests
+
+3. **Unit Testing**:
+
+- Utility functions tested in isolation
+- Type validation using TypeScript
+- Edge cases covered with extensive test suites
 
 ## Installation
 

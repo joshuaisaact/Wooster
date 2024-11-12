@@ -1,4 +1,3 @@
-// src/components/layout/app-layout.tsx
 import { Route, Routes } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
 import TripPage from './Trip';
