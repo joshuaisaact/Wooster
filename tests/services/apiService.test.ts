@@ -115,4 +115,44 @@ describe('API functions', () => {
       message: 'Trip 1 deleted',
     });
   });
+
+  describe('error handling', () => {
+    it('handles 404 when fetching non-existent destination', async () => {
+      await expect(fetchDestinationActivities('invalid')).rejects.toThrow();
+    });
+
+    it('handles 404 when fetching non-existent trip', async () => {
+      await expect(fetchTrip('999')).rejects.toThrow();
+    });
+
+    it('handles 500 server error', async () => {
+      await expect(fetchTrip('888')).rejects.toThrow();
+    });
+
+    it('handles 401 unauthorized error', async () => {
+      await expect(fetchTrip('777')).rejects.toThrow();
+    });
+
+    it('handles validation error when creating trip with invalid days', async () => {
+      const invalidTrip = {
+        days: -1,
+        location: 'Tokyo',
+        startDate: '2024-03-20',
+        selectedCategories: ['Food'],
+      };
+
+      await expect(createTrip(invalidTrip)).rejects.toThrow();
+    });
+
+    it('handles validation error when creating trip with empty location', async () => {
+      const invalidTrip = {
+        days: 5,
+        location: '',
+        startDate: '2024-03-20',
+        selectedCategories: ['Food'],
+      };
+
+      await expect(createTrip(invalidTrip)).rejects.toThrow();
+    });
+  });
 });
