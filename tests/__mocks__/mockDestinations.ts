@@ -4,6 +4,7 @@ export const mockDestinations: Destination[] = [
   {
     destinationId: 1,
     destinationName: 'Paris',
+    normalizedName: 'paris',
     latitude: 48.8566,
     longitude: 2.3522,
     description: 'The capital city of France, known for the Eiffel Tower.',
@@ -27,6 +28,7 @@ export const mockDestinations: Destination[] = [
   {
     destinationId: 2,
     destinationName: 'New York',
+    normalizedName: 'new-york',
     latitude: 40.7128,
     longitude: -74.006,
     description: 'The largest city in the United States, famous for Times Square.',
@@ -54,6 +56,7 @@ export const mockTokyo: Destination[] = [
   {
     destinationId: 3,
     destinationName: 'Tokyo, Japan',
+    normalizedName: 'tokyo',
     latitude: 35.6762,
     longitude: 139.6503,
     description:
@@ -80,6 +83,7 @@ export const mockTokyo: Destination[] = [
 export const mockTokyoObj: Destination = {
   destinationId: 3,
   destinationName: 'Tokyo, Japan',
+  normalizedName: 'tokyo',
   latitude: 35.6762,
   longitude: 139.6503,
   description:
