@@ -38,12 +38,12 @@ function CreateDestination({ onClose, className }: CreateDestinationProps) {
         loading: 'Fetching your destination...',
         success: (newDestination) => {
           if (onClose) onClose();
-          navigate(`/destinations/${newDestination.destination.destinationName}`);
+          navigate(`/destinations/${newDestination.destinationName}`);
           return '🎉 Destination created successfully! Time to explore!';
         },
         error: (err) => {
           console.error('Form submission failed:', err);
-          return `Failed to find your destination: ${err instanceof Error ? err.message : 'please try again'}`;
+          return `${err instanceof Error ? err.message : 'please try again'}`;
         },
       },
     );

@@ -33,6 +33,7 @@ export interface Destination {
   averageTemperatureHigh: string;
   popularActivities: string;
   travelTips: string;
+  normalizedName: string;
   nearbyAttractions: string;
   transportationOptions: string;
   accessibilityInfo: string;
