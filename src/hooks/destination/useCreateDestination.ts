@@ -16,6 +16,7 @@ export function useCreateDestination(onClose?: () => void) {
       const newDestination = response.data;
       dispatch({ type: 'ADD_NEW_DESTINATION', payload: newDestination });
       onClose?.();
+      console.log('New destination:', newDestination);
       return newDestination;
     } catch (error) {
       console.error('Error creating destination:', error);

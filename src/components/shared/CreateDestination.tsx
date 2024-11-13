@@ -6,6 +6,7 @@ import { useAppContext } from '@/hooks/useAppContext';
 import { useCreateDestination } from '@/hooks/destination/useCreateDestination';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 interface CreateDestinationProps {
   onClose?: () => void;
@@ -18,6 +19,7 @@ interface DestinationFormData {
 
 function CreateDestination({ onClose, className }: CreateDestinationProps) {
   const { state } = useAppContext();
+  const navigate = useNavigate();
   const { isLoading } = state;
   const { handleCreateDestination } = useCreateDestination(onClose);
 
@@ -34,8 +36,9 @@ function CreateDestination({ onClose, className }: CreateDestinationProps) {
       }),
       {
         loading: 'Fetching your destination...',
-        success: () => {
+        success: (newDestination) => {
           if (onClose) onClose();
+          navigate(`/destinations/${newDestination.destination.destinationName}`);
           return '🎉 Destination created successfully! Time to explore!';
         },
         error: (err) => {
