@@ -16,11 +16,8 @@ vi.mock('react-router-dom', async () => {
 vi.mock('@/hooks/destination/useCreateDestination', () => ({
   useCreateDestination: () => ({
     handleCreateDestination: vi.fn().mockResolvedValue({
-      destination: {
-        destinationId: '1',
-        destinationName: 'Tokyo',
-      },
-      message: 'Destination created and saved successfully',
+      destinationId: '1',
+      destinationName: 'Tokyo',
     }),
   }),
 }));
