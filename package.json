@@ -31,6 +31,8 @@
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/supabase-js": "^2.46.1",
+    "@tanstack/react-query": "^5.60.5",
+    "@tanstack/react-query-devtools": "^5.60.5",
     "@types/leaflet": "^1.9.12",
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",

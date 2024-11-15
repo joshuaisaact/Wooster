@@ -16,8 +16,6 @@ export const initialState: State = {
 
 export function reducer(state: State = initialState, action: Action): State {
   switch (action.type) {
-    case 'SET_SAVED_DESTINATIONS':
-      return { ...state, savedDestinations: action.payload };
     case 'SET_ALL_DESTINATIONS':
       return { ...state, allDestinations: action.payload };
     case 'SET_TRIPS':
@@ -52,18 +50,6 @@ export function reducer(state: State = initialState, action: Action): State {
       return {
         ...state,
         isLoading: action.payload,
-      };
-    case 'ADD_SAVED_DESTINATION':
-      return {
-        ...state,
-        savedDestinations: [...state.savedDestinations, action.payload],
-      };
-    case 'REMOVE_SAVED_DESTINATION':
-      return {
-        ...state,
-        savedDestinations: state.savedDestinations.filter(
-          (destination) => destination.destinationId !== action.payload,
-        ),
       };
     case 'ADD_NEW_DESTINATION':
       return {

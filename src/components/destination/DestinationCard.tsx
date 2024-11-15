@@ -23,7 +23,7 @@ export function DestinationCard({ destination, onClick }: DestinationCardProps) 
     averageTemperatureHigh,
   } = destination || {};
 
-  const { toggleSaveDestination, isDestinationSaved } = useSaveDestination();
+  const { toggleSaveDestination, isDestinationSaved, isPending } = useSaveDestination();
   const isSaved = isDestinationSaved(destination.destinationId);
 
   const getCostLevelColor = (level: string) => {
@@ -70,12 +70,17 @@ export function DestinationCard({ destination, onClick }: DestinationCardProps) 
                       isSaved
                         ? 'fill-yellow-400 text-yellow-400'
                         : 'text-gray-500 hover:fill-yellow-400 hover:text-yellow-400 dark:text-gray-300',
+                      isPending && 'animate-pulse',
                     )}
                   />
                 </div>
 
                 <span className="sr-only">
-                  {isSaved ? 'Remove from saved destinations' : 'Save destination'}
+                  {isPending
+                    ? 'Updating...'
+                    : isSaved
+                      ? 'Remove from saved destinations'
+                      : 'Save destination'}
                 </span>
               </Button>
             </div>
