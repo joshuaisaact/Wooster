@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import { useAppContext } from '@/hooks/useAppContext';
 import { Destination } from '@/types/types';
 import GlobeSection from '@/components/explore/GlobeSection';
 import DestinationPanel from '@/components/explore/DestinationPanel';
 import ExplorationSection from '@/components/explore/ExplorationSection';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { useSavedDestinations } from '@/lib/query/destinations';
 
 export function Explore() {
-  const { state } = useAppContext();
-  const { savedDestinations, isLoading } = state;
+  const { data: savedDestinations, isLoading } = useSavedDestinations();
   const [focusedDestination, setFocusedDestination] = useState<Destination | null>(null);
   const shouldAnimate = usePageAnimation('explore');
 
@@ -18,6 +17,8 @@ export function Explore() {
       prev?.destinationId === destination.destinationId ? null : destination,
     );
   };
+
+  console.log(savedDestinations);
 
   if (isLoading) {
     return (

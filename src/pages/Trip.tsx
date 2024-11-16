@@ -1,22 +1,20 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { TripView } from '@/components/trip/TripView';
-import { useAppContext } from '@/hooks/useAppContext';
-import { useTripData } from '@/hooks/trip/useTripData';
 import { Button } from '@/components/ui/button';
 import { MapPinIcon } from 'lucide-react';
+import { useTrip } from '@/lib/query/trips';
 
 export default function TripPage() {
   const { tripId } = useParams<{ tripId: string }>();
-  const { state } = useAppContext();
-  const { trips, isLoading: globalLoading } = state;
-  const { trip, isLoading: tripLoading, error, notFound } = useTripData(tripId, trips);
   const navigate = useNavigate();
 
+  const { data: trip, isLoading, isError, error } = useTrip(tripId);
+
   // Loading state
-  if (globalLoading || tripLoading) {
+  if (isLoading) {
     return (
       <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
-        <div className="text-muted-foreground animate-pulse text-base sm:text-lg">
+        <div className="animate-pulse text-base text-muted-foreground sm:text-lg">
           Loading trip details...
         </div>
       </div>
@@ -24,7 +22,7 @@ export default function TripPage() {
   }
 
   // Error state
-  if (error) {
+  if (isError) {
     return (
       <div className="min-h-[calc(100vh-4rem)] w-full">
         <div className="container mx-auto px-3 py-4 sm:px-4 sm:py-6 md:py-8">
@@ -36,7 +34,7 @@ export default function TripPage() {
               Error Loading Trip
             </h2>
             <p className="max-w-md text-center text-sm text-gray-600 dark:text-green-100/70 sm:text-base">
-              {error}
+              {error instanceof Error ? error.message : 'Failed to load trip details'}
             </p>
             <Button
               onClick={() => navigate('/trips')}
@@ -51,7 +49,7 @@ export default function TripPage() {
   }
 
   // Trip not found state
-  if (!trip || notFound) {
+  if (!trip) {
     return (
       <div className="min-h-[calc(100vh-4rem)] w-full">
         <div className="container mx-auto px-3 py-4 sm:px-4 sm:py-6 md:py-8">

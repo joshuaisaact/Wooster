@@ -13,12 +13,14 @@ import { useAppContext } from '@/hooks/useAppContext';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
+import { useSavedDestinations } from '@/lib/query/destinations';
 
 const ITEMS_PER_PAGE = 9;
 
 export function DestinationListView() {
   const { state } = useAppContext();
-  const { allDestinations, savedDestinations, isLoading } = state;
+  const { allDestinations, isLoading } = state;
+  const { data: savedDestinations, isLoading: isLoadingSavedDestinations } = useSavedDestinations();
   const [searchQuery, setSearchQuery] = useState('');
   const [showSavedOnly, setShowSavedOnly] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('all');
@@ -30,7 +32,9 @@ export function DestinationListView() {
     // First filter by saved if needed
     const baseDestinations = showSavedOnly
       ? allDestinations.filter((dest) =>
-          savedDestinations.some((saved) => saved.destinationId === dest.destinationId),
+          savedDestinations.some(
+            (saved: { destinationId: number }) => saved.destinationId === dest.destinationId,
+          ),
         )
       : allDestinations;
 

@@ -1,28 +1,31 @@
 import { useState } from 'react';
 import CreateTrip from '@/components/shared/CreateTrip';
 import { TripCard } from '@/components/trip/trip-card';
-import { useAppContext } from '@/hooks/useAppContext';
 import { Search } from 'lucide-react';
 import { sortTripsByDate, filterTripsByStatus, searchTrips } from '@/utils/trips';
 import ScrollLink from '@/components/shared/ScrollLink';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { useTrips } from '@/lib/query/trips';
 
 function Trips() {
-  const { state } = useAppContext();
-  const { trips } = state;
+  const { data: trips = [], isLoading } = useTrips();
   const [searchQuery, setSearchQuery] = useState('');
   const [showPastTrips, setShowPastTrips] = useState(false);
   const shouldAnimate = usePageAnimation('trips');
 
-  // // Create a map of destination countries for search
-  // const destinationCountries = destinations.reduce(
-  //   (acc, dest) => ({
-  //     ...acc,
-  //     [dest.destinationName]: dest.country,
-  //   }),
-  //   {} as Record<string, string>,
-  // );
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center">
+        <div className="animate-pulse text-lg text-muted-foreground">
+          <span className="bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent dark:text-muted-foreground">
+            Loading your trips...
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   if (!trips || trips.length === 0) {
     return (

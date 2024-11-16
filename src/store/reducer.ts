@@ -18,11 +18,6 @@ export function reducer(state: State = initialState, action: Action): State {
   switch (action.type) {
     case 'SET_ALL_DESTINATIONS':
       return { ...state, allDestinations: action.payload };
-    case 'SET_TRIPS':
-      return {
-        ...state,
-        trips: action.payload,
-      };
     case 'SET_ACTIVITIES':
       return {
         ...state,

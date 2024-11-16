@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from '../ui/button';
 import ConfirmModal from '../ui/ConfirmModal';
 import withDemoDisabled from '../ui/WithDemoDisabled';
-import { useDeleteTrip } from '@/hooks/trip/useDeleteTrip';
+import { useDeleteTrip } from '@/lib/query/trips';
 
 interface DeleteTripButtonProps {
   tripId: string;
@@ -11,7 +11,7 @@ interface DeleteTripButtonProps {
 
 function DeleteTripButton({ tripId }: DeleteTripButtonProps) {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const { deleteTrip, isLoading } = useDeleteTrip();
+  const { mutate: deleteTrip } = useDeleteTrip();
   const DemoDisabledDeleteButton = withDemoDisabled(Button);
 
   const handleConfirm = async () => {
@@ -25,7 +25,6 @@ function DeleteTripButton({ tripId }: DeleteTripButtonProps) {
         onClick={() => setIsConfirmModalOpen(true)}
         variant="destructive"
         className="bg-red-500 text-white hover:bg-red-600"
-        disabled={isLoading}
       >
         Delete Trip
       </DemoDisabledDeleteButton>
