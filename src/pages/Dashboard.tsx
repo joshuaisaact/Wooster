@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Destination } from '@/types/types';
-import { useAppContext } from '@/hooks/useAppContext';
 import { getSoonestTrip } from '@/utils/trips';
 import MainContent from '@/components/dashboard/MainContent';
 import Sidebar from '@/components/dashboard/Sidebar';
@@ -8,22 +7,21 @@ import { usePageAnimation } from '@/hooks/usePageAnimation';
 import CreateTrip from '@/components/shared/CreateTrip';
 import CreateDestination from '@/components/shared/CreateDestination';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { useTrips } from '@/lib/query/trips';
 
 function Dashboard() {
-  const { state } = useAppContext();
-  const { isLoading, trips } = state;
+  const { data: trips = [], isLoading } = useTrips();
   const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null);
   const [activeTab, setActiveTab] = useState<'dashboard' | 'create' | 'destination'>('dashboard');
   const shouldAnimate = usePageAnimation('dashboard');
-
   const soonestTrip = !isLoading ? getSoonestTrip(trips) : null;
   const soonestTripDestination = soonestTrip ? soonestTrip.destination : null;
 
   if (isLoading) {
     return (
       <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
-        <div className="text-muted-foreground animate-pulse text-lg">
-          <span className="dark:text-muted-foreground bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">
+        <div className="animate-pulse text-lg text-muted-foreground">
+          <span className="bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent dark:text-muted-foreground">
             Loading your adventures...
           </span>
         </div>

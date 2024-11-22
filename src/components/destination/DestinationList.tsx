@@ -13,12 +13,14 @@ import { useAppContext } from '@/hooks/useAppContext';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
+import { useSavedDestinations } from '@/lib/query/destinations';
 
 const ITEMS_PER_PAGE = 9;
 
 export function DestinationListView() {
   const { state } = useAppContext();
-  const { allDestinations, savedDestinations, isLoading } = state;
+  const { allDestinations, isLoading } = state;
+  const { data: savedDestinations = [] } = useSavedDestinations();
   const [searchQuery, setSearchQuery] = useState('');
   const [showSavedOnly, setShowSavedOnly] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('all');
@@ -30,7 +32,9 @@ export function DestinationListView() {
     // First filter by saved if needed
     const baseDestinations = showSavedOnly
       ? allDestinations.filter((dest) =>
-          savedDestinations.some((saved) => saved.destinationId === dest.destinationId),
+          savedDestinations.some(
+            (saved: { destinationId: number }) => saved.destinationId === dest.destinationId,
+          ),
         )
       : allDestinations;
 
@@ -68,6 +72,16 @@ export function DestinationListView() {
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, selectedCountry]);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
+        <div className="animate-pulse text-lg text-gray-600 dark:text-green-100/70">
+          Loading destinations...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4 sm:space-y-6 md:space-y-8">

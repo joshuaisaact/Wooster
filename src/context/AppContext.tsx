@@ -1,11 +1,6 @@
 import { createContext, useEffect, useReducer, ReactNode, Dispatch, useContext } from 'react';
 import { initialState, reducer } from '../store/reducer';
-import {
-  fetchTrips,
-  fetchDestinations,
-  fetchAllDestinations,
-  fetchDestinationActivities,
-} from '@/services/apiService';
+import { fetchAllDestinations, fetchDestinationActivities } from '@/services/apiService';
 import { Action, State } from '@/types/types';
 import { AuthContext } from './AuthContext';
 
@@ -39,13 +34,9 @@ export function AppProvider({ children }: AppProviderProps) {
       dispatch({ type: 'SET_LOADING', payload: true });
 
       // Fetch all data in parallel and extract the data property from Axios responses
-      const [tripsResponse, savedDestinationsResponse, allDestinationsResponse] = await Promise.all(
-        [fetchTrips(), fetchDestinations(), fetchAllDestinations()],
-      );
+      const [allDestinationsResponse] = await Promise.all([fetchAllDestinations()]);
 
       // Dispatch all data
-      dispatch({ type: 'SET_TRIPS', payload: tripsResponse.data });
-      dispatch({ type: 'SET_SAVED_DESTINATIONS', payload: savedDestinationsResponse.data });
       dispatch({ type: 'SET_ALL_DESTINATIONS', payload: allDestinationsResponse.data });
     } catch (error) {
       console.error('Error loading initial data:', error);

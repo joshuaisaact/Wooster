@@ -6,6 +6,32 @@ export interface Trip {
   itinerary: ItineraryItem[];
 }
 
+export interface TripResponse {
+  message: string;
+  trip: Trip;
+}
+
+export interface CreateTripData {
+  days: number;
+  location: string;
+  startDate: Date | null;
+  selectedCategories?: string[];
+}
+
+export interface CreateTripResponse {
+  message: string;
+  trip: Trip;
+}
+
+export interface CreateDestinationParams {
+  destinationName: string;
+}
+
+export interface CreateDestinationResponse {
+  message: string;
+  destination: Destination;
+}
+
 export type TripTab = 'summary' | number;
 
 export interface ActivityProps {

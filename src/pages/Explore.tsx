@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import { useAppContext } from '@/hooks/useAppContext';
 import { Destination } from '@/types/types';
 import GlobeSection from '@/components/explore/GlobeSection';
 import DestinationPanel from '@/components/explore/DestinationPanel';
 import ExplorationSection from '@/components/explore/ExplorationSection';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
 import { PageHeader } from '@/components/shared/PageHeader';
+import { useSavedDestinations } from '@/lib/query/destinations';
 
 export function Explore() {
-  const { state } = useAppContext();
-  const { savedDestinations, isLoading } = state;
+  const { data: savedDestinations, isLoading } = useSavedDestinations();
   const [focusedDestination, setFocusedDestination] = useState<Destination | null>(null);
   const shouldAnimate = usePageAnimation('explore');
 
@@ -18,16 +17,6 @@ export function Explore() {
       prev?.destinationId === destination.destinationId ? null : destination,
     );
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
-        <div className="animate-pulse text-lg text-gray-600 dark:text-green-100/70">
-          Loading your world of adventures...
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div
