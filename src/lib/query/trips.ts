@@ -3,28 +3,34 @@ import { fetchTrips, fetchTrip, createTrip, deleteTrip } from '@/services/apiSer
 import { queryKeys } from './keys';
 import { Trip } from '@/types/types';
 import { toast } from 'sonner';
+import { TripResponse, CreateTripData, CreateTripResponse } from '@/types/types';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '@/context/AuthContext';
 
 // Get all trips
 export function useTrips() {
+  const { isAuthReady } = useContext(AuthContext);
+
   return useQuery({
     queryKey: queryKeys.trips.all,
     queryFn: async () => {
       const response = await fetchTrips();
-      return response.data;
+      console.log(response.data.trips);
+      return response.data.trips;
     },
+    enabled: isAuthReady,
   });
 }
-
 // Get single trip
 export function useTrip(tripId: string | undefined) {
-  return useQuery({
-    queryKey: tripId ? queryKeys.trips.detail(tripId) : [],
+  return useQuery<TripResponse>({
+    queryKey: queryKeys.trips.detail(tripId!),
     queryFn: async () => {
-      if (!tripId) {
-        throw new Error('Trip ID is undefined');
-      }
+      if (!tripId) throw new Error('Trip ID is required');
       const response = await fetchTrip(tripId);
-      return response.data.trip; // Access the 'trip' property from the response data
+      console.log(response.data);
+      return response.data;
     },
     enabled: !!tripId,
     retry: 3,
@@ -34,23 +40,46 @@ export function useTrip(tripId: string | undefined) {
 }
 
 // Create trip
-export function useCreateTrip() {
-  const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: createTrip,
-    onSuccess: (newTrip) => {
+export function useCreateTrip(onClose?: () => void) {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const mutation = useMutation<CreateTripResponse, Error, CreateTripData>({
+    mutationFn: async (data) => {
+      if (!data.location) {
+        throw new Error('Location is required');
+      }
+
+      const formattedData = {
+        days: data.days,
+        location: data.location,
+        startDate: data.startDate ? data.startDate.toISOString() : null,
+        selectedCategories: data.selectedCategories,
+      };
+
+      const response = await createTrip(formattedData);
+      return response.data;
+    },
+    onSuccess: (data) => {
+      // Update trips cache
       queryClient.setQueryData<Trip[]>(queryKeys.trips.all, (oldTrips = []) => [
         ...oldTrips,
-        newTrip.data,
+        data.trip,
       ]);
-      toast.success('Trip created successfully');
+
+      // Handle navigation and cleanup
+      if (data.trip.tripId) {
+        onClose?.();
+        navigate(`/trips/${data.trip.tripId}`, { replace: true });
+      }
     },
     onError: (error) => {
-      toast.error('Failed to create trip');
       console.error('Error creating trip:', error);
     },
   });
+
+  return mutation;
 }
 
 // Delete trip

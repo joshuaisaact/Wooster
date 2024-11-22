@@ -8,7 +8,7 @@ export default function TripPage() {
   const { tripId } = useParams<{ tripId: string }>();
   const navigate = useNavigate();
 
-  const { data: trip, isLoading, isError, error } = useTrip(tripId);
+  const { data, isLoading, isError, error } = useTrip(tripId);
 
   // Loading state
   if (isLoading) {
@@ -49,7 +49,7 @@ export default function TripPage() {
   }
 
   // Trip not found state
-  if (!trip) {
+  if (!data?.trip) {
     return (
       <div className="min-h-[calc(100vh-4rem)] w-full">
         <div className="container mx-auto px-3 py-4 sm:px-4 sm:py-6 md:py-8">
@@ -75,6 +75,8 @@ export default function TripPage() {
       </div>
     );
   }
+
+  const { trip } = data;
 
   // Main content for valid trip
   return (

@@ -1,6 +1,6 @@
-import { useAppContext } from '@/hooks/useAppContext';
 import { DestinationsList } from '../destination/DestinationsList';
 import { Destination } from '@/types/types';
+import { useSavedDestinations } from '@/lib/query/destinations';
 
 interface ExplorationSectionProps {
   onDestinationClick: (destination: Destination) => void;
@@ -8,8 +8,15 @@ interface ExplorationSectionProps {
 }
 
 function ExplorationSection({ onDestinationClick, focusedDestinationId }: ExplorationSectionProps) {
-  const { state } = useAppContext();
-  const { savedDestinations } = state;
+  const { data: savedDestinations = [], isLoading } = useSavedDestinations();
+
+  if (isLoading) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <div className="animate-pulse text-lg text-muted-foreground">Loading destinations...</div>
+      </div>
+    );
+  }
 
   return (
     <DestinationsList

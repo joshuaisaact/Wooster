@@ -14,7 +14,6 @@ function Dashboard() {
   const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null);
   const [activeTab, setActiveTab] = useState<'dashboard' | 'create' | 'destination'>('dashboard');
   const shouldAnimate = usePageAnimation('dashboard');
-
   const soonestTrip = !isLoading ? getSoonestTrip(trips) : null;
   const soonestTripDestination = soonestTrip ? soonestTrip.destination : null;
 

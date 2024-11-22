@@ -18,18 +18,6 @@ export function Explore() {
     );
   };
 
-  console.log(savedDestinations);
-
-  if (isLoading) {
-    return (
-      <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
-        <div className="animate-pulse text-lg text-gray-600 dark:text-green-100/70">
-          Loading your world of adventures...
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div
       className={`min-h-[calc(100vh-4rem)] w-full ${shouldAnimate ? 'animate-fade-in opacity-0' : ''}`}

@@ -59,7 +59,7 @@ function Trips() {
       }`}
     >
       <div className="container mx-auto px-4 py-6 sm:px-4 sm:py-6 md:py-8 lg:py-12">
-        {/* Header Section - Reduced spacing */}
+        {/* Header Section */}
         <div className="mb-4 sm:mb-6 md:mb-8 lg:mb-12">
           <div className="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-start md:justify-between">
             <div>
@@ -73,7 +73,7 @@ function Trips() {
                 shouldAnimate={shouldAnimate}
               />
 
-              {/* Trip type toggle - Reduced text size */}
+              {/* Trip type toggle */}
               <div className="mt-3 flex gap-3 sm:mt-4 sm:gap-4">
                 <button
                   onClick={() => setShowPastTrips(false)}
@@ -117,13 +117,13 @@ function Trips() {
           </div>
         </div>
 
-        {/* Main Content - Adjusted gap */}
+        {/* Main Content */}
         <div
           className={`grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 ${
             shouldAnimate ? 'animate-fade-in-up opacity-0 [animation-delay:600ms]' : ''
           }`}
         >
-          {/* Trip List - Reduced padding and rounded corners */}
+          {/* Trip List */}
           <div className="lg:col-span-2">
             <div className="rounded-lg bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20 sm:rounded-xl">
               {filteredTrips.length > 0 ? (
@@ -149,7 +149,7 @@ function Trips() {
             </div>
           </div>
 
-          {/* Sidebar - Adjusted padding */}
+          {/* Sidebar */}
           <div className="w-full lg:col-span-1">
             <div className="space-y-4 sm:space-y-6 lg:sticky lg:top-8">
               <div className="rounded-lg bg-white/70 p-4 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20 sm:rounded-xl sm:p-6">

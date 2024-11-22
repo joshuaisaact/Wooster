@@ -1,20 +1,38 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchDestinations, saveDestination, unsaveDestination } from '@/services/apiService';
+import {
+  createDestination,
+  fetchDestinations,
+  saveDestination,
+  unsaveDestination,
+} from '@/services/apiService';
 import { queryKeys } from './keys';
-import { Destination } from '@/types/types';
+import { CreateDestinationParams, CreateDestinationResponse, Destination } from '@/types/types';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useContext } from 'react';
+import { AuthContext } from '@/context/AuthContext';
 
 interface MutationContext {
   previousDestinations: Destination[] | undefined;
 }
 
+interface ErrorResponse {
+  error: string;
+  code?: string;
+  details?: string;
+}
+
 export function useSavedDestinations() {
+  const { isAuthReady } = useContext(AuthContext);
+
   return useQuery({
     queryKey: queryKeys.destinations.saved(),
     queryFn: async () => {
       const response = await fetchDestinations();
-      return response.data;
+      return response.data.savedDestinations;
     },
+    enabled: isAuthReady,
   });
 }
 
@@ -93,4 +111,67 @@ export function useSaveDestinationActions() {
     isPending: toggleMutation.isPending,
     savedDestinations,
   };
+}
+
+export function useCreateDestination(onClose?: () => void) {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation<CreateDestinationResponse, Error, CreateDestinationParams>({
+    mutationFn: async ({ destinationName }) => {
+      const normalizedInput = destinationName.trim().toLowerCase().replace(/\s+/g, '-');
+
+      // Check if destination exists in current state using normalizedName field
+      const savedDestinations = queryClient.getQueryData<Destination[]>(
+        queryKeys.destinations.saved(),
+      );
+
+      const existingInState = savedDestinations?.find(
+        (dest) => dest.normalizedName === normalizedInput,
+      );
+
+      if (existingInState) {
+        throw new Error('You have already saved this destination');
+      }
+
+      try {
+        const response = await createDestination(destinationName);
+        return response.data;
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          const errorData = error.response?.data as ErrorResponse;
+
+          switch (errorData?.code) {
+            case 'DESTINATION_REQUIRED':
+              throw new Error('Please enter a destination name');
+
+            case 'DESTINATION_ALREADY_SAVED':
+              throw new Error('You have already saved this destination');
+
+            case 'GENERATION_FAILED':
+              throw new Error(
+                'Unable to generate destination information. This might be due to an invalid location name or temporary service issues. Please try again.',
+              );
+
+            default:
+              throw new Error(errorData?.error || 'Failed to create destination');
+          }
+        }
+        throw error;
+      }
+    },
+    onError: (error) => {
+      console.error('Destination creation failed:', error);
+    },
+    onSuccess: (data) => {
+      // Update destinations cache
+      queryClient.setQueryData<Destination[]>(queryKeys.destinations.all, (old = []) => [
+        ...old,
+        data.destination,
+      ]);
+
+      onClose?.();
+      navigate(`/destinations/${data.destination.destinationName}`);
+    },
+  });
 }

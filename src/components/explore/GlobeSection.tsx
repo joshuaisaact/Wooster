@@ -9,7 +9,13 @@ interface GlobeSectionProps {
 
 function GlobeSection({ destinations, focusedDestination, isLoading }: GlobeSectionProps) {
   if (isLoading) {
-    return <p className="p-4 text-gray-600 dark:text-green-100/70">Loading globe...</p>;
+    return (
+      <div className="flex h-full items-center justify-center">
+        <div className="animate-pulse text-lg text-gray-600 dark:text-green-100/70">
+          Loading globe...
+        </div>
+      </div>
+    );
   }
 
   return (
