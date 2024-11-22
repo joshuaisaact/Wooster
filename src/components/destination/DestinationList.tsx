@@ -20,7 +20,7 @@ const ITEMS_PER_PAGE = 9;
 export function DestinationListView() {
   const { state } = useAppContext();
   const { allDestinations, isLoading } = state;
-  const { data: savedDestinations = [], isLoading: isLoadingSaved } = useSavedDestinations();
+  const { data: savedDestinations = [] } = useSavedDestinations();
   const [searchQuery, setSearchQuery] = useState('');
   const [showSavedOnly, setShowSavedOnly] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('all');

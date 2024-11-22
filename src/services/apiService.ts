@@ -41,7 +41,7 @@ export const fetchTrip = (tripId: string) => {
 export const createTrip = (tripData: {
   days: number;
   location: string;
-  startDate: Date | null;
+  startDate: string | null;
   selectedCategories?: string[];
 }) => {
   return api.post('/trips', tripData);
