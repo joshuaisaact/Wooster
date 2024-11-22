@@ -5,30 +5,66 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { AppProvider } from '@/context/AppContext';
 import { AuthProvider } from '@/context/AuthContext';
 import { Toaster } from 'sonner';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 interface WrapperProps {
   children: ReactNode;
+  queryClient: QueryClient;
 }
 
-function render(ui: ReactElement, options = {}) {
-  function Wrapper({ children }: WrapperProps) {
+function render(
+  ui: ReactElement,
+  {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+        mutations: {
+          retry: false,
+        },
+      },
+    }),
+    ...options
+  } = {},
+) {
+  function Wrapper({ children, queryClient }: WrapperProps) {
     const methods = useForm();
     return (
-      <AuthProvider>
-        <AppProvider>
-          <MemoryRouter>
-            <FormProvider {...methods}>
-              {children} <Toaster />
-            </FormProvider>
-          </MemoryRouter>
-        </AppProvider>
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <AppProvider>
+            <MemoryRouter>
+              <FormProvider {...methods}>
+                {children}
+                <Toaster />
+              </FormProvider>
+            </MemoryRouter>
+          </AppProvider>
+        </AuthProvider>
+      </QueryClientProvider>
     );
   }
 
   return rtlRender(ui, {
-    wrapper: Wrapper,
+    wrapper: ({ children }) => <Wrapper queryClient={queryClient}>{children}</Wrapper>,
     ...options,
+  });
+}
+
+// Helper function to create a fresh QueryClient for tests
+export function createTestQueryClient() {
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+
+        staleTime: Infinity,
+      },
+      mutations: {
+        retry: false,
+      },
+    },
   });
 }
 
