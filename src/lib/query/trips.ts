@@ -15,6 +15,7 @@ export function useTrips() {
   return useQuery({
     queryKey: queryKeys.trips.all,
     queryFn: async () => {
+      console.log('Fetching trips...'); // Debug: Ensure this logs only once
       const response = await fetchTrips();
       console.log(response.data.trips);
       return response.data.trips;
