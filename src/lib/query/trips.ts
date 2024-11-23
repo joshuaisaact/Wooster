@@ -16,14 +16,14 @@ export function useTrips() {
     queryKey: queryKeys.trips.all,
     queryFn: async () => {
       const response = await fetchTrips();
-      const trips = response.data.trips;
+      const trips: Trip[] = response.data.trips;
 
       // Deduplicate by trip ID
-      const uniqueTrips = Array.from(
+      const uniqueTrips: Trip[] = Array.from(
         new Map(trips.map((trip: Trip) => [trip.tripId, trip])).values(),
       );
 
-      console.log(uniqueTrips); // Logs deduplicated trips
+      console.log(uniqueTrips);
       return uniqueTrips;
     },
     enabled: isAuthReady,
