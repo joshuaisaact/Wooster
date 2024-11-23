@@ -15,10 +15,16 @@ export function useTrips() {
   return useQuery({
     queryKey: queryKeys.trips.all,
     queryFn: async () => {
-      console.log('Fetching trips...'); // Debug: Ensure this logs only once
       const response = await fetchTrips();
-      console.log(response.data.trips);
-      return response.data.trips;
+      const trips = response.data.trips;
+
+      // Deduplicate by trip ID
+      const uniqueTrips = Array.from(
+        new Map(trips.map((trip: Trip) => [trip.tripId, trip])).values(),
+      );
+
+      console.log(uniqueTrips); // Logs deduplicated trips
+      return uniqueTrips;
     },
     enabled: isAuthReady,
   });
