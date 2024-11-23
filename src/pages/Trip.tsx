@@ -7,8 +7,8 @@ import { useTrip } from '@/lib/query/trips';
 export default function TripPage() {
   const { tripId } = useParams<{ tripId: string }>();
   const navigate = useNavigate();
-
-  const { data, isLoading, isError, error } = useTrip(tripId);
+  console.log('tripid:', tripId);
+  const { data, isLoading, isError, error, status } = useTrip(tripId);
 
   // Loading state
   if (isLoading) {
@@ -49,7 +49,7 @@ export default function TripPage() {
   }
 
   // Trip not found state
-  if (!data?.trip) {
+  if (status === 'success' && !data?.trip) {
     return (
       <div className="min-h-[calc(100vh-4rem)] w-full">
         <div className="container mx-auto px-3 py-4 sm:px-4 sm:py-6 md:py-8">
@@ -74,6 +74,10 @@ export default function TripPage() {
         </div>
       </div>
     );
+  }
+
+  if (!data || !data.trip) {
+    return null; // This will never execute due to above checks
   }
 
   const { trip } = data;

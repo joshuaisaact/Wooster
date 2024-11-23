@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchTrips, fetchTrip, createTrip, deleteTrip } from '@/services/apiService';
+import { fetchTrips, createTrip, deleteTrip } from '@/services/apiService';
 import { queryKeys } from './keys';
 import { Trip } from '@/types/types';
 import { toast } from 'sonner';
-import { TripResponse, CreateTripData, CreateTripResponse } from '@/types/types';
+import { CreateTripData, CreateTripResponse } from '@/types/types';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 
 // Get all trips
@@ -18,32 +18,27 @@ export function useTrips() {
       const response = await fetchTrips();
       const trips: Trip[] = response.data.trips;
 
-      // Deduplicate by trip ID
-      const uniqueTrips: Trip[] = Array.from(
-        new Map(trips.map((trip: Trip) => [trip.tripId, trip])).values(),
-      );
-
-      console.log(uniqueTrips);
-      return uniqueTrips;
+      return trips;
     },
     enabled: isAuthReady,
   });
 }
 // Get single trip
 export function useTrip(tripId: string | undefined) {
-  return useQuery<TripResponse>({
-    queryKey: queryKeys.trips.detail(tripId!),
-    queryFn: async () => {
-      if (!tripId) throw new Error('Trip ID is required');
-      const response = await fetchTrip(tripId);
-      console.log(response.data);
-      return response.data;
-    },
-    enabled: !!tripId,
-    retry: 3,
-    retryDelay: 1000,
-    staleTime: 1000 * 60 * 5,
-  });
+  const { data: trips, isLoading, error, isError, status } = useTrips();
+
+  const trip = useMemo(
+    () => (tripId ? trips?.find((t) => t.tripId === tripId) : undefined),
+    [trips, tripId],
+  );
+
+  return {
+    data: trip ? { message: 'Trip fetched successfully', trip } : undefined,
+    isLoading,
+    isError,
+    error,
+    status,
+  };
 }
 
 // Create trip
