@@ -17,9 +17,8 @@ export const setupAxiosAuth = (supabase: SupabaseClient) => {
 
     if (session?.access_token) {
       config.headers.Authorization = `Bearer ${session.access_token}`;
-      console.log('Auth header being set:', config.headers.Authorization); // Debug log
     } else {
-      console.log('No session/token found'); // Debug log
+      console.log('No session/token found');
     }
     return config;
   });
