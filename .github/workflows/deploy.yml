@@ -12,26 +12,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
-
       - name: Clean and Build
+        run: |
+          rm -rf dist
+          npm ci
+          npm run build
         env:
           VITE_BASE_URL: 'https://trywooster.live/api'
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-        run: |
-          rm -rf dist
-          npm run build
 
-      - name: Clean and prepare remote directory
+      - name: Prepare deploy directory
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -39,13 +35,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            # Stop nginx to prevent serving files while we're updating
-            sudo systemctl stop nginx
-
-            # Clean the directory
-            sudo rm -rf /home/wooster/frontend/dist/*
-
-            # Ensure directory exists with correct permissions
+            sudo rm -rf /home/wooster/frontend/dist
             sudo mkdir -p /home/wooster/frontend/dist
             sudo chown -R wooster:www-data /home/wooster/frontend/dist
             sudo chmod -R 775 /home/wooster/frontend/dist
@@ -59,19 +49,3 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           source: 'dist/'
           target: '/home/wooster/frontend'
-          strip_components: 1
-
-      - name: Post-deploy tasks
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          script: |
-            # Ensure correct permissions after copy
-            sudo chown -R wooster:www-data /home/wooster/frontend/dist
-            sudo chmod -R 775 /home/wooster/frontend/dist
-
-            # Start nginx again
-            sudo systemctl start nginx
