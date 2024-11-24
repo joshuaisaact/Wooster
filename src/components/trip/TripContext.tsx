@@ -1,6 +1,6 @@
-import { Trip, Destination } from '@/types/types';
+import { Trip, Destination } from '@/types';
 import DestinationDetail from '../DestinationDetail';
-import { TripTab } from '@/types/types';
+import { TripTab } from '@/types';
 import { ItineraryView } from './itinerary/ItineraryView';
 
 interface TripContentProps {

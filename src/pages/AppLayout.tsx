@@ -8,6 +8,7 @@ import { Explore } from './Explore';
 import DestinationListPage from './DestinationListPage';
 import DestinationSummary from './DestinationSummary';
 import DestinationActivitiesPage from './DestinationActivitiesPage';
+import { LoadingBoundary } from '@/components/layout/LoadingBoundary';
 
 function AppLayout() {
   return (
@@ -26,21 +27,23 @@ function AppLayout() {
       <main className="flex min-h-screen flex-col">
         <div className="flex-1 px-4 pb-20 pt-4 md:ml-48 md:pb-4 lg:ml-64">
           <div className="mx-auto max-w-7xl space-y-8">
-            <Routes>
-              <Route path="home" element={<Dashboard />} />
-              <Route path="trips" element={<Trips />} />
-              <Route path="trips/:tripId" element={<TripPage />}>
-                <Route path="summary/:destinationId" element={<DestinationSummary />} />
-              </Route>
-              <Route path="explore" element={<Explore />} />
-              <Route path="destinations/:destinationId" element={<DestinationSummary />} />
-              <Route
-                path="destinations/:destinationId/activities"
-                element={<DestinationActivitiesPage />}
-              />
-              <Route path="destination-list" element={<DestinationListPage />} />
-              <Route path="settings" element={<Profile />} />
-            </Routes>
+            <LoadingBoundary>
+              <Routes>
+                <Route path="home" element={<Dashboard />} />
+                <Route path="trips" element={<Trips />} />
+                <Route path="trips/:tripId" element={<TripPage />}>
+                  <Route path="summary/:destinationId" element={<DestinationSummary />} />
+                </Route>
+                <Route path="explore" element={<Explore />} />
+                <Route path="destinations/:destinationId" element={<DestinationSummary />} />
+                <Route
+                  path="destinations/:destinationId/activities"
+                  element={<DestinationActivitiesPage />}
+                />
+                <Route path="destination-list" element={<DestinationListPage />} />
+                <Route path="settings" element={<Profile />} />
+              </Routes>
+            </LoadingBoundary>
           </div>
         </div>
       </main>

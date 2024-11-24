@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Trip } from '@/types/types';
+import { Trip } from '@/types';
 
 interface DayNavProps {
   trip: Trip;
@@ -9,7 +9,7 @@ interface DayNavProps {
 
 function DayNav({ trip, currentDay, setCurrentDay }: DayNavProps) {
   return (
-    <nav className="mb-4 text-text">
+    <nav className="text-text mb-4">
       <ul className="flex gap-4">
         <Link to={`/trips/${trip.tripId}/summary/${trip.destination.destinationName}`}>
           <button

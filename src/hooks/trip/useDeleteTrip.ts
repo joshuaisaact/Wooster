@@ -1,33 +1,40 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppContext } from '../useAppContext';
-import { deleteTrip as apiDeleteTrip } from '@/services/apiService';
+import { queryKeys } from '@/lib/query/keys';
+import { tripService } from '@/services';
+import { Trip } from '@/types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 export function useDeleteTrip() {
-  const { dispatch } = useAppContext();
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
 
-  const deleteTrip = async (tripId: string) => {
-    if (!tripId) return;
+  return useMutation({
+    mutationFn: tripService.delete,
+    onMutate: async (tripId) => {
+      // Cancel outgoing refetches
+      await queryClient.cancelQueries({ queryKey: queryKeys.trips.all() });
 
-    setIsLoading(true);
-    dispatch({ type: 'SET_LOADING', payload: true });
+      // Snapshot current data
+      const previousTrips = queryClient.getQueryData<Trip[]>(queryKeys.trips.all());
 
-    try {
-      await apiDeleteTrip(tripId);
-      dispatch({ type: 'REMOVE_TRIP', payload: tripId });
-      navigate('/trips');
-      toast.success('Trip deleted successfully');
-    } catch (error) {
-      console.error('Error deleting trip:', error instanceof Error ? error.message : error);
+      // Optimistically update
+      if (previousTrips) {
+        queryClient.setQueryData<Trip[]>(
+          queryKeys.trips.all(),
+          previousTrips.filter((trip) => trip.tripId !== tripId),
+        );
+      }
+
+      return { previousTrips };
+    },
+    onError: (_error, _tripId, context) => {
+      // Rollback on error
+      if (context?.previousTrips) {
+        queryClient.setQueryData(queryKeys.trips.all(), context.previousTrips);
+      }
       toast.error('Failed to delete trip');
-    } finally {
-      setIsLoading(false);
-      dispatch({ type: 'SET_LOADING', payload: false });
-    }
-  };
-
-  return { deleteTrip, isLoading };
+    },
+    onSuccess: () => {
+      toast.success('Trip deleted successfully');
+    },
+  });
 }

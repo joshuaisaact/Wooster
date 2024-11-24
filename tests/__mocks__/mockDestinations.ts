@@ -1,4 +1,4 @@
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 
 export const mockDestinations: Destination[] = [
   {

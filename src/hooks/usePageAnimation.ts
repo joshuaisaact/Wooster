@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppContext } from './useAppContext';
-import { State } from '@/types/types';
+import { State } from '@/types';
 
 export function usePageAnimation(pageName: keyof State['pageAnimationStates']) {
   const { state, dispatch } = useAppContext();

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import { getSoonestTrip } from '@/utils/trips';
 import MainContent from '@/components/dashboard/MainContent';
 import Sidebar from '@/components/dashboard/Sidebar';
@@ -7,7 +7,7 @@ import { usePageAnimation } from '@/hooks/usePageAnimation';
 import CreateTrip from '@/components/shared/CreateTrip';
 import CreateDestination from '@/components/shared/CreateDestination';
 import { PageHeader } from '@/components/shared/PageHeader';
-import { useTrips } from '@/lib/query/trips';
+import { useTrips } from '@/hooks/trip/useTrips';
 
 function Dashboard() {
   const { data: trips = [], isLoading } = useTrips();

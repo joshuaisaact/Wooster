@@ -3,7 +3,7 @@ import { DestinationSearchBar } from './DestinationSearchBar';
 import { DestinationFilters } from './DestinationFilters';
 import { DestinationResults } from './DestinationResults';
 import { useDestinationFilters } from '@/hooks/destination/useDestinationFilters';
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import { Button } from '../ui/button';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
 import { PageHeader } from '../shared/PageHeader';

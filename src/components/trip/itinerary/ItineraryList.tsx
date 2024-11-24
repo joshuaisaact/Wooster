@@ -2,7 +2,7 @@ import { Card, CardHeader, CardTitle } from '@/components/ui/card';
 import { ActivityCard } from '@/components/activities';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { ScrollArea } from '@radix-ui/react-scroll-area';
-import { Activity as ActivityType } from '@/types/types';
+import { Activity as ActivityType } from '@/types';
 
 import { useCallback, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';

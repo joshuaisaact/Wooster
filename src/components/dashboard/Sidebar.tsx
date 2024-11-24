@@ -1,4 +1,4 @@
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import CreateTrip from '@/components/shared/CreateTrip';
 import CreateDestination from '../shared/CreateDestination';
 import { cn } from '@/lib/utils';

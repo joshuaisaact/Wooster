@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ActivityCard } from '../activities';
 import { Button } from '@/components/ui/button';
-import { Activity } from '@/types/types';
+import { Activity } from '@/types';
 
 interface DestinationActivitiesProps {
   destinationName: string;

@@ -1,4 +1,4 @@
-import { TripTab } from '@/types/types';
+import { TripTab } from '@/types';
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 

@@ -1,4 +1,4 @@
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import { Map } from '../shared/map';
 import DeleteDestinationButton from './DeleteDestinationButton';
 import { useState } from 'react';

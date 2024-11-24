@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import GlobeSection from '@/components/explore/GlobeSection';
 import DestinationPanel from '@/components/explore/DestinationPanel';
 import ExplorationSection from '@/components/explore/ExplorationSection';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
 import { PageHeader } from '@/components/shared/PageHeader';
-import { useSavedDestinations } from '@/lib/query/destinations';
+import { useSavedDestinations } from '@/hooks/destination/useSavedDestinations';
 
 export function Explore() {
   const { data: savedDestinations, isLoading } = useSavedDestinations();
@@ -17,6 +17,24 @@ export function Explore() {
       prev?.destinationId === destination.destinationId ? null : destination,
     );
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
+        <div className="animate-pulse text-lg text-gray-600 dark:text-green-100/70">
+          Loading destinations...
+        </div>
+      </div>
+    );
+  }
+
+  if (!savedDestinations) {
+    return (
+      <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
+        <div className="text-lg text-gray-600 dark:text-green-100/70">No destinations found</div>
+      </div>
+    );
+  }
 
   return (
     <div

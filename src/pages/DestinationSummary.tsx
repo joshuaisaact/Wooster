@@ -15,7 +15,7 @@ function DestinationSummary() {
   const initialTab = queryParams.get('tab') || 'details';
   const [activeTab, setActiveTab] = useState(initialTab);
 
-  const { destination, destinationActivities, isLoadingActivities } =
+  const { destination, destinationActivities, isLoadingActivities, isLoading, isError } =
     useDestinationDetails(destinationName);
 
   const handleTabClick = (tab: string) => {
@@ -24,16 +24,18 @@ function DestinationSummary() {
     window.history.pushState(null, '', newUrl);
   };
 
-  // Only show loading when we don't have the destination at all
-  if (!destination) {
+  // Show loading state while initial data is being fetched
+  if (isLoading) {
     return (
-      <div className="min-h-[calc(100vh-4rem)] w-full">
-        {/* Your existing "Destination Not Found" UI */}
+      <div className="flex h-[calc(100vh-4rem)] items-center justify-center">
+        <div className="animate-pulse text-lg text-gray-600 dark:text-green-100/70">
+          Loading destination details...
+        </div>
       </div>
     );
   }
 
-  if (!destination) {
+  if (isError || !destination) {
     return (
       <div className="min-h-[calc(100vh-4rem)] w-full">
         <div className="container mx-auto px-4 py-6 md:py-8 lg:py-12">

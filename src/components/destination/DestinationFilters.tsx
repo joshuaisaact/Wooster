@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 
 interface DestinationFiltersProps {
   destinations: Destination[];

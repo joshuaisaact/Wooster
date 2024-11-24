@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { Activity } from '@/types/types';
+import { Activity } from '@/types';
 import { Map, MapRef } from '@/components/shared/map';
 
 interface ItineraryMapProps {

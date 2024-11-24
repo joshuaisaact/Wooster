@@ -1,4 +1,4 @@
-import { Activity } from '@/types/types';
+import { Activity } from '@/types';
 import { LatLngExpression, LatLngTuple } from 'leaflet';
 
 export interface MapComponentProps {

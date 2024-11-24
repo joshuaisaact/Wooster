@@ -1,4 +1,4 @@
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import { Button } from '@/components/ui/button';
 import { MapPinIcon, DollarSignIcon, Sun, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';

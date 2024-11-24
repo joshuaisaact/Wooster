@@ -1,4 +1,4 @@
-import { Action, State, Trip as TripType } from '@/types/types';
+import { Action, State } from '@/types';
 
 export const initialState: State = {
   isLoading: false,
@@ -31,26 +31,13 @@ export function reducer(state: State = initialState, action: Action): State {
         ...state,
         activities: {},
       };
-    case 'ADD_TRIP':
-      return {
-        ...state,
-        trips: [...state.trips, action.payload],
-      };
-    case 'REMOVE_TRIP':
-      return {
-        ...state,
-        trips: state.trips.filter((trip: TripType) => trip.tripId !== action.payload),
-      };
+
     case 'SET_LOADING':
       return {
         ...state,
         isLoading: action.payload,
       };
-    case 'ADD_NEW_DESTINATION':
-      return {
-        ...state,
-        allDestinations: [...state.allDestinations, action.payload],
-      };
+
     case 'SET_PAGE_ANIMATED':
       return {
         ...state,

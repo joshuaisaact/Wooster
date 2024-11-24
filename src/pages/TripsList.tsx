@@ -6,7 +6,7 @@ import { sortTripsByDate, filterTripsByStatus, searchTrips } from '@/utils/trips
 import ScrollLink from '@/components/shared/ScrollLink';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
 import { PageHeader } from '@/components/shared/PageHeader';
-import { useTrips } from '@/lib/query/trips';
+import { useTrips } from '@/hooks/trip/useTrips';
 
 function Trips() {
   const { data: trips = [], isLoading } = useTrips();

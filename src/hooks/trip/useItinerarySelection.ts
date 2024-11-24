@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Activity } from '@/types/types';
+import { Activity } from '@/types';
 
 export function useItinerarySelection(activities: Activity[]) {
   const [selectedActivityId, setSelectedActivityId] = useState<number | null>(null);

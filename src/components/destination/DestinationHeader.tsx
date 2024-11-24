@@ -1,6 +1,6 @@
 import { MapPinIcon } from 'lucide-react';
 
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import { Button } from '../ui/button';
 
 interface DestinationHeaderProps {

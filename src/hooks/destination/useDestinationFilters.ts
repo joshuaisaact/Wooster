@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Destination, SortOption } from '@/types/types';
+import { Destination, SortOption } from '@/types';
 
 export function useDestinationFilters(destinations: Destination[]) {
   const [searchQuery, setSearchQuery] = useState('');

@@ -1,4 +1,4 @@
-import { Trip } from '@/types/types';
+import { Trip } from '@/types';
 
 export const getSoonestTrip = (trips: Trip[]): Trip | null => {
   const today = new Date();
