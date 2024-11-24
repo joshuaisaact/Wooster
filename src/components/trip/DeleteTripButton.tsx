@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from '../ui/button';
 import ConfirmModal from '../ui/ConfirmModal';
 import withDemoDisabled from '../ui/WithDemoDisabled';
-import { useDeleteTrip } from '@/lib/query/trips';
+import { useDeleteTrip } from '@/hooks/trip/useDeleteTrip';
 
 interface DeleteTripButtonProps {
   tripId: string;

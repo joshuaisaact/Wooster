@@ -1,10 +1,11 @@
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import { SavedDestinationsList } from './SavedDestinationsList';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import { useSavedDestinations } from '@/lib/query/destinations';
+
 import { Skeleton } from '@/components/ui/Skeleteon';
+import { useSavedDestinations } from '@/hooks/destination/useSavedDestinations';
 
 interface SavedDestinationsProps {
   onDestinationSelect: (destination: Destination) => void;

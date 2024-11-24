@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useAppContext } from '@/hooks/useAppContext';
-import { createTrip } from '@/services/apiService';
-import { Trip } from '@/types/types';
+import { Trip, TripResponse } from '@/types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { tripService } from '@/services';
+import { queryKeys } from '@/lib/query/keys';
 
 interface CreateTripData {
   days: number;
@@ -11,48 +12,42 @@ interface CreateTripData {
 }
 
 export function useCreateTrip(onClose?: () => void) {
-  const { dispatch } = useAppContext();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const handleCreateTrip = async (data: CreateTripData) => {
-    if (!data.location) {
-      throw new Error('Location is required');
-    }
+  const mutation = useMutation<TripResponse, Error, CreateTripData>({
+    mutationFn: async (data) => {
+      if (!data.location) {
+        throw new Error('Location is required');
+      }
 
-    dispatch({ type: 'SET_LOADING', payload: true });
-
-    const formattedData = {
-      days: data.days,
-      location: data.location,
-      startDate: data.startDate ? data.startDate.toISOString() : null,
-      selectedCategories: data.selectedCategories,
-    };
-
-    try {
-      const response = await createTrip(formattedData);
-      const result = response.data;
-
-      const newTrip: Trip = {
-        tripId: result.trip.tripId,
-        destination: result.trip.destination,
-        numDays: result.trip.numDays,
-        startDate: result.trip.startDate,
-        itinerary: result.trip.itinerary || [],
+      const formattedData = {
+        days: data.days,
+        location: data.location,
+        startDate: data.startDate ? data.startDate.toISOString() : null,
+        selectedCategories: data.selectedCategories,
       };
 
-      dispatch({ type: 'ADD_TRIP', payload: newTrip });
+      const response = await tripService.create(formattedData);
+      return response;
+    },
+    onSuccess: (data) => {
+      // Update trips cache
+      queryClient.setQueryData<Trip[]>(queryKeys.trips.all(), (oldTrips = []) => [
+        ...oldTrips,
+        data.trip,
+      ]);
 
-      if (newTrip.tripId) {
+      // Handle navigation and cleanup
+      if (data.trip.tripId) {
         onClose?.();
-        navigate(`/trips/${newTrip.tripId}`, { replace: true });
+        navigate(`/trips/${data.trip.tripId}`, { replace: true });
       }
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error('Error creating trip:', error);
-      throw error;
-    } finally {
-      dispatch({ type: 'SET_LOADING', payload: false });
-    }
-  };
+    },
+  });
 
-  return { handleCreateTrip };
+  return mutation;
 }

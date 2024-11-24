@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Trip, Destination } from '@/types/types';
+import { Trip, Destination } from '@/types';
 import { TripHeader } from './TripHeader';
 import { TripNavigation } from './TripNavigation';
 import { TripContent } from './TripContext';
 import { useShare } from '@/hooks/trip/useShare';
-import { TripTab } from '@/types/types';
+import { TripTab } from '@/types';
 
 interface TripViewProps {
   trip: Trip;
@@ -14,8 +14,6 @@ interface TripViewProps {
 export function TripView({ trip, destination }: TripViewProps) {
   const [activeTab, setActiveTab] = useState<TripTab>('summary');
   const { shareTrip } = useShare();
-
-  console.log(trip);
 
   // Ensure we have the required data
   if (!trip || !trip.destination?.destinationName) {

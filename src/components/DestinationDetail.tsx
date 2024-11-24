@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPinIcon, Calendar, Thermometer, Globe, Info } from 'lucide-react';
 import { Map } from './shared/map';
 import CreateTrip from './shared/CreateTrip';
-import { Trip as TripType } from '@/types/types';
+import { Trip as TripType } from '@/types';
 import DeleteTripButton from './trip/DeleteTripButton';
 import DeleteDestinationButton from './destination/DeleteDestinationButton';
 import { formatTemperature } from '@/utils/temperature';

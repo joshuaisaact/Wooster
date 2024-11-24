@@ -1,4 +1,4 @@
-import { Activity } from '@/types/types';
+import { Activity } from '@/types';
 import { LineChart, Clock, DollarSign, Star, Tag, Gauge } from 'lucide-react';
 
 interface DestinationInsightsProps {

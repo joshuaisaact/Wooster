@@ -8,12 +8,12 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import { toast } from 'sonner';
 import withDemoDisabled from '../ui/WithDemoDisabled';
 import { useState } from 'react';
 import { Badge } from '../ui/badge';
-import { useCreateTrip } from '@/lib/query/trips';
+import { useCreateTrip } from '@/hooks/trip/useCreateTrip';
 
 interface CreateTripProps {
   location: Destination | null;
@@ -58,7 +58,7 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
           {
             days: data.days,
             location: location?.destinationName || data.location || '',
-            startDate: data.startDate || null,
+            startDate: data.startDate || undefined,
             selectedCategories: data.selectedCategories,
           },
           {

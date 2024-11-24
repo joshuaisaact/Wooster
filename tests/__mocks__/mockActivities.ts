@@ -1,4 +1,4 @@
-import { Activity } from '@/types/types';
+import { Activity } from '@/types';
 
 export const mockActivities: Activity[] = [
   {

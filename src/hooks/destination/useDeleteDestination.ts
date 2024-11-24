@@ -1,37 +1,67 @@
-import { useState } from 'react';
+import { queryKeys } from '@/lib/query/keys';
+import { destinationService } from '@/services';
+import { Destination } from '@/types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { useAppContext } from '../useAppContext';
-import { deleteDestination as apiDeleteDestination } from '@/services/apiService';
 import { toast } from 'sonner';
 
 export function useDeleteDestination() {
-  const { dispatch } = useAppContext();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
 
-  const deleteDestination = async (destinationId: number) => {
-    if (!destinationId) {
-      console.error('No destination ID found');
-      toast.error('Invalid destination ID');
-      return;
-    }
+  return useMutation({
+    mutationFn: async (destinationId: number) => {
+      if (!destinationId) {
+        throw new Error('Invalid destination ID');
+      }
+      return destinationService.delete(destinationId);
+    },
 
-    setIsLoading(true);
-    dispatch({ type: 'SET_LOADING', payload: true });
+    onMutate: async (destinationId) => {
+      // Cancel outgoing refetches
+      await queryClient.cancelQueries({ queryKey: queryKeys.destinations.all() });
+      await queryClient.cancelQueries({ queryKey: queryKeys.destinations.saved() });
 
-    try {
-      await apiDeleteDestination(destinationId);
-      dispatch({ type: 'REMOVE_DESTINATION', payload: destinationId });
-      navigate('/destination-list');
-      toast.success('Destination deleted successfully');
-    } catch (error) {
-      console.error('Error deleting destination:', error instanceof Error ? error.message : error);
+      // Snapshot current data
+      const previousAllDestinations = queryClient.getQueryData<Destination[]>(
+        queryKeys.destinations.all(),
+      );
+      const previousSavedDestinations = queryClient.getQueryData<Destination[]>(
+        queryKeys.destinations.saved(),
+      );
+
+      // Optimistically update both lists
+      if (previousAllDestinations) {
+        queryClient.setQueryData<Destination[]>(
+          queryKeys.destinations.all(),
+          previousAllDestinations.filter((dest) => dest.destinationId !== destinationId),
+        );
+      }
+
+      if (previousSavedDestinations) {
+        queryClient.setQueryData<Destination[]>(
+          queryKeys.destinations.saved(),
+          previousSavedDestinations.filter((dest) => dest.destinationId !== destinationId),
+        );
+      }
+
+      return { previousAllDestinations, previousSavedDestinations };
+    },
+
+    onError: (_error, _destinationId, context) => {
+      // Rollback on error
+      if (context?.previousAllDestinations) {
+        queryClient.setQueryData(queryKeys.destinations.all(), context.previousAllDestinations);
+      }
+      if (context?.previousSavedDestinations) {
+        queryClient.setQueryData(queryKeys.destinations.saved(), context.previousSavedDestinations);
+      }
       toast.error('Failed to delete destination');
-    } finally {
-      setIsLoading(false);
-      dispatch({ type: 'SET_LOADING', payload: false });
-    }
-  };
+    },
 
-  return { deleteDestination, isLoading };
+    onSuccess: () => {
+      toast.success('Destination deleted successfully');
+      navigate('/destination-list');
+    },
+  });
 }

@@ -1,4 +1,4 @@
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import { cn } from '@/lib/utils';
 
 interface WelcomeSectionProps {

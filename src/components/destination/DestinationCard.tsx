@@ -1,11 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPinIcon, Calendar, Thermometer, DollarSign, Star } from 'lucide-react';
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import { cn } from '@/lib/utils';
 import { formatTemperature } from '@/utils/temperature';
 import { Button } from '../ui/button';
-import { useSaveDestination } from '@/hooks/destination/useSavedDestination';
+import { useSaveDestinationToggle } from '@/hooks/destination/useSavedDestinationToggle';
 
 interface DestinationCardProps {
   destination: Destination;
@@ -23,7 +23,7 @@ export function DestinationCard({ destination, onClick }: DestinationCardProps) 
     averageTemperatureHigh,
   } = destination || {};
 
-  const { toggleSaveDestination, isDestinationSaved, isPending } = useSaveDestination();
+  const { toggleSaveDestination, isDestinationSaved, isPending } = useSaveDestinationToggle();
   const isSaved = isDestinationSaved(destination.destinationId);
 
   const getCostLevelColor = (level: string) => {

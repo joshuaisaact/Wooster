@@ -1,4 +1,4 @@
-import { Activity as ActivityType } from '@/types/types';
+import { Activity as ActivityType } from '@/types';
 import { ItineraryMap } from './ItineraryMap';
 import { ItineraryList } from './ItineraryList';
 import { useItinerarySelection } from '@/hooks/trip/useItinerarySelection';

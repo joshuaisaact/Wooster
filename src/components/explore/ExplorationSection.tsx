@@ -1,6 +1,6 @@
+import { useSavedDestinations } from '@/hooks/destination/useSavedDestinations';
 import { DestinationsList } from '../destination/DestinationsList';
-import { Destination } from '@/types/types';
-import { useSavedDestinations } from '@/lib/query/destinations';
+import { Destination } from '@/types';
 
 interface ExplorationSectionProps {
   onDestinationClick: (destination: Destination) => void;

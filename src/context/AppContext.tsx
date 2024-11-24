@@ -1,7 +1,7 @@
 import { createContext, useEffect, useReducer, ReactNode, Dispatch, useContext } from 'react';
 import { initialState, reducer } from '../store/reducer';
 import { fetchAllDestinations, fetchDestinationActivities } from '@/services/apiService';
-import { Action, State } from '@/types/types';
+import { Action, State } from '@/types';
 import { AuthContext } from './AuthContext';
 
 interface AppProviderProps {

@@ -1,4 +1,4 @@
-import { Trip, Destination } from '@/types/types';
+import { Trip, Destination } from '@/types';
 import { TripCard } from '../trip/trip-card';
 
 interface NextTripSectionProps {

@@ -9,23 +9,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useAppContext } from '@/hooks/useAppContext';
 import { usePageAnimation } from '@/hooks/usePageAnimation';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
-import { useSavedDestinations } from '@/lib/query/destinations';
+import { useSavedDestinations } from '@/hooks/destination/useSavedDestinations';
+import { useAllDestinations } from '@/hooks/destination/useAllDestinations';
 
 const ITEMS_PER_PAGE = 9;
 
 export function DestinationListView() {
-  const { state } = useAppContext();
-  const { allDestinations, isLoading } = state;
-  const { data: savedDestinations = [] } = useSavedDestinations();
+  const { data: allDestinations = [], isLoading: isLoadingAll } = useAllDestinations();
+  const { data: savedDestinations = [], isLoading: isLoadingSaved } = useSavedDestinations();
   const [searchQuery, setSearchQuery] = useState('');
   const [showSavedOnly, setShowSavedOnly] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const shouldAnimate = usePageAnimation('destinations');
+
+  const isLoading = isLoadingAll || isLoadingSaved;
 
   // Filter destinations
   const filteredDestinations = useMemo(() => {

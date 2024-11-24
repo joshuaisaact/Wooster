@@ -16,7 +16,7 @@ export const DemoContext = createContext<DemoContextType | undefined>(undefined)
 export function DemoProvider({ children }: { children: React.ReactNode }) {
   const [isDemo, setIsDemo] = useState(false);
   const [isDemoMode, setIsDemoMode] = useState(false);
-  const [isDemoModalOpen, setIsDemoModalOpen] = useState(true);
+  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
 
   useEffect(() => {
     const checkDemoStatus = async () => {

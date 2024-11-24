@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import DestinationCard from './DestinationCard';
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import { useCreateDestination } from '@/hooks/destination/useCreateDestination';
 import { toast } from 'sonner';
 
@@ -19,35 +19,38 @@ export function DestinationResults({
   onResetFilters,
 }: DestinationResultsProps) {
   const navigate = useNavigate();
-  const { handleCreateDestination } = useCreateDestination();
+  const { mutate, isPending } = useCreateDestination();
 
   const handleDestinationClick = (destinationName: string) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     navigate(`/destinations/${encodeURIComponent(destinationName)}`);
   };
 
-  const handleQuickCreateDestination = async () => {
+  const handleQuickCreateDestination = () => {
     if (!searchQuery) return;
 
-    const toastId = toast.loading(`Creating new destination: ${searchQuery}...`);
-
-    try {
-      const newDestination = await handleCreateDestination({
-        destinationName: searchQuery,
-      });
-
-      toast.dismiss(toastId);
-
-      toast.success('🎉 Destination created successfully!');
-
-      setTimeout(() => {
-        navigate(`/destinations/${encodeURIComponent(newDestination.destinationName)}`);
-      }, 1000);
-    } catch (error) {
-      console.error('Error creating destination:', error);
-      toast.dismiss(toastId);
-      toast.error('Failed to create destination. Please try again.');
-    }
+    toast.promise(
+      new Promise((resolve, reject) => {
+        mutate(
+          { destinationName: searchQuery },
+          {
+            onSuccess: (data) => {
+              setTimeout(() => {
+                navigate(`/destinations/${encodeURIComponent(data.destination.destinationName)}`);
+              }, 1000);
+              resolve(data.destination);
+            },
+            onError: reject,
+          },
+        );
+      }),
+      {
+        loading: `Creating new destination: ${searchQuery}...`,
+        success: '🎉 Destination created successfully!',
+        error: (err) =>
+          `Failed to create destination: ${err instanceof Error ? err.message : 'Please try again'}`,
+      },
+    );
   };
 
   if (isLoading) {
@@ -78,12 +81,14 @@ export function DestinationResults({
           <Button
             variant="outline"
             onClick={handleQuickCreateDestination}
-            disabled={!canCreate}
+            disabled={!canCreate || isPending}
             className="bg-green-700 font-medium tracking-tight transition-all duration-200 hover:bg-green-800 active:scale-[0.98] dark:bg-green-600 dark:hover:bg-green-700"
           >
-            {canCreate
-              ? `Create "${trimmedQuery}" as New Destination`
-              : 'Enter at least 3 characters'}
+            {isPending
+              ? 'Creating...'
+              : canCreate
+                ? `Create "${trimmedQuery}" as New Destination`
+                : 'Enter at least 3 characters'}
           </Button>
         </div>
       </div>

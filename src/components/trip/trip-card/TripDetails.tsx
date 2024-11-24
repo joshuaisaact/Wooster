@@ -1,4 +1,4 @@
-import { Trip, Destination } from '@/types/types';
+import { Trip, Destination } from '@/types';
 import { getFirstSentence } from '@/utils/text';
 import { addDays, formatDateRange } from '@/utils/dates';
 

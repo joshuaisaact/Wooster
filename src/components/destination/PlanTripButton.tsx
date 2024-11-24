@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import CreateTrip from '@/components/shared/CreateTrip';
 
 interface PlanTripButtonProps {

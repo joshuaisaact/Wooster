@@ -1,5 +1,5 @@
 import { Map } from '@/components/shared/map';
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 
 interface TripPreviewMapProps {
   destination: Destination;

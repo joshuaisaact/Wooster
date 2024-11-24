@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Trip, Destination } from '@/types/types';
+import { Trip, Destination } from '@/types';
 import { TripPreviewMap } from './TripPreviewMap';
 import { TripDetails } from './TripDetails';
 

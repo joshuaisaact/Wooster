@@ -2,12 +2,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { TripView } from '@/components/trip/TripView';
 import { Button } from '@/components/ui/button';
 import { MapPinIcon } from 'lucide-react';
-import { useTrip } from '@/lib/query/trips';
+import { useTrip } from '@/hooks/trip/useTrip';
 
 export default function TripPage() {
   const { tripId } = useParams<{ tripId: string }>();
   const navigate = useNavigate();
-  console.log('tripid:', tripId);
+
   const { data, isLoading, isError, error, status } = useTrip(tripId);
 
   // Loading state

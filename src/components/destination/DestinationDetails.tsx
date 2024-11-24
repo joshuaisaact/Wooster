@@ -1,4 +1,4 @@
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 import { Card, CardContent } from '../ui/card';
 import { InfoItem } from '../InfoItem';
 
@@ -29,7 +29,7 @@ function DestinationDetails({ destination }: DestinationSummaryProps) {
         }).map(([title, content]) => (
           <section key={title}>
             <h3 className="mb-2 font-semibold text-gray-900 dark:text-white/95">{title}</h3>
-            <p className="text-muted-foreground text-sm dark:text-green-100/70">{content}</p>
+            <p className="text-sm text-muted-foreground dark:text-green-100/70">{content}</p>
           </section>
         ))}
       </CardContent>

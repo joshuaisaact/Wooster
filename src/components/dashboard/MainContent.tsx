@@ -1,4 +1,4 @@
-import { Trip, Destination } from '@/types/types';
+import { Trip, Destination } from '@/types';
 import WelcomeSection from './WelcomeSection';
 import NextTripSection from './NextTripSection';
 import { SavedDestinations } from '../destination/SavedDestinations';

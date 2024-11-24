@@ -1,4 +1,4 @@
-import { Trip, ItineraryItem, Activity } from '@/types/types';
+import { Trip, ItineraryItem, Activity } from '@/types';
 import { mockTokyoObj } from './mockDestinations';
 
 // Mock activities for a day in the itinerary

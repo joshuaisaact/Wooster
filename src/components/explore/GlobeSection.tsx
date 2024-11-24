@@ -1,8 +1,8 @@
 import GlobeComponent from './globecomponent';
-import { Destination } from '@/types/types';
+import { Destination } from '@/types';
 
 interface GlobeSectionProps {
-  destinations: Destination[];
+  destinations: Destination[] | undefined;
   focusedDestination: Destination | null;
   isLoading: boolean;
 }

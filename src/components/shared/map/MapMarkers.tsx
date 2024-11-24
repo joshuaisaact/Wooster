@@ -1,5 +1,5 @@
 import { Marker, Popup } from 'react-leaflet';
-import { Activity } from '@/types/types';
+import { Activity } from '@/types';
 import { createCustomIcon } from './Icons';
 import { createLatLng } from './types';
 
