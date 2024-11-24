@@ -7,7 +7,7 @@ import { useTrip } from '@/hooks/trip/useTrip';
 export default function TripPage() {
   const { tripId } = useParams<{ tripId: string }>();
   const navigate = useNavigate();
-  console.log('tripid:', tripId);
+
   const { data, isLoading, isError, error, status } = useTrip(tripId);
 
   // Loading state
