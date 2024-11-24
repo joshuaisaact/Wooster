@@ -9,7 +9,7 @@ export function useDeleteDestination() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: async (destinationId: number) => {
       if (!destinationId) {
         throw new Error('Invalid destination ID');
@@ -64,4 +64,6 @@ export function useDeleteDestination() {
       navigate('/destination-list');
     },
   });
+
+  return mutation;
 }
