@@ -10,12 +10,12 @@ interface DeleteDestinationButtonProps {
 
 function DeleteDestinationButton({ destinationId }: DeleteDestinationButtonProps) {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const { deleteDestination, isLoading } = useDeleteDestination();
+  const { mutate, isPending } = useDeleteDestination();
   const DemoDisabledDeleteButton = withDemoDisabled(Button);
 
   const handleConfirm = async () => {
     setIsConfirmModalOpen(false);
-    await deleteDestination(destinationId);
+    mutate(destinationId);
   };
 
   return (
@@ -24,7 +24,7 @@ function DeleteDestinationButton({ destinationId }: DeleteDestinationButtonProps
         onClick={() => setIsConfirmModalOpen(true)}
         variant="destructive"
         className="bg-red-500 text-white hover:bg-red-600"
-        disabled={isLoading}
+        disabled={isPending}
       >
         Delete Destination
       </DemoDisabledDeleteButton>
