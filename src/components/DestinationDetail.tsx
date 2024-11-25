@@ -6,9 +6,9 @@ import { MapPinIcon, Calendar, Thermometer, Globe, Info } from 'lucide-react';
 import { Map } from './shared/map';
 import { Trip as TripType } from '@/types';
 import DeleteTripButton from './trip/DeleteTripButton';
-import DeleteDestinationButton from './destination/buttons/DeleteDestinationButton';
 import { formatTemperature } from '@/utils/temperature';
 import { Link } from 'react-router-dom';
+import { TripDateHeader } from './trip/TripDateHeader';
 
 interface DestinationDetailProps {
   destination: Destination;
@@ -56,6 +56,12 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
               </Link>
             </div>
 
+            {trip && (
+              <div className="mb-2 mt-3">
+                <TripDateHeader trip={trip} />
+              </div>
+            )}
+
             {/* Badges */}
             <div className="mt-2 flex flex-wrap gap-2">
               <Badge
@@ -84,6 +90,13 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
             <p className="text-gray-600 dark:text-green-100/70">{destination.description}</p>
 
             {/* Information Items */}
+
+            {trip?.description && (
+              <div className="rounded-lg bg-white/50 dark:bg-green-900/20">
+                <h3 className="mb-2 font-semibold text-gray-900 dark:text-white/95">Trip Notes</h3>
+                <p className="text-sm text-gray-600 dark:text-green-100/70">{trip.description}</p>
+              </div>
+            )}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <InfoItem
                 icon={<Calendar className="h-4 w-4" />}
@@ -146,9 +159,6 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
                 <DeleteTripButton tripId={trip.tripId} />
               </div>
             )}
-            <div className="mt-4 flex justify-center">
-              <DeleteDestinationButton destinationId={destination.destinationId} />
-            </div>
           </CardContent>
         </Card>
       </div>

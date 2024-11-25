@@ -1,14 +1,15 @@
-import { TripTab } from '@/types';
+import { Trip, TripTab } from '@/types';
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { formatItineraryDate } from '@/utils/dates';
 
 interface TripNavigationProps {
-  daysCount: number;
+  trip: Trip;
   activeTab: TripTab;
   onTabChange: (tab: TripTab) => void;
 }
 
-export function TripNavigation({ daysCount, activeTab, onTabChange }: TripNavigationProps) {
+export function TripNavigation({ trip, activeTab, onTabChange }: TripNavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const getActiveLabel = () => {
@@ -30,7 +31,7 @@ export function TripNavigation({ daysCount, activeTab, onTabChange }: TripNaviga
         >
           Summary
         </button>
-        {Array.from({ length: daysCount }).map((_, i) => (
+        {Array.from({ length: trip.numDays }).map((_, i) => (
           <button
             key={i}
             onClick={() => onTabChange(i + 1)}
@@ -40,7 +41,7 @@ export function TripNavigation({ daysCount, activeTab, onTabChange }: TripNaviga
                 : 'bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-green-800 dark:text-green-100 dark:hover:bg-green-700'
             }`}
           >
-            Day {i + 1}
+            {formatItineraryDate(i + 1, new Date(trip.startDate))}
           </button>
         ))}
       </nav>
@@ -72,7 +73,7 @@ export function TripNavigation({ daysCount, activeTab, onTabChange }: TripNaviga
             >
               Summary
             </button>
-            {Array.from({ length: daysCount }).map((_, i) => (
+            {Array.from({ length: trip.numDays }).map((_, i) => (
               <button
                 key={i}
                 onClick={() => {
@@ -85,7 +86,7 @@ export function TripNavigation({ daysCount, activeTab, onTabChange }: TripNaviga
                     : 'text-gray-900 hover:bg-gray-100 dark:text-green-100 dark:hover:bg-green-800'
                 }`}
               >
-                Day {i + 1}
+                {formatItineraryDate(i + 1, new Date(trip.startDate))}
               </button>
             ))}
           </div>

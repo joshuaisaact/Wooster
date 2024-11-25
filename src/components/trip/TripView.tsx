@@ -40,11 +40,7 @@ export function TripView({ trip, destination }: TripViewProps) {
       {/* Navigation */}
       <div className="border-b bg-white dark:border-green-700 dark:bg-green-800/30">
         <div className="mx-auto max-w-7xl px-4 text-gray-700 dark:text-green-100 sm:px-6 lg:px-8">
-          <TripNavigation
-            daysCount={trip.itinerary?.length ?? 0}
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
-          />
+          <TripNavigation trip={trip} activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
       </div>
 

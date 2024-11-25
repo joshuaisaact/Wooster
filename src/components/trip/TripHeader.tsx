@@ -19,10 +19,6 @@ export function TripHeader({ trip, onShare }: TripHeaderProps) {
         <h1 className="text-lg font-bold text-gray-900 dark:text-green-100 sm:text-xl md:text-2xl">
           {!trip.title && <span>{trip.destination.destinationName} Trip</span>}
           {trip.title}
-          <span>
-            -
-            <TripDates trip={trip} />
-          </span>
         </h1>
 
         <div className="flex gap-2">

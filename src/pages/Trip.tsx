@@ -77,7 +77,7 @@ export default function TripPage() {
   }
 
   if (!data || !data.trip) {
-    return null; // This will never execute due to above checks
+    return null;
   }
 
   const { trip } = data;

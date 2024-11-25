@@ -23,3 +23,13 @@ export function formatDateRange(start: Date, end: Date): string {
     return `${startMonth} ${startDay}, ${startYear} - ${endMonth} ${endDay}, ${endYear}`;
   }
 }
+
+export function formatItineraryDate(dayNumber: number, startDate: Date): string {
+  const date = addDays(startDate, dayNumber - 1);
+  const formatted = date.toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  });
+  return formatted.replace(',', '');
+}
