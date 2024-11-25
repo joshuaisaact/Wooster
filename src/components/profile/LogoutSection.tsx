@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '@/hooks/useAppContext';
-import { useDemo } from '@/context/useDemoContext';
+
 import { toast } from 'sonner';
+import { useDemo } from '@/hooks/useDemo';
 
 export function LogoutSection() {
   const navigate = useNavigate();

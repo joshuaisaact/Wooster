@@ -1,12 +1,14 @@
 import { Destination } from '@/types';
 import { Map } from '../shared/map';
-import DeleteDestinationButton from './DeleteDestinationButton';
+import DeleteDestinationButton from './buttons/DeleteDestinationButton';
 import { useState } from 'react';
 import { MapPinIcon, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import CreateTrip from '../shared/CreateTrip';
 import { formatTemperature } from '@/utils/temperature';
+import { SaveDestinationButton } from './buttons/SaveDestinationButton';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 
 interface DestinationViewProps {
   destination: Destination;
@@ -18,15 +20,18 @@ function DestinationView({ destination }: DestinationViewProps) {
   const hasMapCoordinates = destination.latitude && destination.longitude;
 
   return (
-    <div className={cn('space-y-8 transition-all duration-300', tripCreationOpen ? 'mr-96' : '')}>
+    <div className={cn('space-y-8 transition-all duration-300')}>
       {/* Hero Section */}
       <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
         <div className="p-6 md:p-8">
           <div className="mb-6 space-y-4">
             <div className="space-y-2">
-              <h1 className="text-2xl font-bold text-green-900 dark:text-white/95">
-                {destination.destinationName}
-              </h1>
+              <div className="flex items-start justify-between gap-4">
+                <h1 className="text-2xl font-bold text-green-900 dark:text-white/95">
+                  {destination.destinationName}
+                </h1>
+                <SaveDestinationButton destination={destination} />
+              </div>
               <div className="flex items-center text-gray-600 dark:text-green-100/70">
                 <MapPinIcon className="mr-1 h-4 w-4" />
                 <span>{destination.country}</span>
@@ -114,33 +119,32 @@ function DestinationView({ destination }: DestinationViewProps) {
         </div>
       </div>
 
-      {tripCreationOpen && (
-        <div className="fixed right-0 top-0 h-full w-96 overflow-y-auto border-l border-gray-100 bg-white/80 p-6 shadow-xl backdrop-blur-sm dark:border-white/10 dark:bg-green-800/80">
+      {/* Trip Creation Dialog */}
+      <Dialog open={tripCreationOpen} onOpenChange={setTripCreationOpen} modal={false}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <DialogTitle className="text-lg font-semibold text-green-900 dark:text-white/95">
+              Plan Your Trip
+            </DialogTitle>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-green-800 hover:text-green-900 dark:text-green-100 dark:hover:text-white"
+              onClick={() => setTripCreationOpen(false)}
+            >
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </Button>
+          </DialogHeader>
           <div className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-green-900 dark:text-white/95">
-                Plan Your Trip
-              </h2>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setTripCreationOpen(false)}
-                className="text-gray-500 hover:text-gray-700 dark:text-green-100/70 dark:hover:text-green-100"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-            <CreateTrip location={destination} onClose={() => setTripCreationOpen(false)} />
-            <div className="mt-auto text-center">
-              <img
-                src="/wooster-on-maps-no-bg.png"
-                alt="Wooster"
-                className="mx-auto w-32 opacity-80 dark:opacity-60 dark:hover:opacity-80"
-              />
-            </div>
+            <CreateTrip
+              location={destination}
+              onClose={() => setTripCreationOpen(false)}
+              title={true}
+            />
           </div>
-        </div>
-      )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

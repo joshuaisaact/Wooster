@@ -1,11 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MapPinIcon, Calendar, Thermometer, DollarSign, Star } from 'lucide-react';
+import { MapPinIcon, Calendar, Thermometer, DollarSign } from 'lucide-react';
 import { Destination } from '@/types';
 import { cn } from '@/lib/utils';
 import { formatTemperature } from '@/utils/temperature';
-import { Button } from '../ui/button';
-import { useSaveDestinationToggle } from '@/hooks/destination/useSavedDestinationToggle';
+import { SaveDestinationButton } from './buttons/SaveDestinationButton';
 
 interface DestinationCardProps {
   destination: Destination;
@@ -22,9 +21,6 @@ export function DestinationCard({ destination, onClick }: DestinationCardProps) 
     averageTemperatureLow,
     averageTemperatureHigh,
   } = destination || {};
-
-  const { toggleSaveDestination, isDestinationSaved, isPending } = useSaveDestinationToggle();
-  const isSaved = isDestinationSaved(destination.destinationId);
 
   const getCostLevelColor = (level: string) => {
     const colors = {
@@ -57,32 +53,7 @@ export function DestinationCard({ destination, onClick }: DestinationCardProps) 
           </div>
           <div className="flex flex-col items-end gap-2">
             <div className="relative">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="hover:!none relative h-8 w-8 p-0 !outline-none !ring-0 !ring-offset-0 hover:!bg-transparent hover:!outline-none focus:!outline-none focus:!ring-0 focus:!ring-offset-0 active:!outline-none active:!ring-0 active:!ring-offset-0"
-                onClick={(e) => toggleSaveDestination(destination, e)}
-              >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Star
-                    className={cn(
-                      'h-5 w-5 transition-all',
-                      isSaved
-                        ? 'fill-yellow-400 text-yellow-400'
-                        : 'text-gray-500 hover:fill-yellow-400 hover:text-yellow-400 dark:text-gray-300',
-                      isPending && 'animate-pulse',
-                    )}
-                  />
-                </div>
-
-                <span className="sr-only">
-                  {isPending
-                    ? 'Updating...'
-                    : isSaved
-                      ? 'Remove from saved destinations'
-                      : 'Save destination'}
-                </span>
-              </Button>
+              <SaveDestinationButton destination={destination} />
             </div>
 
             <Badge

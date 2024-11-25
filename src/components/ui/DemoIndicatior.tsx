@@ -1,4 +1,4 @@
-import { useDemo } from '@/context/useDemoContext';
+import { useDemo } from '@/hooks/useDemo';
 
 export function DemoIndicator() {
   const { isDemo } = useDemo();

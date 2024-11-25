@@ -7,6 +7,8 @@ export interface Trip {
   numDays: number;
   startDate: string;
   itinerary: ItineraryItem[];
+  title?: string;
+  description?: string;
 }
 
 export interface CreateTripData {

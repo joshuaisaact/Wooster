@@ -10,16 +10,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-neutral-900 text-neutral-50 hover:bg-neutral-900/90 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90',
+          'bg-green-800 text-white hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700',
         destructive:
           'bg-red-500 text-neutral-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-red-900/90',
         outline:
-          'border border-neutral-200 bg-white  hover:text-neutral-900 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50',
+          'border border-gray-200 bg-white/80 hover:bg-white dark:border-white/10 dark:bg-green-800/30 dark:hover:bg-green-800/40',
         secondary:
-          'bg-neutral-100 text-neutral-900 hover:bg-neutral-100/80 dark:bg-neutral-800 dark:text-neutral-50 dark:hover:bg-neutral-800/80',
-        ghost:
-          'ring-0 ring-offset-0 !ring-offset-0 !ring-0 !outline-none hover:!ring-0 hover:!ring-offset-0 hover:bg-transparent focus:!ring-0 focus:!ring-offset-0 focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:outline-none active:!ring-0 active:!ring-offset-0',
-        link: 'text-neutral-900 underline-offset-4 hover:underline dark:text-neutral-50',
+          'bg-green-50 text-green-900 hover:bg-green-100 dark:bg-green-800/50 dark:text-green-100 dark:hover:bg-green-800/60',
+        ghost: 'hover:bg-transparent focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0',
+        link: 'text-green-800 underline-offset-4 hover:underline dark:text-green-100',
       },
       size: {
         default: 'h-10 px-4 py-2',

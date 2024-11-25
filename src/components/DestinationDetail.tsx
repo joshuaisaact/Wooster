@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Destination } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPinIcon, Calendar, Thermometer, Globe, Info } from 'lucide-react';
 import { Map } from './shared/map';
-import CreateTrip from './shared/CreateTrip';
 import { Trip as TripType } from '@/types';
 import DeleteTripButton from './trip/DeleteTripButton';
-import DeleteDestinationButton from './destination/DeleteDestinationButton';
+import DeleteDestinationButton from './destination/buttons/DeleteDestinationButton';
 import { formatTemperature } from '@/utils/temperature';
 import { Link } from 'react-router-dom';
 
@@ -18,8 +17,6 @@ interface DestinationDetailProps {
 }
 
 function DestinationDetail({ destination, trip }: DestinationDetailProps) {
-  const [tripCreationOpen] = useState(false);
-
   return (
     <div className="flex w-full flex-col gap-4 md:flex-row">
       {/* Map Section */}
@@ -38,9 +35,7 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
       </div>
 
       {/* Right Side - Destination Details */}
-      <div
-        className={`flex h-full w-full flex-col md:w-1/2 ${tripCreationOpen ? 'flex-grow' : ''}`}
-      >
+      <div className={`flex h-full w-full flex-col md:w-1/2`}>
         <Card className="h-full overflow-auto border-none bg-white shadow-lg dark:bg-green-800/30 dark:shadow-green-900/20">
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -157,18 +152,6 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
           </CardContent>
         </Card>
       </div>
-
-      {/* Right Side - Create Trip Section (appears when button is clicked) */}
-      {tripCreationOpen && (
-        <div className="flex h-full flex-col justify-between">
-          <CreateTrip location={destination} />
-          <img
-            src="/Wooster-map-planning.png"
-            className="mt-4 h-auto opacity-80 dark:opacity-60 dark:hover:opacity-80"
-            alt="Map Planning"
-          />
-        </div>
-      )}
     </div>
   );
 }

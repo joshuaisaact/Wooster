@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Button } from '../ui/button';
-import ConfirmModal from '../ui/ConfirmModal';
-import withDemoDisabled from '../ui/WithDemoDisabled';
+import { Button } from '../../ui/button';
+import ConfirmModal from '../../ui/ConfirmModal';
+import withDemoDisabled from '../../ui/WithDemoDisabled';
 import { useDeleteDestination } from '@/hooks/destination/useDeleteDestination';
 
 interface DeleteDestinationButtonProps {

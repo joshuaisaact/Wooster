@@ -1,5 +1,5 @@
+import { useDemo } from '@/hooks/useDemo';
 import { X } from 'lucide-react';
-import { useDemo } from '@/context/useDemoContext';
 
 export function DemoModal() {
   const { isDemo, isDemoModalOpen, closeDemoModal } = useDemo();
