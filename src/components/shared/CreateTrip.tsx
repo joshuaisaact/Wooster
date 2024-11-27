@@ -19,6 +19,7 @@ interface CreateTripProps {
   location: Destination | null;
   onClose?: () => void;
   className?: string;
+  title?: boolean;
 }
 
 interface TripFormData {
@@ -37,7 +38,7 @@ const categories = [
   'Entertainment',
 ] as const;
 
-function CreateTrip({ location, onClose, className }: CreateTripProps) {
+function CreateTrip({ location, onClose, className, title }: CreateTripProps) {
   const { mutate, isPending } = useCreateTrip(onClose);
   const SubmitButton = withDemoDisabled(Button);
   const [open, setOpen] = useState(false);
@@ -78,12 +79,14 @@ function CreateTrip({ location, onClose, className }: CreateTripProps) {
 
   return (
     <div className={cn('w-full', className)}>
-      <div className="mb-6 space-y-1">
-        <h2 className="text-xl font-semibold tracking-tight text-green-900 dark:text-white/95">
-          Create a Trip
-        </h2>
-        <p className="text-sm text-gray-600 dark:text-green-100/70">Plan your next adventure</p>
-      </div>
+      {!title && (
+        <div className="mb-6 space-y-1">
+          <h2 className="text-xl font-semibold tracking-tight text-green-900 dark:text-white/95">
+            Create a Trip
+          </h2>
+          <p className="text-sm text-gray-600 dark:text-green-100/70">Plan your next adventure</p>
+        </div>
+      )}
 
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

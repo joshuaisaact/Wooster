@@ -7,7 +7,12 @@ export interface Trip {
   numDays: number;
   startDate: string;
   itinerary: ItineraryItem[];
+  title?: string;
+  description?: string;
+  status: TripStatus;
 }
+
+export type TripStatus = 'PLANNING' | 'BOOKED' | 'COMPLETED';
 
 export interface CreateTripData {
   days: number;
@@ -34,4 +39,14 @@ export interface CreateTripParams {
   location: string;
   startDate: string | null;
   selectedCategories?: string[];
+}
+
+export interface ShareLinkResponse {
+  message: string;
+  shareCode: string;
+}
+
+export interface SharedTripResponse {
+  message: string;
+  trip: Trip;
 }

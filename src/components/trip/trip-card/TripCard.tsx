@@ -19,6 +19,7 @@ export function TripCard({ trip, destination }: TripCardProps) {
         <div className="flex-1 py-4 md:px-4">
           <TripDetails trip={trip} destination={destination} />
         </div>
+
         <TripPreviewMap destination={destination} />
       </div>
     </Link>

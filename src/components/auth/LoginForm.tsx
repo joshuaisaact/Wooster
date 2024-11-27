@@ -7,7 +7,7 @@ import { AuthContext } from '@/context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './../../index.css';
 import { Eye } from 'lucide-react';
-import { useDemo } from '@/context/useDemoContext';
+import { useDemo } from '@/hooks/useDemo';
 
 export function LoginForm() {
   const { session } = useContext(AuthContext);

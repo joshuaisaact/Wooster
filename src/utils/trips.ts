@@ -38,12 +38,14 @@ export function searchTrips(trips: Trip[], searchQuery: string): Trip[] {
     if (!trip) return false;
 
     const destination = trip.destination || {};
+    const title = trip.title || '';
     const destinationName = destination.destinationName || '';
     const country = destination.country || '';
     const startDate = trip.startDate ? new Date(trip.startDate).toLocaleDateString() : '';
 
     return (
       destinationName.toLowerCase().includes(searchLower) ||
+      title.toLowerCase().includes(searchLower) ||
       country.toLowerCase().includes(searchLower) ||
       startDate.toLowerCase().includes(searchLower)
     );

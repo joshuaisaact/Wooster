@@ -132,20 +132,6 @@ function DestinationSummary() {
             )}
           </div>
         </div>
-
-        {/* Bottom Action
-        <div className="mt-6 text-center">
-          <Button
-            className="bg-green-700 text-white hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-700"
-            onClick={() =>
-              navigate('/trips', {
-                state: { selectedDestination: destination },
-              })
-            }
-          >
-            Plan a Trip to {destination.destinationName}
-          </Button>
-        </div> */}
       </div>
     </div>
   );

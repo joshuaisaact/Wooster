@@ -1,4 +1,4 @@
-import { useDemo } from '@/context/useDemoContext';
+import { useDemo } from '@/hooks/useDemo';
 import { ButtonProps } from 'react-day-picker';
 
 export function DemoButton({ onClick, children, ...props }: ButtonProps) {

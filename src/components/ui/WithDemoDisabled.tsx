@@ -1,4 +1,3 @@
-import { useDemo } from '@/context/useDemoContext';
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -9,6 +8,7 @@ import {
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from './button';
+import { useDemo } from '@/hooks/useDemo';
 
 const withDemoDisabled = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
   const DemoDisabledComponent: React.FC<P> = (props) => {

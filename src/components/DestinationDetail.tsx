@@ -1,29 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Destination } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPinIcon, Calendar, Thermometer, Globe, Info } from 'lucide-react';
 import { Map } from './shared/map';
-import CreateTrip from './shared/CreateTrip';
 import { Trip as TripType } from '@/types';
 import DeleteTripButton from './trip/DeleteTripButton';
-import DeleteDestinationButton from './destination/DeleteDestinationButton';
 import { formatTemperature } from '@/utils/temperature';
 import { Link } from 'react-router-dom';
+import { TripDateHeader } from './trip/TripDateHeader';
+import { TripStatusSelect } from './trip/TripStatusSelect';
 
 interface DestinationDetailProps {
   destination: Destination;
-  trip?: TripType;
+  trip: TripType;
   onDeleteTrip?: (tripId: string) => void;
+  isSharedView?: boolean;
 }
 
-function DestinationDetail({ destination, trip }: DestinationDetailProps) {
-  const [tripCreationOpen] = useState(false);
-
+function DestinationDetail({ destination, trip, isSharedView }: DestinationDetailProps) {
   return (
-    <div className="flex w-full flex-col gap-4 md:flex-row">
+    <div className="flex min-h-screen flex-col gap-4 p-4 md:h-[800px] md:flex-row md:gap-6">
       {/* Map Section */}
-      <div className="h-80 md:h-[800px] md:w-1/2">
+      <div className="relative h-64 w-full md:h-full md:w-1/2">
         {destination.latitude && destination.longitude ? (
           <Map
             latitude={destination.latitude}
@@ -38,9 +37,7 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
       </div>
 
       {/* Right Side - Destination Details */}
-      <div
-        className={`flex h-full w-full flex-col md:w-1/2 ${tripCreationOpen ? 'flex-grow' : ''}`}
-      >
+      <div className={`flex h-full w-full flex-col md:w-1/2`}>
         <Card className="h-full overflow-auto border-none bg-white shadow-lg dark:bg-green-800/30 dark:shadow-green-900/20">
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -52,14 +49,14 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
                   {destination.destinationName}
                 </CardTitle>
               </Link>
-
-              <Link
-                to={`/destinations/${destination.destinationName}/activities`}
-                className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium text-green-900 transition-colors hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40"
-              >
-                View Activities
-              </Link>
+              {!isSharedView && <TripStatusSelect trip={trip} />}
             </div>
+
+            {trip && (
+              <div className="mb-2 mt-3">
+                <TripDateHeader trip={trip} />
+              </div>
+            )}
 
             {/* Badges */}
             <div className="mt-2 flex flex-wrap gap-2">
@@ -86,9 +83,17 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
           </CardHeader>
 
           <CardContent className="space-y-4">
+            {trip?.description && (
+              <div className="rounded-lg bg-white/50 dark:bg-green-900/20">
+                <h3 className="mb-2 font-semibold text-gray-900 dark:text-white/95">Trip Notes</h3>
+                <p className="text-sm text-gray-600 dark:text-green-100/70">{trip.description}</p>
+              </div>
+            )}
+
             <p className="text-gray-600 dark:text-green-100/70">{destination.description}</p>
 
             {/* Information Items */}
+
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <InfoItem
                 icon={<Calendar className="h-4 w-4" />}
@@ -146,29 +151,14 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
             </div>
 
             {/* Buttons */}
-            {trip && (
+            {!isSharedView && (
               <div className="mt-4 flex justify-center">
                 <DeleteTripButton tripId={trip.tripId} />
               </div>
             )}
-            <div className="mt-4 flex justify-center">
-              <DeleteDestinationButton destinationId={destination.destinationId} />
-            </div>
           </CardContent>
         </Card>
       </div>
-
-      {/* Right Side - Create Trip Section (appears when button is clicked) */}
-      {tripCreationOpen && (
-        <div className="flex h-full flex-col justify-between">
-          <CreateTrip location={destination} />
-          <img
-            src="/Wooster-map-planning.png"
-            className="mt-4 h-auto opacity-80 dark:opacity-60 dark:hover:opacity-80"
-            alt="Map Planning"
-          />
-        </div>
-      )}
     </div>
   );
 }
