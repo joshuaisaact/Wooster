@@ -3,17 +3,16 @@ import { Trip, Destination } from '@/types';
 import { TripHeader } from './TripHeader';
 import { TripNavigation } from './TripNavigation';
 import { TripContent } from './TripContext';
-import { useShare } from '@/hooks/trip/useShare';
 import { TripTab } from '@/types';
 
 interface TripViewProps {
   trip: Trip;
   destination: Destination | undefined;
+  isSharedView?: boolean;
 }
 
-export function TripView({ trip, destination }: TripViewProps) {
+export function TripView({ trip, destination, isSharedView }: TripViewProps) {
   const [activeTab, setActiveTab] = useState<TripTab>('summary');
-  const { shareTrip } = useShare();
 
   // Ensure we have the required data
   if (!trip || !trip.destination?.destinationName) {
@@ -26,14 +25,12 @@ export function TripView({ trip, destination }: TripViewProps) {
     );
   }
 
-  const handleShare = () => shareTrip(trip.destination.destinationName, window.location.href);
-
   return (
     <div className="flex min-h-screen w-full flex-col bg-gray-50 dark:bg-green-900/30">
       {/* Header Section */}
       <div className="bg-white shadow dark:bg-green-800/30 dark:shadow-green-900/20">
         <div className="mx-auto max-w-7xl px-3 py-2 text-green-700 dark:text-green-100 sm:px-4 sm:py-3 md:px-6 md:py-4 lg:px-8">
-          <TripHeader trip={trip} onShare={handleShare} />
+          <TripHeader trip={trip} isSharedView={isSharedView} />
         </div>
       </div>
 
@@ -47,7 +44,12 @@ export function TripView({ trip, destination }: TripViewProps) {
       {/* Main Content */}
       <main className="flex-1">
         <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
-          <TripContent trip={trip} destination={destination} activeTab={activeTab} />
+          <TripContent
+            trip={trip}
+            destination={destination}
+            activeTab={activeTab}
+            isSharedView={isSharedView}
+          />
         </div>
       </main>
     </div>

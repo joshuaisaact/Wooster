@@ -130,6 +130,7 @@ export const mockTrips: Trip[] = [
     numDays: 5,
     startDate: '2025-05-01',
     itinerary: mockItineraryParis,
+    status: 'PLANNING',
   },
   {
     tripId: 'trip_2',
@@ -137,5 +138,6 @@ export const mockTrips: Trip[] = [
     numDays: 3,
     startDate: '2025-07-15',
     itinerary: mockItineraryNYC,
+    status: 'PLANNING',
   },
 ];

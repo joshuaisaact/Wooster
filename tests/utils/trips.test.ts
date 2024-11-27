@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { getSoonestTrip } from '../../src/utils/trips';
 import { mockTrips } from '../__mocks__/mockTrips';
 import { mockTokyoObj } from '../__mocks__/mockDestinations';
+import { Trip } from '@/types';
 
 describe('getSoonestTrip', () => {
   const mockToday = new Date(2024, 4, 30); // Fixed date for testing (May 30, 2024)
@@ -23,6 +24,7 @@ describe('getSoonestTrip', () => {
       destination: mockTokyoObj,
       numDays: 5,
       startDate: '2025-05-01',
+      status: 'PLANNING',
       itinerary: [
         {
           day: 1,
@@ -37,13 +39,14 @@ describe('getSoonestTrip', () => {
   });
 
   it('should return null if there are no upcoming trips', () => {
-    const trips = [
+    const trips: Trip[] = [
       {
         tripId: 'trip_3',
         destination: mockTokyoObj,
         numDays: 2,
         startDate: '2024-01-01',
         itinerary: [],
+        status: 'PLANNING', // Now TypeScript knows this must be one of the allowed values
       },
     ];
     const soonestTrip = getSoonestTrip(trips);

@@ -11,6 +11,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import { Toaster } from 'sonner';
 import { queryClient } from './lib/query/queryClient';
 import { QueryClientProvider } from '@tanstack/react-query';
+import { SharedTripView } from './pages/SharedTripView';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <DemoModal />
               <Routes>
                 <Route path="/" index element={<Login />} />
+                <Route path="/shared/:shareCode" element={<SharedTripView />} />
                 <Route
                   path="/*"
                   element={

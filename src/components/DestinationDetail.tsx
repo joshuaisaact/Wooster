@@ -9,18 +9,20 @@ import DeleteTripButton from './trip/DeleteTripButton';
 import { formatTemperature } from '@/utils/temperature';
 import { Link } from 'react-router-dom';
 import { TripDateHeader } from './trip/TripDateHeader';
+import { TripStatusSelect } from './trip/TripStatusSelect';
 
 interface DestinationDetailProps {
   destination: Destination;
-  trip?: TripType;
+  trip: TripType;
   onDeleteTrip?: (tripId: string) => void;
+  isSharedView?: boolean;
 }
 
-function DestinationDetail({ destination, trip }: DestinationDetailProps) {
+function DestinationDetail({ destination, trip, isSharedView }: DestinationDetailProps) {
   return (
-    <div className="flex w-full flex-col gap-4 md:flex-row">
+    <div className="flex min-h-screen flex-col gap-4 p-4 md:h-[800px] md:flex-row md:gap-6">
       {/* Map Section */}
-      <div className="h-80 md:h-[800px] md:w-1/2">
+      <div className="relative h-64 w-full md:h-full md:w-1/2">
         {destination.latitude && destination.longitude ? (
           <Map
             latitude={destination.latitude}
@@ -47,13 +49,7 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
                   {destination.destinationName}
                 </CardTitle>
               </Link>
-
-              <Link
-                to={`/destinations/${destination.destinationName}/activities`}
-                className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium text-green-900 transition-colors hover:bg-white/50 dark:text-green-100 dark:hover:bg-green-800/40"
-              >
-                View Activities
-              </Link>
+              {!isSharedView && <TripStatusSelect trip={trip} />}
             </div>
 
             {trip && (
@@ -87,16 +83,17 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
           </CardHeader>
 
           <CardContent className="space-y-4">
-            <p className="text-gray-600 dark:text-green-100/70">{destination.description}</p>
-
-            {/* Information Items */}
-
             {trip?.description && (
               <div className="rounded-lg bg-white/50 dark:bg-green-900/20">
                 <h3 className="mb-2 font-semibold text-gray-900 dark:text-white/95">Trip Notes</h3>
                 <p className="text-sm text-gray-600 dark:text-green-100/70">{trip.description}</p>
               </div>
             )}
+
+            <p className="text-gray-600 dark:text-green-100/70">{destination.description}</p>
+
+            {/* Information Items */}
+
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <InfoItem
                 icon={<Calendar className="h-4 w-4" />}
@@ -154,7 +151,7 @@ function DestinationDetail({ destination, trip }: DestinationDetailProps) {
             </div>
 
             {/* Buttons */}
-            {trip && (
+            {!isSharedView && (
               <div className="mt-4 flex justify-center">
                 <DeleteTripButton tripId={trip.tripId} />
               </div>
