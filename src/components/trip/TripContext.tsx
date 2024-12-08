@@ -21,7 +21,7 @@ export function TripContent({ trip, destination, activeTab, isSharedView }: Trip
 
   const currentDayItinerary = trip.itinerary[Number(activeTab) - 1];
   return currentDayItinerary?.activities?.length > 0 ? (
-    <ItineraryView currentDay={currentDayItinerary} />
+    <ItineraryView currentDay={currentDayItinerary} tripId={trip.tripId} />
   ) : (
     <p>No activities for Day {activeTab}</p>
   );

@@ -2,40 +2,75 @@ import { Activity as ActivityType } from '@/types';
 import { ItineraryMap } from './ItineraryMap';
 import { ItineraryList } from './ItineraryList';
 import { useItinerarySelection } from '@/hooks/trip/useItinerarySelection';
+import { tripService } from '@/services';
+import { useTrip } from '@/hooks/trip/useTrip';
+import { Card } from '@/components/ui/card';
 
 interface ItineraryViewProps {
+  tripId: string;
   currentDay: {
     day: number;
     activities: ActivityType[];
   };
 }
 
-export function ItineraryView({ currentDay }: ItineraryViewProps) {
+export function ItineraryView({ tripId, currentDay }: ItineraryViewProps) {
+  const { refetch } = useTrip(tripId);
   const { selectedActivityId, handleActivitySelect, mapRef } = useItinerarySelection(
     currentDay.activities,
   );
 
-  return (
-    <div className="rounded-xl bg-white/70 shadow-lg backdrop-blur-sm dark:bg-green-800/30 dark:shadow-green-900/20">
-      <div className="flex min-h-screen flex-col gap-4 p-4 md:h-[800px] md:flex-row md:gap-6">
-        {/* Map Section */}
-        <div className="relative h-64 w-full md:h-full md:w-1/2">
-          <ItineraryMap
-            activities={currentDay.activities}
-            selectedActivityId={selectedActivityId}
-            ref={mapRef}
-          />
-        </div>
+  const handleSlotChange = async (activityId: number, newSlot: number | null) => {
+    try {
+      const updates = currentDay.activities.map((activity) => {
+        if (activity.activityId === activityId) {
+          return {
+            activityId: Number(activity.activityId), // Ensure it's a number
+            slotNumber: newSlot ?? activity.slotNumber,
+          };
+        } else if (activity.slotNumber === newSlot) {
+          const movingActivity = currentDay.activities.find((a) => a.activityId === activityId);
+          return {
+            activityId: Number(activity.activityId), // Ensure it's a number
+            slotNumber: movingActivity?.slotNumber ?? activity.slotNumber,
+          };
+        } else {
+          return {
+            activityId: Number(activity.activityId), // Ensure it's a number
+            slotNumber: activity.slotNumber,
+          };
+        }
+      });
 
-        {/* List Section */}
-        <div className="h-[600px] w-full md:h-full md:w-1/2">
+      await tripService.reorderActivities(tripId, currentDay.day, updates);
+      await refetch();
+    } catch (error) {
+      console.error('Failed to reorder activities:', error);
+    }
+  };
+
+  return (
+    <div className="flex min-h-screen flex-col gap-4 p-4 md:h-[800px] md:flex-row md:gap-6">
+      {/* Map Section */}
+      <div className="relative h-64 w-full md:h-full md:w-1/2">
+        <ItineraryMap
+          activities={currentDay.activities}
+          selectedActivityId={selectedActivityId}
+          ref={mapRef}
+        />
+      </div>
+
+      {/* List Section */}
+      <div className="flex h-full w-full flex-col md:w-1/2">
+        <Card className="h-full overflow-auto border-none bg-white shadow-lg dark:bg-green-800/30 dark:shadow-green-900/20">
           <ItineraryList
             day={currentDay.day}
             activities={currentDay.activities}
             selectedActivityId={selectedActivityId}
             onActivitySelect={handleActivitySelect}
+            onSlotChange={handleSlotChange}
           />
-        </div>
+        </Card>
       </div>
     </div>
   );

@@ -1,17 +1,39 @@
-import { Card, CardHeader, CardTitle } from '@/components/ui/card';
+import { CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ActivityCard } from '@/components/activities';
-import { Carousel, CarouselApi, CarouselContent, CarouselItem } from '@/components/ui/carousel';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
 import { Activity as ActivityType } from '@/types';
+import { Sunrise, Sun, Sunset } from 'lucide-react';
+import { useState } from 'react';
 
-import { useCallback, useEffect, useState } from 'react';
-import { cn } from '@/lib/utils';
+interface TimeSlot {
+  number: number;
+  label: string;
+  icon: React.ReactNode;
+}
+
+const TIME_SLOTS: TimeSlot[] = [
+  {
+    number: 1,
+    label: 'Morning',
+    icon: <Sunrise className="h-4 w-4 text-amber-500 dark:text-amber-400" />,
+  },
+  {
+    number: 2,
+    label: 'Afternoon',
+    icon: <Sun className="h-4 w-4 text-yellow-500 dark:text-yellow-400" />,
+  },
+  {
+    number: 3,
+    label: 'Evening',
+    icon: <Sunset className="h-4 w-4 text-orange-500 dark:text-orange-400" />,
+  },
+];
 
 interface ItineraryListProps {
   day: number;
   activities: ActivityType[];
   selectedActivityId: number | null;
   onActivitySelect: (id: number) => void;
+  onSlotChange: (activityId: number, newSlot: number | null) => Promise<void>;
 }
 
 export function ItineraryList({
@@ -19,41 +41,25 @@ export function ItineraryList({
   activities,
   selectedActivityId,
   onActivitySelect,
+  onSlotChange,
 }: ItineraryListProps) {
-  const [api, setApi] = useState<CarouselApi>();
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [isReordering, setIsReordering] = useState(false);
 
-  const onSelect = useCallback(() => {
-    if (!api) return;
-    setSelectedIndex(api.selectedScrollSnap());
-  }, [api]);
+  const handleSlotChange = async (activityId: number, newSlot: number | null) => {
+    if (isReordering) return;
+    setIsReordering(true);
+    try {
+      await onSlotChange(activityId, newSlot);
+    } finally {
+      setIsReordering(false);
+    }
+  };
 
-  useEffect(() => {
-    if (!api) return;
-
-    setScrollSnaps(api.scrollSnapList());
-    onSelect();
-
-    api.on('select', onSelect);
-    api.on('reInit', onSelect);
-
-    return () => {
-      api.off('select', onSelect);
-      api.off('reInit', onSelect);
-    };
-  }, [api, onSelect]);
-
-  const onDotButtonClick = useCallback(
-    (index: number) => {
-      if (!api) return;
-      api.scrollTo(index);
-    },
-    [api],
-  );
+  const getActivitiesForSlot = (slotNumber: number) =>
+    activities.filter((activity) => activity.slotNumber === slotNumber);
 
   return (
-    <Card className="group flex w-full flex-col border-none bg-white/70 shadow-lg transition-all duration-200 hover:bg-white/80 hover:shadow-xl dark:bg-green-800/30 dark:shadow-green-900/20 dark:hover:bg-green-800/40">
+    <>
       <CardHeader className="border-b border-gray-100 bg-white/50 px-4 py-3 dark:border-white/10 dark:bg-green-800/20 sm:px-6 sm:py-4">
         <CardTitle className="text-lg font-bold text-green-900 group-hover:text-green-800 dark:text-white/95 dark:group-hover:text-white sm:text-xl">
           Day {day}
@@ -63,77 +69,35 @@ export function ItineraryList({
         </p>
       </CardHeader>
 
-      {/* Mobile Carousel */}
-      <div className="flex-1 sm:hidden">
-        {activities.length > 0 ? (
-          <div className="px-4 py-4">
-            <Carousel
-              opts={{
-                align: 'start',
-                loop: false,
-              }}
-              setApi={setApi}
-              className="w-full"
-            >
-              <CarouselContent>
-                {activities.map((activity) => (
-                  <CarouselItem key={activity.activityId}>
-                    <ActivityCard
-                      activity={activity}
-                      isSelected={selectedActivityId === activity.activityId}
-                      onSelect={() => onActivitySelect(activity.activityId)}
-                    />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
-
-            {/* Dot indicators */}
-            <div className="mt-4 flex justify-center gap-1.5">
-              {scrollSnaps.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => onDotButtonClick(index)}
-                  className={cn(
-                    'h-1.5 rounded-full transition-all',
-                    index === selectedIndex
-                      ? 'w-4 bg-green-600 dark:bg-green-400'
-                      : 'w-1.5 bg-gray-300 dark:bg-green-100/30',
-                  )}
-                />
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="flex h-32 items-center justify-center text-gray-500">
-            No activities planned for this day yet
-          </div>
-        )}
-      </div>
-
-      {/* Desktop ScrollArea List */}
-      <div className="hidden flex-1 sm:block">
-        <ScrollArea className="flex-1">
-          <div className="px-6 py-6">
-            {activities.length > 0 ? (
+      <CardContent>
+        <div className="divide-y divide-gray-100 dark:divide-green-700/30">
+          {TIME_SLOTS.map((slot) => (
+            <div key={slot.number} className="py-4 first:pt-0 last:pb-0">
+              <div className="mb-3 flex items-center gap-2 py-2">
+                {slot.icon}
+                <h3 className="font-medium text-green-900 dark:text-white/90">{slot.label}</h3>
+              </div>
               <div className="space-y-4">
-                {activities.map((activity) => (
+                {getActivitiesForSlot(slot.number).map((activity) => (
                   <ActivityCard
                     key={activity.activityId}
                     activity={activity}
                     isSelected={selectedActivityId === activity.activityId}
                     onSelect={() => onActivitySelect(activity.activityId)}
+                    onSlotChange={(newSlot) => handleSlotChange(activity.activityId, newSlot)}
+                    disabled={isReordering}
                   />
                 ))}
+                {getActivitiesForSlot(slot.number).length === 0 && (
+                  <div className="rounded-lg border border-dashed border-gray-200 p-4 text-center text-sm text-gray-500 dark:border-green-700/30 dark:text-green-100/50">
+                    No activities planned for {slot.label.toLowerCase()}
+                  </div>
+                )}
               </div>
-            ) : (
-              <div className="flex h-32 items-center justify-center text-gray-500">
-                No activities planned for this day yet
-              </div>
-            )}
-          </div>
-        </ScrollArea>
-      </div>
-    </Card>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </>
   );
 }

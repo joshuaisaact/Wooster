@@ -15,6 +15,7 @@ export const mockActivities: Activity[] = [
     duration: '3 hours',
     difficulty: 'Medium',
     bestTime: 'Morning',
+    slotNumber: 1,
   },
   {
     activityId: 2,
@@ -30,5 +31,6 @@ export const mockActivities: Activity[] = [
     duration: '3 hours',
     difficulty: 'Medium',
     bestTime: 'Morning',
+    slotNumber: 2,
   },
 ];

@@ -7,6 +7,11 @@ import {
   TripsResponse,
 } from '@/types';
 
+interface ReorderActivityUpdate {
+  activityId: number;
+  slotNumber: number | null;
+}
+
 export const tripService = {
   getAll: () => api.get<TripsResponse>('/trips').then((response) => response.data),
 
@@ -28,4 +33,9 @@ export const tripService = {
 
   getSharedTrip: (shareCode: string) =>
     api.get<SharedTripResponse>(`/shared/${shareCode}`).then((response) => response.data),
+
+  reorderActivities: (tripId: string, dayNumber: number, updates: ReorderActivityUpdate[]) =>
+    api
+      .put<TripResponse>(`/trips/${tripId}/days/${dayNumber}/reorder`, { updates })
+      .then((response) => response.data),
 };
