@@ -5,6 +5,7 @@ import { useItinerarySelection } from '@/hooks/trip/useItinerarySelection';
 import { tripService } from '@/services';
 import { useTrip } from '@/hooks/trip/useTrip';
 import { Card } from '@/components/ui/card';
+import { toast } from 'sonner';
 
 interface ItineraryViewProps {
   tripId: string;
@@ -25,18 +26,18 @@ export function ItineraryView({ tripId, currentDay }: ItineraryViewProps) {
       const updates = currentDay.activities.map((activity) => {
         if (activity.activityId === activityId) {
           return {
-            activityId: Number(activity.activityId), // Ensure it's a number
+            activityId: Number(activity.activityId),
             slotNumber: newSlot ?? activity.slotNumber,
           };
         } else if (activity.slotNumber === newSlot) {
           const movingActivity = currentDay.activities.find((a) => a.activityId === activityId);
           return {
-            activityId: Number(activity.activityId), // Ensure it's a number
+            activityId: Number(activity.activityId),
             slotNumber: movingActivity?.slotNumber ?? activity.slotNumber,
           };
         } else {
           return {
-            activityId: Number(activity.activityId), // Ensure it's a number
+            activityId: Number(activity.activityId),
             slotNumber: activity.slotNumber,
           };
         }
@@ -44,8 +45,12 @@ export function ItineraryView({ tripId, currentDay }: ItineraryViewProps) {
 
       await tripService.reorderActivities(tripId, currentDay.day, updates);
       await refetch();
+      toast.success('Activity moved successfully');
     } catch (error) {
       console.error('Failed to reorder activities:', error);
+      toast.error('Failed to move activity', {
+        description: 'There was a problem rescheduling the activity. Please try again.',
+      });
     }
   };
 
