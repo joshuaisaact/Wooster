@@ -12,4 +12,5 @@ export interface Activity {
   duration: string;
   difficulty: string;
   bestTime: string;
+  slotNumber: number;
 }

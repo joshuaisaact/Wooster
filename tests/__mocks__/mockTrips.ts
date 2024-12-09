@@ -17,6 +17,7 @@ const mockActivitiesParisDay1: Activity[] = [
     duration: '3 hours',
     difficulty: 'Medium',
     bestTime: 'Morning',
+    slotNumber: 1,
   },
   {
     activityId: 2,
@@ -32,6 +33,7 @@ const mockActivitiesParisDay1: Activity[] = [
     duration: '3 hours',
     difficulty: 'Medium',
     bestTime: 'Morning',
+    slotNumber: 2,
   },
 ];
 
@@ -50,6 +52,7 @@ const mockActivitiesParisDay2: Activity[] = [
     duration: '3 hours',
     difficulty: 'Medium',
     bestTime: 'Morning',
+    slotNumber: 1,
   },
   {
     activityId: 4,
@@ -65,6 +68,7 @@ const mockActivitiesParisDay2: Activity[] = [
     duration: '3 hours',
     difficulty: 'Medium',
     bestTime: 'Morning',
+    slotNumber: 2,
   },
 ];
 
@@ -84,6 +88,7 @@ export const mockActivitiesNYC: Activity[] = [
     duration: '3 hours',
     difficulty: 'Medium',
     bestTime: 'Morning',
+    slotNumber: 1,
   },
   {
     activityId: 6,
@@ -99,6 +104,7 @@ export const mockActivitiesNYC: Activity[] = [
     duration: '3 hours',
     difficulty: 'Medium',
     bestTime: 'Morning',
+    slotNumber: 2,
   },
 ];
 

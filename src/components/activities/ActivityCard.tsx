@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { Activity as ActivityType } from '@/types';
 import { Badge } from '../ui/badge';
 import {
   MapPinIcon,
@@ -9,16 +9,41 @@ import {
   Sun,
   Gauge,
   Tag,
+  MoreVertical,
+  Sunrise,
+  Sunset,
+  Loader2,
 } from 'lucide-react';
-import { Activity } from '@/types';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui/card';
 
 interface ActivityCardProps {
-  activity: Activity;
+  activity: ActivityType;
   isSelected: boolean;
   onSelect: () => void;
+  onSlotChange?: (newSlot: number | null) => Promise<void>;
+  disabled?: boolean;
 }
 
-export function ActivityCard({ activity, isSelected, onSelect }: ActivityCardProps) {
+export function ActivityCard({
+  activity,
+  isSelected,
+  onSelect,
+  onSlotChange,
+  disabled,
+}: ActivityCardProps) {
+  const timeSlots = [
+    { number: 1, label: 'Morning', icon: <Sunrise className="h-4 w-4" /> },
+    { number: 2, label: 'Afternoon', icon: <Sun className="h-4 w-4" /> },
+    { number: 3, label: 'Evening', icon: <Sunset className="h-4 w-4" /> },
+  ];
+
   return (
     <Card
       onClick={onSelect}
@@ -36,12 +61,51 @@ export function ActivityCard({ activity, isSelected, onSelect }: ActivityCardPro
             <span className="text-base text-green-900 dark:text-white/95 sm:text-lg md:text-xl">
               {activity.activityName}
             </span>
-            <Badge
-              variant="outline"
-              className="shrink-0 text-xs dark:border-green-100/20 dark:bg-green-900/60 dark:text-green-100"
-            >
-              <Tag className="mr-1 h-3 w-3" /> {activity.category}
-            </Badge>
+            <div className="flex items-center gap-2">
+              <Badge
+                variant="outline"
+                className="shrink-0 text-xs dark:border-green-100/20 dark:bg-green-900/60 dark:text-green-100"
+              >
+                <Tag className="mr-1 h-3 w-3" /> {activity.category}
+              </Badge>
+              {onSlotChange && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0 hover:bg-gray-100 dark:hover:bg-green-700/50"
+                      disabled={disabled}
+                    >
+                      {disabled ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <MoreVertical className="h-4 w-4" />
+                      )}
+                      <span className="sr-only">Move activity</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    {timeSlots.map((slot) => (
+                      <DropdownMenuItem
+                        key={slot.number}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (slot.number !== activity.slotNumber) {
+                            onSlotChange(slot.number);
+                          }
+                        }}
+                        disabled={slot.number === activity.slotNumber || disabled}
+                        className="flex items-center gap-2"
+                      >
+                        {slot.icon}
+                        Move to {slot.label}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </div>
           </div>
         </CardTitle>
       </CardHeader>

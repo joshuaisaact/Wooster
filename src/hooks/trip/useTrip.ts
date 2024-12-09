@@ -1,7 +1,7 @@
 import { useTrips } from './useTrips';
 
 export function useTrip(tripId: string | undefined) {
-  const { data: trips, isLoading, error, isError, status } = useTrips();
+  const { data: trips, isLoading, error, isError, status, refetch } = useTrips();
 
   const trip = tripId ? trips?.find((t) => t.tripId === tripId) : undefined;
 
@@ -11,5 +11,6 @@ export function useTrip(tripId: string | undefined) {
     isError,
     error,
     status,
+    refetch,
   };
 }
