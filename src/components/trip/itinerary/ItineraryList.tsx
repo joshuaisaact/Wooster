@@ -90,7 +90,7 @@ export function ItineraryList({
                 ))}
                 {getActivitiesForSlot(slot.number).length === 0 && (
                   <div className="rounded-lg border border-dashed border-gray-200 p-4 text-center text-sm text-gray-500 dark:border-green-700/30 dark:text-green-100/50">
-                    No activities planned for {slot.label.toLowerCase()}
+                    No activities planned for the {slot.label.toLowerCase()}
                   </div>
                 )}
               </div>
